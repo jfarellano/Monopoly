@@ -15,15 +15,21 @@ public class Corner extends Nodo{
 
     private int gift;
     private String name;
+    
+    public int x, y;
 
-    public Corner(String name) {
+    public Corner(String name, int x, int y) {
         this.name = name;
         gift = 0;
+        this.x = x;
+        this.y = y;
     }
 
-    public Corner(String name, int number, int gift) {
+    public Corner(String name, int number, int gift, int x, int y) {
         this.name = name;
         this.gift = gift;
+        this.x = x;
+        this.y = y;
     }
 
     //GETTERS SETTERS

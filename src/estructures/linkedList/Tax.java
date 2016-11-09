@@ -4,10 +4,10 @@ import estructures.Nodo;
 
 public class Tax extends Nodo{
     
-    int numberOnTable, tax;
+    public int tax;
 
     public Tax(int numberOnTable, int tax) {
-        this.numberOnTable = numberOnTable;
+        super(numberOnTable);
         this.tax = tax;
     }
     

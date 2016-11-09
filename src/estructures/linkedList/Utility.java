@@ -19,13 +19,15 @@ public class Utility extends Nodo{
     private Player owner;
 
     private String utilityName;
+    
 
     private int price;
     private boolean rentDicex4;
     private boolean rentDicex10;
     private int mortgage;
 
-    public Utility (String utilityName) {
+    public Utility (String utilityName, int id) {
+        super(id);
         this.utilityName = utilityName;
         price = 150;
         mortgage = 75;

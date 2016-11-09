@@ -5,13 +5,12 @@
  */
 package managers;
 
-import estructures.DoubleLinkedList;
 import estructures.Lista;
+import estructures.Nodo;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Random;
-import machines.Avenue;
 import estructures.linkedList.Card;
 import estructures.linkedList.Chance;
 import estructures.linkedList.Chest;
@@ -19,8 +18,10 @@ import estructures.linkedList.Player;
 import estructures.linkedList.Railroad;
 import estructures.linkedList.Tax;
 import estructures.linkedList.Utility;
-import javax.swing.JOptionPane;
+import javafx.scene.control.Cell;
+import machines.Avenue;
 import machines.Corner;
+import sun.reflect.generics.visitor.Reifier;
 
 /**
  *
@@ -40,8 +41,8 @@ public class Master {
     private Lista ChanceCard;
 
     private Player playerOnTurn;
-    private Random dice;
-    private Random dice2;
+    
+    private int dice1, dice2;
 
     public Master() {
         /*String startingRoute = "./resources/txts/;*/
@@ -75,32 +76,30 @@ public class Master {
 
             FileReader fr = new FileReader(boardTableRoute);
             BufferedReader br = new BufferedReader(fr);
-
-            br.readLine();
-            br.readLine();
             
             table.add(new Corner("Go", 1, 200));
             String line;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split("\\|");
-                if(fields[0].equals("")) return;
                 int number = Integer.valueOf(fields[0]);
                 String name = fields[1];
                 
                 //Number|Name|Color|Price|Rent|1 House|2 Houses|3 Houses|4 Houses|Hotel|Mortgage|Houses Value|Hotels Value|
+                
                 
                 if (name.contains("Avenue") || name.contains("Place") || name.contains("Gardens") || name.contains("walk")) {
                     table.add(new Avenue(line));
                 } else if (name.contains("Tax")) {
                     table.add(new Tax(number, Integer.valueOf(fields[2])));
                 } else if (number == 11 || number == 21 || number == 31) {
-                    table.add(new Corner(fields[1]));
+                    table.add(new Corner(fields[1], Integer.valueOf(fields[2]), Integer.valueOf(fields[4])));
                 } else if (name.contains("Railroad")) {
-                    Railroad r = new Railroad(fields[1]);
+                    Railroad r = new Railroad(fields[1], number);
                     table.add(r);
                     rail.add(r);
                 } else if (name.contains("Works") || name.contains("Company")) {
-                    Utility u = new Utility(name);
+                    Utility u = new Utility(name, number);
                     table.add(u);
                     utility.add(u);
                 } else if (name.contains("Chance")) {
@@ -146,6 +145,47 @@ public class Master {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    public void nextTurn(){
+        Random r = new Random();
+        Nodo cell = null;
+        if(dice1 != dice2) playerOnTurn = (Player) players.next();
+        dice1 = r.nextInt(6) + 1;
+        dice2 = r.nextInt(6) + 1;
+        int m = dice1 + dice2;
+        table.BuscarConId(playerOnTurn.getCourrentCell());
+        for(int i = 0; i < m; i++){
+            cell = table.next();
+        }
+        if(cell.getClass() == Avenue.class){
+            Avenue courrentCell = (Avenue) cell;
+            if(courrentCell.getOwner() == null){
+                
+            }else if(courrentCell.getOwner() == playerOnTurn){
+                
+            }else{
+                
+            }
+        }else if(cell.getClass() == Corner.class){
+            Corner courrentCell = (Corner) cell;
+            playerOnTurn.setCourrentCell(courrentCell.getId());
+        }else if(cell.getClass() == Railroad.class){
+            Railroad courrentCell = (Railroad) cell;
+            playerOnTurn.setCourrentCell(courrentCell.getId());
+        }else if(cell.getClass() == Tax.class){
+            Tax courrentCell = (Tax) cell;
+            playerOnTurn.setCourrentCell(courrentCell.getId());
+        }else if(cell.getClass() == Utility.class){
+            Utility courrentCell = (Utility) cell;
+            playerOnTurn.setCourrentCell(courrentCell.getId());
+        }else if(cell.getClass() == Chance.class){
+            Chance courrentCell = (Chance) cell;
+            playerOnTurn.setCourrentCell(courrentCell.getId());
+        }else if(cell.getClass() == Chest.class){
+            Chest courrentCell = (Chest) cell;
+            playerOnTurn.setCourrentCell(courrentCell.getId());
         }
     }
 

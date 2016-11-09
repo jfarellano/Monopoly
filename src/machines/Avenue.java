@@ -15,6 +15,8 @@ import estructures.linkedList.Player;
 public class Avenue extends Nodo{
 
     private Player owner;
+    
+    public int x, y;
 
     private String avenueName;
     private String avenueColor;
@@ -34,6 +36,7 @@ public class Avenue extends Nodo{
 
     public Avenue(String line) {
         String[] fields = line.split("\\|");
+        id = Integer.parseInt(fields[0]);
         avenueName = fields[1];
         avenueColor = fields[2];
         price = Integer.valueOf(fields[3]);
@@ -44,8 +47,9 @@ public class Avenue extends Nodo{
         rent4Houses = Integer.valueOf(fields[8]);
         rentHotel = Integer.valueOf(fields[9]);
         mortgage = Integer.valueOf(fields[10]);
-        //housesPrice = Integer.valueOf(fields[11]);
-        //hotelsPrice = Integer.valueOf(fields[12]);
+        housesPrice = Integer.valueOf(fields[11]);
+        hotelsPrice = Integer.valueOf(fields[12]);
+        x = Integer.valueOf(fields[13]);
     }
 
     public Avenue(String avenueName, String avenueColor, int price, int rentPrice, int rent1House, int rent2Houses, int rent3Houses, int rent4Houses, int rentHotel, int mortgage, int housesPrice, int hotelsPrice) {

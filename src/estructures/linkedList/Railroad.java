@@ -6,7 +6,6 @@
 package estructures.linkedList;
 
 import estructures.Nodo;
-import estructures.linkedList.Player;
 
 /**
  *
@@ -27,7 +26,8 @@ public class Railroad extends Nodo{
     private int rent4Railroad;
     private int mortgage;
 
-    public Railroad(String railroadName) {
+    public Railroad(String railroadName, int id) {
+        super(id);
         this.railroadName = railroadName;
         price = 200;
         rentPrice = 25;

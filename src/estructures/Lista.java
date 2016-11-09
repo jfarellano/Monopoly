@@ -42,6 +42,18 @@ public class Lista {
         System.out.println("Borrado inconcluseo, objeto no existene.");
     }
     
+    public Nodo BuscarConId(int id){
+        Nodo p = PTR;
+        boolean sw = true;
+        while(p != PTR || sw){
+            if(p.id == id){
+                return p;
+            }
+            p = next();
+        }
+        return null;
+    }
+    
     public Nodo next(){
         PTR = PTR.linkR;
         return PTR;

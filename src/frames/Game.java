@@ -8,6 +8,7 @@ package frames;
 import estructures.linkedList.Player;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -39,11 +40,15 @@ public class Game extends javax.swing.JFrame {
             m.getPlayers().next();
         }
         
+        
         initComponents();
         loadTable();
 
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+    public void render(Graphics g){
+        g.drawRect(10, 10, 50, 50);
     }
 
     private void loadTable() {
@@ -54,6 +59,8 @@ public class Game extends javax.swing.JFrame {
 
         Icon icon = new ImageIcon(new javax.swing.ImageIcon("./resources/gfx/monopoly-table.jpg").getImage().getScaledInstance(746, 746, Image.SCALE_SMOOTH));
         JLabel label = new JLabel(icon);
+        
+        
 
         pTable.add(label);
         Dimension size = label.getPreferredSize();
