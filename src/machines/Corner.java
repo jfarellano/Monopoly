@@ -17,7 +17,8 @@ public class Corner extends Nodo{
     private String name;
     
 
-    public Corner(String name) {
+    public Corner(String name, int number) {
+        super(number);
         this.name = name;
         gift = 0;
         this.nombre = this.getClass().getSimpleName();

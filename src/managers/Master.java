@@ -92,7 +92,7 @@ public class Master {
                 } else if (name.contains("Tax")) {
                     table.add(new Tax(number, Integer.valueOf(fields[2])));
                 } else if (number == 11 || number == 21 || number == 31) {
-                    table.add(new Corner(fields[1]));
+                    table.add(new Corner(fields[1], number));
                 } else if (name.contains("Railroad")) {
                     Railroad r = new Railroad(fields[1], number);
                     table.add(r);
@@ -178,6 +178,8 @@ public class Master {
         }else if(cell.getNombre().equals("Corner")){
             Corner courrentCell = (Corner) cell;
             playerOnTurn.setMoney(playerOnTurn.getMoney() + courrentCell.getGift());
+            System.out.println("ID " + courrentCell.getId());
+            System.out.println("Nombre " + courrentCell.getName());
             playerOnTurn.setCourrentCell(courrentCell.getId());
         }else if(cell.getNombre().equals("Railroad")){
             Railroad courrentCell = (Railroad) cell;
