@@ -46,10 +46,11 @@ public class Lista {
         Nodo p = PTR;
         boolean sw = true;
         while(p != PTR || sw){
-            if(p.id == id){
-                return p;
+            sw = false;
+            if(PTR.id == id){
+                return PTR;
             }
-            p = next();
+            next();
         }
         return null;
     }

@@ -57,8 +57,6 @@ public class Master {
         CommunityChestCard = new Lista();
         ChanceCard = new Lista();
 
-        playerOnTurn = null;
-
         start();
     }
 
@@ -69,6 +67,7 @@ public class Master {
             createChanceList();
             createTable();
         }
+        
     }
 
     private void createTable() {
@@ -93,15 +92,15 @@ public class Master {
                 } else if (name.contains("Tax")) {
                     table.add(new Tax(number, Integer.valueOf(fields[2])));
                 } else if (number == 11 || number == 21 || number == 31) {
-                    table.add(new Corner(fields[1], Integer.valueOf(fields[2]), Integer.valueOf(fields[4])));
+                    table.add(new Corner(fields[1]));
                 } else if (name.contains("Railroad")) {
                     Railroad r = new Railroad(fields[1], number);
                     table.add(r);
-                    rail.add(r);
+                    //rail.add(r);
                 } else if (name.contains("Works") || name.contains("Company")) {
                     Utility u = new Utility(name, number);
                     table.add(u);
-                    utility.add(u);
+                    //utility.add(u);
                 } else if (name.contains("Chance")) {
                     table.add(new Chance(number));
                 } else if (name.contains("Chest")) {
@@ -124,7 +123,7 @@ public class Master {
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split("\\|");
                 //System.out.println(fields[1]);
-                CommunityChestCard.add(new Card(Integer.valueOf(fields[0]), "CommunityChest", fields[1], fields[2], fields[3]));
+                CommunityChestCard.add(new Card(Integer.valueOf(fields[0]), "CommunityChest", fields[1], fields[2], fields[3], this));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,7 +140,7 @@ public class Master {
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split("\\|");
                 //System.out.println(fields[1]);
-                ChanceCard.add(new Card(Integer.valueOf(fields[0]), "Chance", fields[1], fields[2], fields[3]));
+                ChanceCard.add(new Card(Integer.valueOf(fields[0]), "Chance", fields[1], fields[2], fields[3], this));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,15 +151,22 @@ public class Master {
         Random r = new Random();
         Nodo cell = null;
         if(dice1 != dice2) playerOnTurn = (Player) players.next();
+        System.out.println("Player " + playerOnTurn.getId());
         dice1 = r.nextInt(6) + 1;
         dice2 = r.nextInt(6) + 1;
         int m = dice1 + dice2;
-        table.BuscarConId(playerOnTurn.getCourrentCell());
+        System.out.println("Total dados " + m + " Dados: " + dice1 + " " + dice2);
+        Nodo n = table.BuscarConId(playerOnTurn.getCourrentCell());
         for(int i = 0; i < m; i++){
             cell = table.next();
+            
         }
-        if(cell.getClass() == Avenue.class){
+        
+        System.out.println("Casilla: " + cell.getNombre() + " id: " + cell.getId());
+        if(cell.getNombre().equals("Avenue")){
             Avenue courrentCell = (Avenue) cell;
+            System.out.println("Nombre de la propiedad: " + courrentCell.getAvenueName());
+            playerOnTurn.setCourrentCell(courrentCell.getId());
             if(courrentCell.getOwner() == null){
                 
             }else if(courrentCell.getOwner() == playerOnTurn){
@@ -168,24 +174,34 @@ public class Master {
             }else{
                 
             }
-        }else if(cell.getClass() == Corner.class){
+        }else if(cell.getNombre().equals("Corner")){
             Corner courrentCell = (Corner) cell;
+            playerOnTurn.setMoney(playerOnTurn.getMoney() + courrentCell.getGift());
             playerOnTurn.setCourrentCell(courrentCell.getId());
-        }else if(cell.getClass() == Railroad.class){
+        }else if(cell.getNombre().equals("Railroad")){
             Railroad courrentCell = (Railroad) cell;
             playerOnTurn.setCourrentCell(courrentCell.getId());
-        }else if(cell.getClass() == Tax.class){
+        }else if(cell.getNombre().equals("Tax")){
             Tax courrentCell = (Tax) cell;
             playerOnTurn.setCourrentCell(courrentCell.getId());
-        }else if(cell.getClass() == Utility.class){
+        }else if(cell.getNombre().equals("Utility")){
             Utility courrentCell = (Utility) cell;
             playerOnTurn.setCourrentCell(courrentCell.getId());
-        }else if(cell.getClass() == Chance.class){
+        }else if(cell.getNombre().equals("Chance")){
             Chance courrentCell = (Chance) cell;
             playerOnTurn.setCourrentCell(courrentCell.getId());
-        }else if(cell.getClass() == Chest.class){
+        }else if(cell.getNombre().equals("Chest")){
             Chest courrentCell = (Chest) cell;
             playerOnTurn.setCourrentCell(courrentCell.getId());
+        }
+    }
+    
+    private void drawRandomCard(int Chance1Chest2){
+        Random r = new Random();
+        if(Chance1Chest2 == 1){
+            ChanceCard.BuscarConId(r.nextInt(ChanceCard.length()));
+        }else{
+            CommunityChestCard.BuscarConId(r.nextInt(CommunityChestCard.length()));
         }
     }
 
@@ -217,5 +233,20 @@ public class Master {
     public Lista getPlayers() {
         return players;
     }
+
+    public Player getPlayerOnTurn() {
+        return playerOnTurn;
+    }
+
+    public void setPlayerOnTurn(Player playerOnTurn) {
+        this.playerOnTurn = playerOnTurn;
+    }
+
+    public Lista getTable() {
+        return table;
+    }
+    
+    
+    
     
 }

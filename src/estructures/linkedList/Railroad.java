@@ -35,6 +35,7 @@ public class Railroad extends Nodo{
         rent3Railroad = 100;
         rent4Railroad = 200;
         mortgage = 100;
+        this.nombre = this.getClass().getSimpleName();
     }
 
     public Railroad(Player owner, String railroadName, int price, int rentPrice, int rent2Railroad, int rent3Railroad, int rent4Railroad, int mortgage) {

@@ -49,7 +49,7 @@ public class Avenue extends Nodo{
         mortgage = Integer.valueOf(fields[10]);
         housesPrice = Integer.valueOf(fields[11]);
         hotelsPrice = Integer.valueOf(fields[12]);
-        x = Integer.valueOf(fields[13]);
+        this.nombre = this.getClass().getSimpleName();
     }
 
     public Avenue(String avenueName, String avenueColor, int price, int rentPrice, int rent1House, int rent2Houses, int rent3Houses, int rent4Houses, int rentHotel, int mortgage, int housesPrice, int hotelsPrice) {

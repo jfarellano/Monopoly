@@ -14,5 +14,5 @@ Number|Title|Clause or Money|Text|
 13|Pay school fees of $150|-150|<A bespectacled schoolboy unhappily receives a head pat and a dime ((Rockefeller style) from Mr. M.>|
 14|Receive $25 consultancy fee|25|<As Justice of the Peace, a stern Mr. M holds out his hand for fee from an embarrassed groom whose bride hold a bouquet behind him>|
 15|You are assessed for street repairs|$40 per house – $115 per hotel|<Mr. M., supported by his near-ubiquitous cane in his left hand, holds a pick and shovel over his right shoulder>|
-16|You have won second prize in a beauty contest|Collect $10|<Mr. M preens with a sash and large bouquet>|
+16|You have won second prize in a beauty contest|10|<Mr. M preens with a sash and large bouquet>|
 17|You inherit $100|100|<Mr M. holds his head as unseen people's hands offer brochures titled "Buy Yacht", "World Tour", and "Rolls Royce">| 

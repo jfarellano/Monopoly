@@ -34,7 +34,7 @@ public class Player extends Nodo{
 
     public Player(int playerNumber, String playerName) {
         super(playerNumber);
-        courrentCell = 0;
+        courrentCell = 1;
         this.playerName = playerName;
         money = 1500;
         bankruptcy = false;

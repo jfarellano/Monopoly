@@ -33,6 +33,7 @@ public class Utility extends Nodo{
         mortgage = 75;
         rentDicex4 = false;
         rentDicex10 = false;
+        this.nombre = this.getClass().getSimpleName();
     }
 
     public Utility(String utilityName, int price, int mortgage) {

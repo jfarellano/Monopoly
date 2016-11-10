@@ -206,6 +206,7 @@ public class PlayerSetUp extends javax.swing.JFrame {
             lPlayerNumber.setText(Integer.toString(cont));
         } else {
             Game g = new Game(m);
+            m.setPlayerOnTurn((Player) m.getPlayers().getCourrent());
             this.dispose();
         }
     }//GEN-LAST:event_bAcept1ActionPerformed
