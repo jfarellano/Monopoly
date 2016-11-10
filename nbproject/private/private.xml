@@ -3,17 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/src/managers/Master.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/src/estructures/linkedList/Tax.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/src/estructures/linkedList/Player.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/src/machines/Avenue.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/src/estructures/DoubleLinkedList.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/src/estructures/linkedList/Chance.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/src/estructures/linkedList/Chest.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/src/estructures/linkedList/Utility.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/src/estructures/linkedList/Railroad.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/resources/txts/Table.txt</file>
-            <file>file:/C:/Users/Juan/Desktop/Monopoly/src/machines/Corner.java</file>
+            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/managers/Master.java</file>
+            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/frames/PlayerSetUp.java</file>
+            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/machines/Corner.java</file>
+            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/resources/txts/Table.txt</file>
+            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/frames/Game.java</file>
+            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/frames/Start.java</file>
         </group>
     </open-files>
 </project-private>

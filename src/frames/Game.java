@@ -27,7 +27,7 @@ import managers.Master;
  * @author JohnBarbosa
  */
 public class Game extends javax.swing.JFrame {
-    
+
     Master m;
     Thread t1;
     boolean stop;
@@ -36,7 +36,8 @@ public class Game extends javax.swing.JFrame {
     /**
      * Creates new form Game
      */
-    public Game(Master m) {        
+    public Game(Master m) {
+        this.m = m;
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -48,9 +49,11 @@ public class Game extends javax.swing.JFrame {
                 System.exit(0);
             }
         });
-        
+
+        setUp();
+
         try {
-            background = ImageIO.read(new File("./resources/gfx/monopoly-table.jpg")); 
+            background = ImageIO.read(new File("./resources/gfx/monopoly-table.jpg"));
         } catch (Exception e) {
         }
 
@@ -65,15 +68,90 @@ public class Game extends javax.swing.JFrame {
         t1.setDaemon(false);
         t1.start();
         
-        this.m = m;
+        
         Player p;
-        for(int i = 0; i < m.getPlayers().length(); i++){
+        for (int i = 0; i < m.getPlayers().length(); i++) {
             p = (Player) m.getPlayers().getCourrent();
             System.out.println("Nombre del jugador: " + p.getPlayerName());
             m.getPlayers().next();
         }
     }
-    
+
+    private void setUp() {
+        
+        Player p = (Player) m.getPlayers().BuscarConId(1);
+        if (p == null) {
+            Player1.setText("NONE");
+        } else {
+            Player1.setText(p.getPlayerName());
+        }
+        Player1.setBackground(Color.BLUE);
+        Player1.setOpaque(true);
+
+        p = (Player) m.getPlayers().BuscarConId(2);
+        if (p == null) {
+            Player2.setText("NONE");
+        } else {
+            Player2.setText(p.getPlayerName());
+        }
+        Player2.setBackground(Color.YELLOW);
+        Player2.setOpaque(true);
+
+        p = (Player) m.getPlayers().BuscarConId(3);
+        if (p == null) {
+            Player3.setText("NONE");
+        } else {
+            Player3.setText(p.getPlayerName());
+        }
+        Player3.setBackground(Color.GRAY);
+        Player3.setOpaque(true);
+
+        p = (Player) m.getPlayers().BuscarConId(4);
+        if (p == null) {
+            Player4.setText("NONE");
+        } else {
+            Player4.setText(p.getPlayerName());
+        }
+        Player4.setBackground(Color.PINK);
+        Player4.setOpaque(true);
+
+        p = (Player) m.getPlayers().BuscarConId(5);
+        if (p == null) {
+            Player5.setText("NONE");
+        } else {
+            Player5.setText(p.getPlayerName());
+        }
+        Player5.setBackground(Color.WHITE);
+        Player5.setOpaque(true);
+
+        p = (Player) m.getPlayers().BuscarConId(6);
+        if (p == null) {
+            Player6.setText("NONE");
+        } else {
+            Player6.setText(p.getPlayerName());
+        }
+        Player6.setBackground(Color.MAGENTA);
+        Player6.setOpaque(true);
+
+        p = (Player) m.getPlayers().BuscarConId(7);
+        if (p == null) {
+            Player7.setText("NONE");
+        } else {
+            Player7.setText(p.getPlayerName());
+        }
+        Player7.setBackground(Color.ORANGE);
+        Player7.setOpaque(true);
+
+        p = (Player) m.getPlayers().BuscarConId(8);
+        if (p == null) {
+            Player8.setText("NONE");
+        } else {
+            Player8.setText(p.getPlayerName());
+        }
+        Player8.setBackground(Color.CYAN);
+        Player8.setOpaque(true);
+    }
+
     private void paint() {
         canvas.createBufferStrategy(2);
         Graphics g = canvas.getBufferStrategy().getDrawGraphics();
@@ -86,18 +164,18 @@ public class Game extends javax.swing.JFrame {
             putInCell(g, 1, p.getCourrentCell(), p.getId(), 0, 0);
             m.getPlayers().next();
         }
-        
-        for (int i = 0; i < m.getTable().length(); i++){
+
+        for (int i = 0; i < m.getTable().length(); i++) {
             if (m.getTable().getCourrent().getNombre().equals("Avenue")) {
                 Avenue a = (Avenue) m.getTable().getCourrent();;
                 putInCell(g, 2, a.getId(), 0, a.getHotels(), a.getHouses());
             }
             m.getTable().next();
         }
-        
+
         canvas.getBufferStrategy().show();
     }
-    
+
     private void putInCell(Graphics g, int mode, int cell, int playerNumber, int hotel, int house) {
         int pcCell;
         int j;
@@ -278,12 +356,21 @@ public class Game extends javax.swing.JFrame {
 
         canvas = new java.awt.Canvas();
         elBotonMagico = new javax.swing.JButton();
+        playerPane = new javax.swing.JPanel();
+        Player1 = new javax.swing.JLabel();
+        Player2 = new javax.swing.JLabel();
+        Player3 = new javax.swing.JLabel();
+        Player4 = new javax.swing.JLabel();
+        Player5 = new javax.swing.JLabel();
+        Player6 = new javax.swing.JLabel();
+        Player7 = new javax.swing.JLabel();
+        Player8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Table");
         setResizable(false);
 
-        elBotonMagico.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        elBotonMagico.setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
         elBotonMagico.setText("El Boton magico");
         elBotonMagico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,28 +378,91 @@ public class Game extends javax.swing.JFrame {
             }
         });
 
+        Player1.setText("Player1");
+
+        Player2.setText("Player2");
+
+        Player3.setText("Player3");
+
+        Player4.setText("Player4");
+
+        Player5.setText("Player5");
+
+        Player6.setText("Player6");
+
+        Player7.setText("Player7");
+
+        Player8.setText("Player8");
+
+        javax.swing.GroupLayout playerPaneLayout = new javax.swing.GroupLayout(playerPane);
+        playerPane.setLayout(playerPaneLayout);
+        playerPaneLayout.setHorizontalGroup(
+            playerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playerPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(playerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Player2, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                    .addComponent(Player3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Player4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Player5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Player6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Player7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Player8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Player1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        playerPaneLayout.setVerticalGroup(
+            playerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playerPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Player1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Player2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Player3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Player4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Player5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Player6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Player7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Player8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(elBotonMagico, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(elBotonMagico, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(playerPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(playerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(elBotonMagico)
+                        .addGap(42, 42, 42))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(elBotonMagico, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -323,7 +473,16 @@ public class Game extends javax.swing.JFrame {
     }//GEN-LAST:event_elBotonMagicoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Player1;
+    private javax.swing.JLabel Player2;
+    private javax.swing.JLabel Player3;
+    private javax.swing.JLabel Player4;
+    private javax.swing.JLabel Player5;
+    private javax.swing.JLabel Player6;
+    private javax.swing.JLabel Player7;
+    private javax.swing.JLabel Player8;
     private java.awt.Canvas canvas;
     private javax.swing.JButton elBotonMagico;
+    private javax.swing.JPanel playerPane;
     // End of variables declaration//GEN-END:variables
 }
