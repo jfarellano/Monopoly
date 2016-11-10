@@ -5,6 +5,7 @@
  */
 package frames;
 
+import estructures.Nodo;
 import estructures.linkedList.Player;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import machines.Avenue;
 import managers.Master;
 
 /**
@@ -86,13 +88,11 @@ public class Game extends javax.swing.JFrame {
         }
         
         for (int i = 0; i < m.getTable().length(); i++){
-            /**
-            if (p.algo == "Avenue") {
-                if (avenue.getowner != null) {
-                    putInCell(g, 2, avenue.getId(), 0, avenue.getHOTEL(), AVENUE.gethouse);
-                }
+            if (m.getTable().getCourrent().getNombre().equals("Avenue")) {
+                Avenue a = (Avenue) m.getTable().getCourrent();;
+                putInCell(g, 2, a.getId(), 0, a.getHotels(), a.getHouses());
             }
-            */
+            m.getTable().next();
         }
         
         canvas.getBufferStrategy().show();

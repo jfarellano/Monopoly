@@ -168,9 +168,10 @@ public class Master {
             System.out.println("Nombre de la propiedad: " + courrentCell.getAvenueName());
             playerOnTurn.setCourrentCell(courrentCell.getId());
             if(courrentCell.getOwner() == null){
-                
+                playerOnTurn.Tradeo(courrentCell, null, courrentCell.getPrice(), 0, null);
+                courrentCell.setHouses(courrentCell.getHouses() + 1);
             }else if(courrentCell.getOwner() == playerOnTurn){
-                
+                courrentCell.setHouses(courrentCell.getHouses() + 1);
             }else{
                 
             }

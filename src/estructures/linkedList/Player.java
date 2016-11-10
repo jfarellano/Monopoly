@@ -43,9 +43,11 @@ public class Player extends Nodo{
         hotels = 0;
     }
     
+    //Corregir tradeo, implementar compra a banco, compra a otro jugadro, venta a otro jugador, compra, venta con otro jugador, venta al banco. El metodo actual no cubre compra al banco
+    
     public void Tradeo(Nodo Propiedad1, Nodo Propiedad2, int valor1, int valor2, Player trader){
         
-        if(Propiedad1.getClass() == Avenue.class){
+        if(Propiedad1.getNombre().equals("Avenue")){
             Avenue a = (Avenue) Propiedad1;
             if(trader == null){
                 a.setOwner(null);
