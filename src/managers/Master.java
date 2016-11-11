@@ -133,6 +133,13 @@ public class Master {
             e.printStackTrace();
         }
     }
+    
+    public int throwDice(){
+        Random r = new Random();
+        dice1 = r.nextInt(6) + 1;
+        dice2 = r.nextInt(6) + 1;
+        return dice1 + dice2;
+    }
 
     public void nextTurn() {
         Random r = new Random();
@@ -148,7 +155,6 @@ public class Master {
         Nodo n = table.BuscarConId(playerOnTurn.getCourrentCell());
         for (int i = 0; i < m; i++) {
             cell = table.next();
-
         }
 
         System.out.println("Casilla: " + cell.getNombre() + " id: " + cell.getId());
