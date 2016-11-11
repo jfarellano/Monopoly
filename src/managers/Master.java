@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package managers;
 
 import estructures.Lista;
@@ -18,15 +13,9 @@ import estructures.linkedList.Player;
 import estructures.linkedList.Railroad;
 import estructures.linkedList.Tax;
 import estructures.linkedList.Utility;
-import javafx.scene.control.Cell;
 import machines.Avenue;
 import machines.Corner;
-import sun.reflect.generics.visitor.Reifier;
 
-/**
- *
- * @author JohnBarbosa
- */
 public class Master {
 
     private final String boardTableRoute;
@@ -41,7 +30,7 @@ public class Master {
     private Lista ChanceCard;
 
     private Player playerOnTurn;
-    
+
     private int dice1, dice2;
 
     public Master() {
@@ -67,7 +56,7 @@ public class Master {
             createChanceList();
             createTable();
         }
-        
+
     }
 
     private void createTable() {
@@ -75,7 +64,7 @@ public class Master {
 
             FileReader fr = new FileReader(boardTableRoute);
             BufferedReader br = new BufferedReader(fr);
-            
+
             table.add(new Corner("Go", 1, 200));
             String line;
             br.readLine();
@@ -83,10 +72,8 @@ public class Master {
                 String[] fields = line.split("\\|");
                 int number = Integer.valueOf(fields[0]);
                 String name = fields[1];
-                
+
                 //Number|Name|Color|Price|Rent|1 House|2 Houses|3 Houses|4 Houses|Hotel|Mortgage|Houses Value|Hotels Value|
-                
-                
                 if (name.contains("Avenue") || name.contains("Place") || name.contains("Gardens") || name.contains("walk")) {
                     table.add(new Avenue(line));
                 } else if (name.contains("Tax")) {
@@ -106,7 +93,7 @@ public class Master {
                 } else if (name.contains("Chest")) {
                     table.add(new Chest(number));
                 }
-                
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,64 +133,96 @@ public class Master {
             e.printStackTrace();
         }
     }
-    
-    public void nextTurn(){
+
+    public void nextTurn() {
         Random r = new Random();
         Nodo cell = null;
-        if(dice1 != dice2) playerOnTurn = (Player) players.next();
+        if (dice1 != dice2) {
+            playerOnTurn = (Player) players.next();
+        }
         System.out.println("Player " + playerOnTurn.getId());
         dice1 = r.nextInt(6) + 1;
         dice2 = r.nextInt(6) + 1;
         int m = dice1 + dice2;
         System.out.println("Total dados " + m + " Dados: " + dice1 + " " + dice2);
         Nodo n = table.BuscarConId(playerOnTurn.getCourrentCell());
-        for(int i = 0; i < m; i++){
+        for (int i = 0; i < m; i++) {
             cell = table.next();
-            
+
         }
-        
+
         System.out.println("Casilla: " + cell.getNombre() + " id: " + cell.getId());
-        if(cell.getNombre().equals("Avenue")){
+        if (cell.getNombre().equals("Avenue")) {
             Avenue courrentCell = (Avenue) cell;
             System.out.println("Nombre de la propiedad: " + courrentCell.getAvenueName());
             playerOnTurn.setCourrentCell(courrentCell.getId());
-            if(courrentCell.getOwner() == null){
-                playerOnTurn.Tradeo(courrentCell, null, courrentCell.getPrice(), 0, null);
+            if (courrentCell.getOwner() == null) {
+                compra(courrentCell, playerOnTurn, courrentCell.getPrice());
                 courrentCell.setHouses(courrentCell.getHouses() + 1);
-            }else if(courrentCell.getOwner() == playerOnTurn){
+                System.out.println("Dinero del comprador :$" + playerOnTurn.getMoney());
+            } else if (courrentCell.getOwner() == playerOnTurn) {
                 courrentCell.setHouses(courrentCell.getHouses() + 1);
-            }else{
-                
+            } else {
+
             }
-        }else if(cell.getNombre().equals("Corner")){
+        } else if (cell.getNombre().equals("Corner")) {
             Corner courrentCell = (Corner) cell;
             playerOnTurn.setMoney(playerOnTurn.getMoney() + courrentCell.getGift());
             System.out.println("ID " + courrentCell.getId());
             System.out.println("Nombre " + courrentCell.getName());
             playerOnTurn.setCourrentCell(courrentCell.getId());
-        }else if(cell.getNombre().equals("Railroad")){
+        } else if (cell.getNombre().equals("Railroad")) {
             Railroad courrentCell = (Railroad) cell;
             playerOnTurn.setCourrentCell(courrentCell.getId());
-        }else if(cell.getNombre().equals("Tax")){
+        } else if (cell.getNombre().equals("Tax")) {
             Tax courrentCell = (Tax) cell;
             playerOnTurn.setCourrentCell(courrentCell.getId());
-        }else if(cell.getNombre().equals("Utility")){
+        } else if (cell.getNombre().equals("Utility")) {
             Utility courrentCell = (Utility) cell;
             playerOnTurn.setCourrentCell(courrentCell.getId());
-        }else if(cell.getNombre().equals("Chance")){
+        } else if (cell.getNombre().equals("Chance")) {
             Chance courrentCell = (Chance) cell;
             playerOnTurn.setCourrentCell(courrentCell.getId());
-        }else if(cell.getNombre().equals("Chest")){
+        } else if (cell.getNombre().equals("Chest")) {
             Chest courrentCell = (Chest) cell;
             playerOnTurn.setCourrentCell(courrentCell.getId());
         }
     }
-    
-    private void drawRandomCard(int Chance1Chest2){
+
+    public void venta(Nodo propiedad, Player vendedor, Player comprador, int valorDeCompra) {
+        if (propiedad.getNombre().equals("Avenue")) {
+            Avenue a = (Avenue) propiedad;
+            a.setOwner(comprador);
+        } else if (propiedad.getNombre().equals("Railroad")) {
+            Railroad r = (Railroad) propiedad;
+            r.setOwner(comprador);
+        } else if (propiedad.getNombre().equals("Utility")) {
+            Utility u = (Utility) propiedad;
+            u.setOwner(comprador);
+        }
+        vendedor.setMoney(vendedor.getMoney() + valorDeCompra);
+        comprador.setMoney(comprador.getMoney() - valorDeCompra);
+    }
+
+    public void compra(Nodo propiedad, Player comprador, int valorDeCompra) {
+        if (propiedad.getNombre().equals("Avenue")) {
+            Avenue a = (Avenue) propiedad;
+            a.setOwner(comprador);
+        } else if (propiedad.getNombre().equals("Railroad")) {
+            Railroad r = (Railroad) propiedad;
+            r.setOwner(comprador);
+        } else if (propiedad.getNombre().equals("Utility")) {
+            Utility u = (Utility) propiedad;
+            u.setOwner(comprador);
+        }
+        comprador.setMoney(comprador.getMoney() - valorDeCompra);
+    }
+
+    private void drawRandomCard(int Chance1Chest2) {
         Random r = new Random();
-        if(Chance1Chest2 == 1){
+        if (Chance1Chest2 == 1) {
             ChanceCard.BuscarConId(r.nextInt(ChanceCard.length()));
-        }else{
+        } else {
             CommunityChestCard.BuscarConId(r.nextInt(CommunityChestCard.length()));
         }
     }
@@ -222,17 +241,12 @@ public class Master {
         return false;
     }
 
-
     //PLAYER CODE
-
     //AVENUE CODE
     //CARD CODE
     //RAIL CODE
-
     //UTILITY CODE
-
     //GETTERS SETTERS
-
     public Lista getPlayers() {
         return players;
     }
@@ -248,8 +262,5 @@ public class Master {
     public Lista getTable() {
         return table;
     }
-    
-    
-    
-    
+
 }
