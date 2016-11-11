@@ -142,15 +142,12 @@ public class Master {
     }
 
     public void nextTurn() {
-        Random r = new Random();
         Nodo cell = null;
         if (dice1 != dice2) {
             playerOnTurn = (Player) players.next();
         }
         System.out.println("Player " + playerOnTurn.getId());
-        dice1 = r.nextInt(6) + 1;
-        dice2 = r.nextInt(6) + 1;
-        int m = dice1 + dice2;
+        int m = throwDice();
         System.out.println("Total dados " + m + " Dados: " + dice1 + " " + dice2);
         Nodo n = table.BuscarConId(playerOnTurn.getCourrentCell());
         for (int i = 0; i < m; i++) {
