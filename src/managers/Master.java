@@ -1,5 +1,7 @@
 package managers;
 
+//SE INICIA TRABAJO DE CARDS
+
 import estructures.Lista;
 import estructures.Nodo;
 import java.io.BufferedReader;
