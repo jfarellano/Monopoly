@@ -12,6 +12,14 @@ public class Tax extends Nodo{
         this.nombre = this.getClass().getSimpleName();
     }
     
-    
+    //GETTERS SETTERS
 
+    public int getTax() {
+        return tax;
+    }
+
+    public void setTax(int tax) {
+        this.tax = tax;
+    }
+    
 }

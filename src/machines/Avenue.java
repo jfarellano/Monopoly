@@ -12,10 +12,10 @@ import estructures.linkedList.Player;
  *
  * @author JohnBarbosa
  */
-public class Avenue extends Nodo{
+public class Avenue extends Nodo {
 
     private Player owner;
-    
+
     public int x, y;
 
     private String avenueName;
@@ -50,6 +50,8 @@ public class Avenue extends Nodo{
         housesPrice = Integer.valueOf(fields[11]);
         hotelsPrice = Integer.valueOf(fields[12]);
         this.nombre = this.getClass().getSimpleName();
+        houses = 0;
+        hotels = 0;
     }
 
     public Avenue(String avenueName, String avenueColor, int price, int rentPrice, int rent1House, int rent2Houses, int rent3Houses, int rent4Houses, int rentHotel, int mortgage, int housesPrice, int hotelsPrice) {
@@ -65,6 +67,24 @@ public class Avenue extends Nodo{
         this.mortgage = mortgage;
         this.housesPrice = housesPrice;
         this.hotelsPrice = hotelsPrice;
+    }
+
+    public int getTotalRentPrice() {
+        int totalPrice;
+        if (houses == 1) {
+            totalPrice = rent1House + rentHotel * hotels;
+        } else if (houses == 2) {
+            totalPrice = rent2Houses + rentHotel * hotels;
+        } else if (houses == 3) {
+            totalPrice = rent3Houses + rentHotel * hotels;
+        } else if (houses == 4) {
+            totalPrice = rent4Houses + rentHotel * hotels;
+        } else if (hotels > 0) {
+            totalPrice = rentHotel * hotels;
+        } else {
+            return rentPrice;
+        }
+        return totalPrice;
     }
 
     //GETTERS SETTERS

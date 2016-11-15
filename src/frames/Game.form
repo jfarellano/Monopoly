@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Container class="javax.swing.JPopupMenu" name="PopupProperties">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="MenuItemSell">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Vender"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuItemSellActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="MenuItemHotels">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Poner Hotel"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuItemHotelsActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="MenuItemHouses">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Poner Casa"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuItemHousesActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="MenuItemSellHouses">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Vender Casa"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuItemSellHousesActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="MenuItemSellHotels">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Vender Hotel"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuItemSellHotelsActionPerformed"/>
+          </Events>
+        </MenuItem>
+      </SubComponents>
+    </Container>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Table"/>
@@ -26,18 +76,15 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="dicePane" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-                      <Component id="elBotonMagico" min="-2" pref="84" max="-2" attributes="0"/>
-                      <EmptySpace pref="300" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="playerPane" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="playerPane" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="canvas" min="-2" pref="746" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -47,35 +94,25 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="playerPane" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="elBotonMagico" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="dicePane" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="188" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="canvas" min="-2" pref="746" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="canvas" min="-2" pref="746" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
     <Component class="java.awt.Canvas" name="canvas">
-    </Component>
-    <Component class="javax.swing.JButton" name="elBotonMagico">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="8" style="0"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="El Boton magico"/>
+        <Property name="name" type="java.lang.String" value="p1,m1" noResource="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="elBotonMagicoActionPerformed"/>
-      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="playerPane">
 
@@ -85,14 +122,475 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="Player2" alignment="0" pref="70" max="32767" attributes="0"/>
-                      <Component id="Player3" alignment="0" max="32767" attributes="0"/>
-                      <Component id="Player4" alignment="0" max="32767" attributes="0"/>
-                      <Component id="Player5" alignment="0" max="32767" attributes="0"/>
-                      <Component id="Player6" alignment="0" max="32767" attributes="0"/>
-                      <Component id="Player7" alignment="0" max="32767" attributes="0"/>
-                      <Component id="Player8" alignment="0" max="32767" attributes="0"/>
-                      <Component id="Player1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lPlayer1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lPlayer2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lPlayer3" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lPlayer4" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lPlayer5" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lPlayer6" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lPlayer7" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lPlayer8" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lPlayers" pref="82" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="lProperties" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="P1M1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1M2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P1C1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1C2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1C3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P1P1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1P2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1P3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P1O1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1O2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1O3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P1R1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1R2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1R3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P1Y1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1Y2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1Y3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P1G1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1G2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1G3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P1B1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1B2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P1U1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1U2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P1RA1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1RA2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1RA3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P1RA4" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="P2M1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2M2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P2C1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2C2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2C3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P2P1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2P2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2P3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P2O1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2O2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2O3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P2R1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2R2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2R3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P2Y1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2Y2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2Y3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P2G1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2G2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2G3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P2B1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2B2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P2U1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2U2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P2RA1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2RA2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2RA3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P2RA4" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="P3M1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3M2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P3C1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3C2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3C3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P3P1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3P2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3P3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P3O1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3O2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3O3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P3R1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3R2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3R3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P3Y1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3Y2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3Y3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P3G1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3G2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3G3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P3B1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3B2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P3U1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3U2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P3RA1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3RA2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3RA3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P3RA4" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="P4M1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4M2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P4C1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4C2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4C3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P4P1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4P2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4P3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P4O1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4O2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4O3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P4R1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4R2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4R3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P4Y1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4Y2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4Y3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P4G1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4G2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4G3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P4B1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4B2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P4U1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4U2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P4RA1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4RA2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4RA3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P4RA4" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="P5M1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5M2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P5C1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5C2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5C3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P5P1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5P2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5P3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P5O1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5O2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5O3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P5R1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5R2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5R3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P5Y1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5Y2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5Y3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P5G1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5G2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5G3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P5B1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5B2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P5U1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5U2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P5RA1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5RA2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5RA3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P5RA4" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="P6M1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6M2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P6C1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6C2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6C3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P6P1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6P2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6P3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P6O1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6O2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6O3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P6R1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6R2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6R3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P6Y1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6Y2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6Y3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P6G1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6G2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6G3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P6B1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6B2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P6U1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6U2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P6RA1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6RA2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6RA3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P6RA4" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="P7M1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7M2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P7C1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7C2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7C3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P7P1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7P2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7P3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P7O1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7O2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7O3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P7R1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7R2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7R3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P7Y1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7Y2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7Y3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P7G1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7G2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7G3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P7B1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7B2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P7U1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7U2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P7RA1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7RA2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7RA3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P7RA4" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="P8M1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8M2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P8C1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8C2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8C3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P8P1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8P2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8P3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P8O1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8O2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8O3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P8R1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8R2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8R3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P8Y1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8Y2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8Y3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P8G1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8G2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8G3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P8B1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8B2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P8U1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8U2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="P8RA1" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8RA2" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8RA3" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="P8RA4" linkSize="1" min="-2" pref="12" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -102,66 +600,2018 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Player1" min="-2" pref="24" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Player2" min="-2" pref="24" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Player3" min="-2" pref="24" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Player4" min="-2" pref="24" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Player5" min="-2" pref="24" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Player6" min="-2" pref="24" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Player7" min="-2" pref="24" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Player8" min="-2" pref="24" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lPlayers" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lProperties" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lPlayer1" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="P1M1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1M2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1C1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1C2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1C3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1P1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1P2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1P3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1O1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1O2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1O3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1R1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1R2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1R3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1Y1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1Y2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1Y3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1G1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1G2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1G3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1B1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1B2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1U1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1U2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1RA1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1RA2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1RA3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="P1RA4" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="P2U1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2U2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2RA1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2RA2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2RA3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2RA4" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="P2M1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2M2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2C1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2C2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2C3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2P1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2P2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2P3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2O1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2O2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2O3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2R1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2R2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2R3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2Y1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2Y2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2Y3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2G1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2G2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2G3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2B1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P2B2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="lPlayer2" min="-2" pref="24" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="P3U1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3U2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3RA1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3RA2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3RA3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3RA4" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="P3M1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3M2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3C1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3C2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3C3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3P1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3P2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3P3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3O1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3O2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3O3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3R1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3R2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3R3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3Y1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3Y2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3Y3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3G1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3G2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3G3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3B1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P3B2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="lPlayer3" min="-2" pref="24" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="P4U1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4U2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4RA1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4RA2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4RA3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4RA4" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="P4M1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4M2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4C1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4C2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4C3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4P1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4P2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4P3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4O1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4O2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4O3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4R1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4R2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4R3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4Y1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4Y2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4Y3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4G1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4G2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4G3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4B1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P4B2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="lPlayer4" min="-2" pref="24" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="P5U1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5U2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5RA1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5RA2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5RA3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5RA4" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="P5M1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5M2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5C1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5C2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5C3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5P1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5P2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5P3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5O1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5O2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5O3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5R1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5R2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5R3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5Y1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5Y2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5Y3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5G1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5G2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5G3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5B1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P5B2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="lPlayer5" min="-2" pref="24" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="P6U1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6U2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6RA1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6RA2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6RA3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6RA4" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="P6M1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6M2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6C1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6C2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6C3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6P1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6P2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6P3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6O1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6O2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6O3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6R1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6R2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6R3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6Y1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6Y2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6Y3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6G1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6G2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6G3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6B1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P6B2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="lPlayer6" min="-2" pref="24" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="P7U1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7U2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7RA1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7RA2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7RA3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7RA4" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="P7M1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7M2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7C1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7C2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7C3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7P1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7P2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7P3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7O1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7O2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7O3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7R1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7R2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7R3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7Y1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7Y2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7Y3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7G1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7G2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7G3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7B1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P7B2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="lPlayer7" min="-2" pref="24" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="P8U1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8U2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8RA1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8RA2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8RA3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8RA4" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="P8M1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8M2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8C1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8C2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8C3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8P1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8P2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8P3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8O1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8O2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8O3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8R1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8R2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8R3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8Y1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8Y2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8Y3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8G1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8G2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8G3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8B1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P8B2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="lPlayer8" min="-2" pref="24" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="Player1">
+        <Component class="javax.swing.JLabel" name="lPlayer1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Player1"/>
+            <Property name="name" type="java.lang.String" value="lPlayer1" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Player2">
+        <Component class="javax.swing.JLabel" name="lPlayer2">
           <Properties>
             <Property name="text" type="java.lang.String" value="Player2"/>
+            <Property name="name" type="java.lang.String" value="lPlayer2" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Player3">
+        <Component class="javax.swing.JLabel" name="lPlayer3">
           <Properties>
             <Property name="text" type="java.lang.String" value="Player3"/>
+            <Property name="name" type="java.lang.String" value="lPlayer3" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Player4">
+        <Component class="javax.swing.JLabel" name="lPlayer4">
           <Properties>
             <Property name="text" type="java.lang.String" value="Player4"/>
+            <Property name="name" type="java.lang.String" value="lPlayer4" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Player5">
+        <Component class="javax.swing.JLabel" name="lPlayer5">
           <Properties>
             <Property name="text" type="java.lang.String" value="Player5"/>
+            <Property name="name" type="java.lang.String" value="lPlayer5" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Player6">
+        <Component class="javax.swing.JLabel" name="lPlayer6">
           <Properties>
             <Property name="text" type="java.lang.String" value="Player6"/>
+            <Property name="name" type="java.lang.String" value="lPlayer6" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Player7">
+        <Component class="javax.swing.JLabel" name="lPlayer7">
           <Properties>
             <Property name="text" type="java.lang.String" value="Player7"/>
+            <Property name="name" type="java.lang.String" value="lPlayer7" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Player8">
+        <Component class="javax.swing.JLabel" name="lPlayer8">
           <Properties>
             <Property name="text" type="java.lang.String" value="Player8"/>
+            <Property name="name" type="java.lang.String" value="lPlayer8" noResource="true"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lPlayers">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="JUGADORES"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1M1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P1M1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1M2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P1M2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1C1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P1C1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1C2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P1C2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1C3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P1C3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1P1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P1P1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1P2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P1P2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1P3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P1P3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1O1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P1O1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1O2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P1O2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1O3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P1O3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lProperties">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="PROPIEDADES"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1R3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P1R3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1R2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P1R2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1R1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P1R1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1Y3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P1Y3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1Y2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P1Y2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1Y1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P1Y1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1G3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P1G3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1G2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P1G2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1G1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P1G1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1B1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P1B1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1B2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P1B2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2M1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P2M1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2M2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P2M2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2C1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P2C1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2C2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P2C2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2C3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P2C3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2P1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P2P1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2P2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P2P2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2P3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P2P3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2O1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P2O1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2O2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P2O2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2O3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P2O3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2R1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P2R1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2R2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P2R2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2R3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P2R3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2Y1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P2Y1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2Y2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P2Y2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2Y3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P2Y3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2G1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P2G1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2G2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P2G2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2G3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P2G3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2B1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P2B1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2B2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P2B2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3M1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P3M1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3M2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P3M2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3C1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P3C1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3C2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P3C2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3C3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P3C3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3P1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P3P1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3P2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P3P2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3P3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P3P3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3O1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P3O1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3O2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P3O2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3O3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P3O3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3R1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P3R1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3R2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P3R2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3R3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P3R3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3Y1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P3Y1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3Y2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P3Y2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3Y3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P3Y3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3G1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P3G1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3G2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P3G2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3G3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P3G3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3B1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P3B1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3B2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P3B2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4P3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P4P3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4Y3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P4Y3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4R2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P4R2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4Y1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P4Y1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4R3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P4R3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4G2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P4G2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4P1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P4P1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4O3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P4O3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4G3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P4G3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4R1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P4R1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4M1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P4M1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4M2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P4M2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4O2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P4O2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4B2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P4B2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4P2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P4P2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4C1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P4C1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4O1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P4O1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4G1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P4G1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4B1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P4B1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4C2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P4C2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4C3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P4C3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4Y2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P4Y2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5C1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P5C1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5C3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P5C3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5Y1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P5Y1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5R3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P5R3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5M1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P5M1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5G1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P5G1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5G3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P5G3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5P2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P5P2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5R2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P5R2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5O3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P5O3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5O1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P5O1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5B1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P5B1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5G2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P5G2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5P1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P5P1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5B2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P5B2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5Y3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P5Y3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5O2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P5O2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5C2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P5C2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5R1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P5R1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5M2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P5M2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5P3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P5P3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5Y2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P5Y2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6G3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P6G3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6C1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P6C1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6Y1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P6Y1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6C2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P6C2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6G2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P6G2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6Y2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P6Y2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6G1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P6G1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6P1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P6P1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6M2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P6M2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6B2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P6B2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6B1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P6B1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6Y3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P6Y3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6R1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P6R1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6O3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P6O3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6R2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P6R2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6P2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P6P2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6C3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P6C3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6P3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P6P3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6M1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P6M1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6O1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P6O1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6R3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P6R3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6O2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P6O2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7R1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P7R1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7M2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P7M2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7P2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P7P2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7R2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P7R2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7B2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P7B2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7O3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P7O3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7O2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P7O2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7P3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P7P3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7P1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P7P1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7G3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P7G3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7B1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P7B1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7O1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P7O1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7Y2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P7Y2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7G1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P7G1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7Y1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P7Y1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7Y3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P7Y3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7R3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P7R3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7C3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P7C3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7C1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P7C1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7C2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P7C2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7G2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P7G2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7M1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P7M1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8O3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P8O3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8M1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P8M1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8P3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P8P3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8P1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P8P1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8B1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P8B1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8R3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P8R3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8Y2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P8Y2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8O1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P8O1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8P2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P8P2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8C2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P8C2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8R1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P8R1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8M2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P8M2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8Y1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P8Y1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8B2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P8B2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8R2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P8R2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8G3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P8G3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8Y3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P8Y3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8G2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P8G2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8C1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P8C1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8O2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P8O2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8G1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P8G1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8C3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P8C3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1U1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P1U1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1U2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P1U2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1RA1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P1RA1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1RA2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P1RA2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1RA3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P1RA3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P1RA4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="4"/>
+            <Property name="name" type="java.lang.String" value="P1RA4" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2RA4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="4"/>
+            <Property name="name" type="java.lang.String" value="P2RA4" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2U1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P2U1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2U2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P2U2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2RA1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P2RA1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2RA2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P2RA2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P2RA3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P2RA3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3RA4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="4"/>
+            <Property name="name" type="java.lang.String" value="P3RA4" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3U1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P3U1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3U2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P3U2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3RA1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P3RA1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3RA2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P3RA2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P3RA3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P3RA3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4RA4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="4"/>
+            <Property name="name" type="java.lang.String" value="P4RA4" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4U1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P4U1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4U2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P4U2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4RA1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P4RA1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4RA2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P4RA2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P4RA3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P4RA3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5RA4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="4"/>
+            <Property name="name" type="java.lang.String" value="P5RA4" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5U1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P5U1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5U2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P5U2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5RA1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P5RA1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5RA2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P5RA2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P5RA3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P5RA3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6RA4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="4"/>
+            <Property name="name" type="java.lang.String" value="P6RA4" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6U1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P6U1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6U2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P6U2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6RA1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P6RA1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6RA2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P6RA2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P6RA3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P6RA3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7RA4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="4"/>
+            <Property name="name" type="java.lang.String" value="P7RA4" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7U1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P7U1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7U2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P7U2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7RA1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P7RA1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7RA2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P7RA2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P7RA3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P7RA3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8RA4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="4"/>
+            <Property name="name" type="java.lang.String" value="P8RA4" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8U1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P8U1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8U2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P8U2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8RA1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="name" type="java.lang.String" value="P8RA1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8RA2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+            <Property name="name" type="java.lang.String" value="P8RA2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="P8RA3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="3"/>
+            <Property name="name" type="java.lang.String" value="P8RA3" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="dicePane">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="bBankrupt" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="bNextTurn" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lCell" min="-2" pref="196" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="bPayRent" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="lPlayerOnTurn" min="-2" pref="95" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="lRentToPay" min="-2" pref="45" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="lHotelPrice" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="lHousePrice" min="-2" pref="35" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="bBuyProperty" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bAuctionProperty" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="lTotalDice" min="-2" pref="14" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lDice1" min="-2" pref="14" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lDice2" min="-2" pref="14" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="bDice" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="lMoney" min="-2" pref="90" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="bPropertyHandle" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lPlayerOnTurn" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lMoney" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="bBuyProperty" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="bAuctionProperty" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lHousePrice" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="bDice" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lDice1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lDice2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lTotalDice" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lHotelPrice" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="lRentToPay" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="bPayRent" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="bPropertyHandle" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Component id="lCell" min="-2" pref="196" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="17" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="bBankrupt" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bNextTurn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="TARJETA EN LA QUE ESTAS"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lCell">
+        </Component>
+        <Component class="javax.swing.JButton" name="bDice">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tirar Dados"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bDiceActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Dado 1:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lDice1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lDice2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Dado 2:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Te mueves:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lTotalDice">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Turno de:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lPlayerOnTurn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="PlayerOnTurn"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="bBankrupt">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Declararme en Bancarota"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bBankruptActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tradear"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="bBuyProperty">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Comprar propiedad"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bBuyPropertyActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="bAuctionProperty">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Subastar propiedad"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bAuctionPropertyActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="bPropertyHandle">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Manejar Mis Propiedades"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bPropertyHandleActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel6">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Dinero:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lMoney">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0 M"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel8">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Precio de Casas:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lHousePrice">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0 M"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lHotelPrice">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0 M"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel11">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Precio de Hoteles:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel7">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Renta a pagar:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lRentToPay">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0 M"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="bPayRent">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pagar Renta"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bPayRentActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="bNextTurn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Finalizar Turno"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bNextTurnActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

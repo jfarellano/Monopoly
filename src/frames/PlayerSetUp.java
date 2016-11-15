@@ -3,6 +3,7 @@ package frames;
 import estructures.linkedList.Player;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import managers.Master;
 
@@ -12,12 +13,15 @@ public class PlayerSetUp extends javax.swing.JFrame {
     private int cont;
     private Master m;
 
+    private boolean keySleep;
+
     public PlayerSetUp() {
         initComponents();
 
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
+        keySleep = false;
         m = new Master();
         cont = 1;
         enableComponents(pCreate, false);
@@ -109,6 +113,14 @@ public class PlayerSetUp extends javax.swing.JFrame {
         tName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tNameActionPerformed(evt);
+            }
+        });
+        tName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tNameKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tNameKeyTyped(evt);
             }
         });
 
@@ -216,6 +228,26 @@ public class PlayerSetUp extends javax.swing.JFrame {
     private void tNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tNameActionPerformed
+
+    private void tNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tNameKeyTyped
+        char enter = evt.getKeyChar();
+        evt.consume();
+        if (!keySleep) {
+            if (tName.getText().length() < 10) {
+                String number = tName.getText() + enter + "";
+                tName.setText(number);
+            }
+        } else {
+            keySleep = false;
+        }
+    }//GEN-LAST:event_tNameKeyTyped
+
+    private void tNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tNameKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            //tName.setText(tName.getText().substring(0, tName.getText().length() - 1)); //When backspace is released is goind to erase twice... 
+            keySleep = true;
+        }
+    }//GEN-LAST:event_tNameKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAcept;
