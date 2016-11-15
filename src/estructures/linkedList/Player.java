@@ -122,6 +122,5 @@ public class Player extends Nodo {
     public void setTurnsInJail(int turnsInJail) {
         this.turnsInJail = turnsInJail;
     }
-
     
 }
