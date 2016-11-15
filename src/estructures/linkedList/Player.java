@@ -107,4 +107,22 @@ public class Player extends Nodo {
         this.playerPlace = playerPlace;
     }
 
+    public boolean isInJail() {
+        return inJail;
+    }
+
+    public void setInJail(boolean inJail) {
+        this.inJail = inJail;
+    }
+
+    public int getTurnsInJail() {
+        return turnsInJail;
+    }
+
+    public void setTurnsInJail(int turnsInJail) {
+        this.turnsInJail = turnsInJail;
+    }
+    
+    
+
 }

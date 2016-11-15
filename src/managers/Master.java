@@ -15,6 +15,7 @@ import estructures.linkedList.Player;
 import estructures.linkedList.Railroad;
 import estructures.linkedList.Tax;
 import estructures.linkedList.Utility;
+import frames.Game;
 import machines.Avenue;
 import machines.Corner;
 
@@ -34,6 +35,8 @@ public class Master {
     private Player playerOnTurn;
 
     private int dice1, dice2;
+    
+    public Game g;
 
     public Master() {
         /*String startingRoute = "./resources/txts/;*/
@@ -41,10 +44,10 @@ public class Master {
         chanceCardRoute = "./resources/txts/ChanceCards.txt";
         communityChestCardRoute = "./resources/txts/CommunityChestCards.txt";
 
-        table = new Lista();
-        players = new Lista();
         rail = new Lista();
         utility = new Lista();
+        table = new Lista();
+        players = new Lista();
         CommunityChestCard = new Lista();
         ChanceCard = new Lista();
 
@@ -114,7 +117,7 @@ public class Master {
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split("\\|");
                 //System.out.println(fields[1]);
-                CommunityChestCard.add(new Card(Integer.valueOf(fields[0]), "CommunityChest", fields[1], fields[2], fields[3], this));
+                CommunityChestCard.add(new Card(Integer.valueOf(fields[0]), "CommunityChest", fields[1], fields[2], fields[3], Integer.valueOf(fields[4]), Integer.valueOf(fields[5]),this));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,7 +134,7 @@ public class Master {
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split("\\|");
                 //System.out.println(fields[1]);
-                ChanceCard.add(new Card(Integer.valueOf(fields[0]), "Chance", fields[1], fields[2], fields[3], this));
+                ChanceCard.add(new Card(Integer.valueOf(fields[0]), "Chance", fields[1], fields[2], fields[3], Integer.valueOf(fields[4]), Integer.valueOf(fields[5]),this));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -159,57 +162,6 @@ public class Master {
         dice2 = r.nextInt(6) + 1;
         return dice1 + dice2;
     }
-
-    public void nextTurn() {
-        Nodo cell = null;
-        if (dice1 != dice2) {
-            playerOnTurn = (Player) players.next();
-        }
-        System.out.println("Player " + playerOnTurn.getId());
-        int m = throwDice();
-        System.out.println("Total dados " + m + " Dados: " + dice1 + " " + dice2);
-        Nodo n = table.BuscarConId(playerOnTurn.getCourrentCell());
-        for (int i = 0; i < m; i++) {
-            cell = table.next();
-        }
-
-        System.out.println("Casilla: " + cell.getNombre() + " id: " + cell.getId());
-        if (cell.getNombre().equals("Avenue")) {
-            Avenue courrentCell = (Avenue) cell;
-            System.out.println("Nombre de la propiedad: " + courrentCell.getAvenueName());
-            playerOnTurn.setCourrentCell(courrentCell.getId());
-            if (courrentCell.getOwner() == null) {
-                compra(courrentCell, playerOnTurn, courrentCell.getPrice());
-                courrentCell.setHouses(courrentCell.getHouses() + 1);
-                System.out.println("Dinero del comprador :$" + playerOnTurn.getMoney());
-            } else if (courrentCell.getOwner() == playerOnTurn) {
-                courrentCell.setHouses(courrentCell.getHouses() + 1);
-            } else {
-
-            }
-        } else if (cell.getNombre().equals("Corner")) {
-            Corner courrentCell = (Corner) cell;
-            playerOnTurn.setMoney(playerOnTurn.getMoney() + courrentCell.getGift());
-            System.out.println("ID " + courrentCell.getId());
-            System.out.println("Nombre " + courrentCell.getName());
-            playerOnTurn.setCourrentCell(courrentCell.getId());
-        } else if (cell.getNombre().equals("Railroad")) {
-            Railroad courrentCell = (Railroad) cell;
-            playerOnTurn.setCourrentCell(courrentCell.getId());
-        } else if (cell.getNombre().equals("Tax")) {
-            Tax courrentCell = (Tax) cell;
-            playerOnTurn.setCourrentCell(courrentCell.getId());
-        } else if (cell.getNombre().equals("Utility")) {
-            Utility courrentCell = (Utility) cell;
-            playerOnTurn.setCourrentCell(courrentCell.getId());
-        } else if (cell.getNombre().equals("Chance")) {
-            Chance courrentCell = (Chance) cell;
-            playerOnTurn.setCourrentCell(courrentCell.getId());
-        } else if (cell.getNombre().equals("Chest")) {
-            Chest courrentCell = (Chest) cell;
-            playerOnTurn.setCourrentCell(courrentCell.getId());
-        }
-    } //i think we can delete this...
 
     public void venta(Nodo propiedad, Player vendedor, Player comprador, int valorDeCompra) {
         if (propiedad.getNombre().equals("Avenue")) {
@@ -305,12 +257,14 @@ public class Master {
     }
 
     //CARD CODE
-    private void drawRandomCard(int Chance1Chest2) {
+    public Card drawRandomCard(int Chance1Chest2) {
         Random r = new Random();
         if (Chance1Chest2 == 1) {
-            ChanceCard.BuscarConId(r.nextInt(ChanceCard.length()));
+            int x = r.nextInt(ChanceCard.length()) + 1;
+            return (Card) ChanceCard.BuscarConId(x);
         } else {
-            CommunityChestCard.BuscarConId(r.nextInt(CommunityChestCard.length()));
+            int x = r.nextInt(CommunityChestCard.length()) + 1;
+            return (Card) CommunityChestCard.BuscarConId(x);
         }
     }
 

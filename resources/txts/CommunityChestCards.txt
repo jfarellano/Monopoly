@@ -1,18 +1,17 @@
-Number|Title|Clause or Money|Text|
-1|Advance to Go (Collect $200)|200|<Mr. M strides in 7-league boots>|
-2|Bank error in your favor – Collect $200|200|<Mr. M falls back in astonishment as an arm presents a sheaf of cash out of a bank teller's window>|
-3|Doctor's fees – Pay $50|50|<Mr. M angrily brandishes crutches as he stomps with a leg cast>|
-4|From sale of stock you get $50|50|<Mr. M, happily entangled in the tape of a stock ticker, waves cash (with no $ sign this time)>|
-5|Get Out of Jail Free|This card may be kept until needed or sold|<A winged Mr. M flutters out of a bird cage>|
-6|Go to Jail|Go directly to jail, Do not pass Go, Do not collect $200|<A truncheon-wielding policeman in a light-colored uniform lifts a surprised Mr M by the collar>|
-7|Grand Opera Night – Collect $50|From every player for opening night seats|<A wall sign near steps reads "Opera Tonite - 8 PM Sharp"; Mr. M leans against it checking his pocket watch in annoyance>|
-8|Holiday Fund matures - Receive $100|100|<Mr. M carries along a giant Xmas sock containing a sheaf of cash>|
-9|Income tax refund – Collect $20|20|<Mr M faints back against a man displaying the Refund paper>|
-10|It is your birthday|Collect $10 from each player|<Not in the deck>|
-11|Life insurance matures – Collect $100|100|<Below an I N S sign stands a bent Mr M, his long beard brushing the floor>|
-12|Pay hospital fees of $100|-100|<A bored nurse holds out her hand for payment while Mr. M holds 2 swaddled infants, one in each arm>|
-13|Pay school fees of $150|-150|<A bespectacled schoolboy unhappily receives a head pat and a dime ((Rockefeller style) from Mr. M.>|
-14|Receive $25 consultancy fee|25|<As Justice of the Peace, a stern Mr. M holds out his hand for fee from an embarrassed groom whose bride hold a bouquet behind him>|
-15|You are assessed for street repairs|$40 per house – $115 per hotel|<Mr. M., supported by his near-ubiquitous cane in his left hand, holds a pick and shovel over his right shoulder>|
-16|You have won second prize in a beauty contest|10|<Mr. M preens with a sash and large bouquet>|
-17|You inherit $100|100|<Mr M. holds his head as unseen people's hands offer brochures titled "Buy Yacht", "World Tour", and "Rolls Royce">| 
+Number|Title|Clause or Money|Text|AcctionType|Value|
+1|Advance to Go (Collect $200)|200|<Mr. M strides in 7-league boots>|4|1|
+2|Bank error in your favor – Collect $200|200|<Mr. M falls back in astonishment as an arm presents a sheaf of cash out of a bank teller's window>|1|200|
+3|Doctor's fees – Pay $50|50|<Mr. M angrily brandishes crutches as he stomps with a leg cast>|1|-50|
+4|From sale of stock you get $50|50|<Mr. M, happily entangled in the tape of a stock ticker, waves cash (with no $ sign this time)>|1|50|
+5|Go to Jail|Go directly to jail, Do not pass Go, Do not collect $200|<A truncheon-wielding policeman in a light-colored uniform lifts a surprised Mr M by the collar>|4|11|
+6|Grand Opera Night – Collect $50|From every player for opening night seats|<A wall sign near steps reads "Opera Tonite - 8 PM Sharp"; Mr. M leans against it checking his pocket watch in annoyance>|1|50|
+7|Holiday Fund matures - Receive $100|100|<Mr. M carries along a giant Xmas sock containing a sheaf of cash>|1|100|
+8|Income tax refund – Collect $20|20|<Mr M faints back against a man displaying the Refund paper>|1|20|
+9|It is your birthday|Collect $10 from each player|<Not in the deck>|1|10|
+10|Life insurance matures – Collect $100|100|<Below an I N S sign stands a bent Mr M, his long beard brushing the floor>|1|100|
+11|Pay hospital fees of $100|-100|<A bored nurse holds out her hand for payment while Mr. M holds 2 swaddled infants, one in each arm>|1|-100|
+12|Pay school fees of $150|-150|<A bespectacled schoolboy unhappily receives a head pat and a dime ((Rockefeller style) from Mr. M.>|1|-150|
+13|Receive $25 consultancy fee|25|<As Justice of the Peace, a stern Mr. M holds out his hand for fee from an embarrassed groom whose bride hold a bouquet behind him>|1|25|
+14|You are assessed for street repairs|$80 per house and hotel|<Mr. M., supported by his near-ubiquitous cane in his left hand, holds a pick and shovel over his right shoulder>|3|80|
+15|You have won second prize in a beauty contest|10|<Mr. M preens with a sash and large bouquet>|1|10|
+16|You inherit $100|100|<Mr M. holds his head as unseen people's hands offer brochures titled "Buy Yacht", "World Tour", and "Rolls Royce">|1|100|

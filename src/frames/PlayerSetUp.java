@@ -221,6 +221,7 @@ public class PlayerSetUp extends javax.swing.JFrame {
             Player j = (Player) m.getPlayers().getCourrent();
             System.out.println("PLAYER " + j.getPlayerName());
             Game g = new Game(m);
+            m.g = g;
             this.dispose();
         }
     }//GEN-LAST:event_bAcept1ActionPerformed

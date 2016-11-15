@@ -6,12 +6,14 @@
 package frames;
 
 import estructures.Nodo;
+import estructures.linkedList.Card;
 import estructures.linkedList.Chance;
 import estructures.linkedList.Chest;
 import estructures.linkedList.Player;
 import estructures.linkedList.Railroad;
 import estructures.linkedList.Tax;
 import estructures.linkedList.Utility;
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -25,8 +27,12 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.UIManager;
 import machines.Avenue;
 import machines.Corner;
@@ -2959,10 +2965,16 @@ public class Game extends javax.swing.JFrame {
                 }
             } else if (cellInTurn.getNombre().equals("Chance")) { //fix...
                 Chance courrentCell = (Chance) cellInTurn;
+                Card c = m.drawRandomCard(1);
                 playerOnTurn.setCourrentCell(courrentCell.getId());
+                c.showMessageToPlayer();
+                c.accion();
             } else if (cellInTurn.getNombre().equals("Chest")) { //fix...
                 Chest courrentCell = (Chest) cellInTurn;
+                Card c = (Card) m.drawRandomCard(2);
                 playerOnTurn.setCourrentCell(courrentCell.getId());
+                c.showMessageToPlayer();
+                c.accion();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ya tiraste los dados.");
@@ -3317,6 +3329,2234 @@ public class Game extends javax.swing.JFrame {
         // PAPI HACE FALTA TRADEO
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //GETTER SETTER
+    //<editor-fold defaultstate="collapsed" desc="comment">
+    
+    public Master getM() {
+        return m;
+    }
+    
+    public void setM(Master m) {
+        this.m = m;
+    }
+    
+    public Thread getT1() {
+        return t1;
+    }
+    
+    public void setT1(Thread t1) {
+        this.t1 = t1;
+    }
+    
+    public boolean isStop() {
+        return stop;
+    }
+    
+    public void setStop(boolean stop) {
+        this.stop = stop;
+    }
+    
+    
+    public void setBackground(BufferedImage background) {
+        this.background = background;
+    }
+    
+    public HashMap getComponentMap() {
+        return componentMap;
+    }
+    
+    public void setComponentMap(HashMap componentMap) {
+        this.componentMap = componentMap;
+    }
+    
+    public Player getPlayerOnTurn() {
+        return playerOnTurn;
+    }
+    
+    public void setPlayerOnTurn(Player playerOnTurn) {
+        this.playerOnTurn = playerOnTurn;
+    }
+    
+    public Nodo getCellInTurn() {
+        return cellInTurn;
+    }
+    
+    public void setCellInTurn(Nodo cellInTurn) {
+        this.cellInTurn = cellInTurn;
+    }
+    
+    public boolean isOnAcquirable() {
+        return onAcquirable;
+    }
+    
+    public void setOnAcquirable(boolean onAcquirable) {
+        this.onAcquirable = onAcquirable;
+    }
+    
+    public Component getPropertySelected() {
+        return propertySelected;
+    }
+    
+    public void setPropertySelected(Component propertySelected) {
+        this.propertySelected = propertySelected;
+    }
+    
+    public JMenuItem getMenuItemHotels() {
+        return MenuItemHotels;
+    }
+    
+    public void setMenuItemHotels(JMenuItem MenuItemHotels) {
+        this.MenuItemHotels = MenuItemHotels;
+    }
+    
+    public JMenuItem getMenuItemHouses() {
+        return MenuItemHouses;
+    }
+    
+    public void setMenuItemHouses(JMenuItem MenuItemHouses) {
+        this.MenuItemHouses = MenuItemHouses;
+    }
+    
+    public JMenuItem getMenuItemSell() {
+        return MenuItemSell;
+    }
+    
+    public void setMenuItemSell(JMenuItem MenuItemSell) {
+        this.MenuItemSell = MenuItemSell;
+    }
+    
+    public JMenuItem getMenuItemSellHotels() {
+        return MenuItemSellHotels;
+    }
+    
+    public void setMenuItemSellHotels(JMenuItem MenuItemSellHotels) {
+        this.MenuItemSellHotels = MenuItemSellHotels;
+    }
+    
+    public JMenuItem getMenuItemSellHouses() {
+        return MenuItemSellHouses;
+    }
+    
+    public void setMenuItemSellHouses(JMenuItem MenuItemSellHouses) {
+        this.MenuItemSellHouses = MenuItemSellHouses;
+    }
+    
+    public JLabel getP1B1() {
+        return P1B1;
+    }
+    
+    public void setP1B1(JLabel P1B1) {
+        this.P1B1 = P1B1;
+    }
+    
+    public JLabel getP1B2() {
+        return P1B2;
+    }
+    
+    public void setP1B2(JLabel P1B2) {
+        this.P1B2 = P1B2;
+    }
+    
+    public JLabel getP1C1() {
+        return P1C1;
+    }
+    
+    public void setP1C1(JLabel P1C1) {
+        this.P1C1 = P1C1;
+    }
+    
+    public JLabel getP1C2() {
+        return P1C2;
+    }
+    
+    public void setP1C2(JLabel P1C2) {
+        this.P1C2 = P1C2;
+    }
+    
+    public JLabel getP1C3() {
+        return P1C3;
+    }
+    
+    public void setP1C3(JLabel P1C3) {
+        this.P1C3 = P1C3;
+    }
+    
+    public JLabel getP1G1() {
+        return P1G1;
+    }
+    
+    public void setP1G1(JLabel P1G1) {
+        this.P1G1 = P1G1;
+    }
+    
+    public JLabel getP1G2() {
+        return P1G2;
+    }
+    
+    public void setP1G2(JLabel P1G2) {
+        this.P1G2 = P1G2;
+    }
+    
+    public JLabel getP1G3() {
+        return P1G3;
+    }
+    
+    public void setP1G3(JLabel P1G3) {
+        this.P1G3 = P1G3;
+    }
+    
+    public JLabel getP1M1() {
+        return P1M1;
+    }
+    
+    public void setP1M1(JLabel P1M1) {
+        this.P1M1 = P1M1;
+    }
+    
+    public JLabel getP1M2() {
+        return P1M2;
+    }
+    
+    public void setP1M2(JLabel P1M2) {
+        this.P1M2 = P1M2;
+    }
+    
+    public JLabel getP1O1() {
+        return P1O1;
+    }
+    
+    public void setP1O1(JLabel P1O1) {
+        this.P1O1 = P1O1;
+    }
+    
+    public JLabel getP1O2() {
+        return P1O2;
+    }
+    
+    public void setP1O2(JLabel P1O2) {
+        this.P1O2 = P1O2;
+    }
+    
+    public JLabel getP1O3() {
+        return P1O3;
+    }
+    
+    public void setP1O3(JLabel P1O3) {
+        this.P1O3 = P1O3;
+    }
+    
+    public JLabel getP1P1() {
+        return P1P1;
+    }
+    
+    public void setP1P1(JLabel P1P1) {
+        this.P1P1 = P1P1;
+    }
+    
+    public JLabel getP1P2() {
+        return P1P2;
+    }
+    
+    public void setP1P2(JLabel P1P2) {
+        this.P1P2 = P1P2;
+    }
+    
+    public JLabel getP1P3() {
+        return P1P3;
+    }
+    
+    public void setP1P3(JLabel P1P3) {
+        this.P1P3 = P1P3;
+    }
+    
+    public JLabel getP1R1() {
+        return P1R1;
+    }
+    
+    public void setP1R1(JLabel P1R1) {
+        this.P1R1 = P1R1;
+    }
+    
+    public JLabel getP1R2() {
+        return P1R2;
+    }
+    
+    public void setP1R2(JLabel P1R2) {
+        this.P1R2 = P1R2;
+    }
+    
+    public JLabel getP1R3() {
+        return P1R3;
+    }
+    
+    public void setP1R3(JLabel P1R3) {
+        this.P1R3 = P1R3;
+    }
+    
+    public JLabel getP1RA1() {
+        return P1RA1;
+    }
+    
+    public void setP1RA1(JLabel P1RA1) {
+        this.P1RA1 = P1RA1;
+    }
+    
+    public JLabel getP1RA2() {
+        return P1RA2;
+    }
+    
+    public void setP1RA2(JLabel P1RA2) {
+        this.P1RA2 = P1RA2;
+    }
+    
+    public JLabel getP1RA3() {
+        return P1RA3;
+    }
+    
+    public void setP1RA3(JLabel P1RA3) {
+        this.P1RA3 = P1RA3;
+    }
+    
+    public JLabel getP1RA4() {
+        return P1RA4;
+    }
+    
+    public void setP1RA4(JLabel P1RA4) {
+        this.P1RA4 = P1RA4;
+    }
+    
+    public JLabel getP1U1() {
+        return P1U1;
+    }
+    
+    public void setP1U1(JLabel P1U1) {
+        this.P1U1 = P1U1;
+    }
+    
+    public JLabel getP1U2() {
+        return P1U2;
+    }
+    
+    public void setP1U2(JLabel P1U2) {
+        this.P1U2 = P1U2;
+    }
+    
+    public JLabel getP1Y1() {
+        return P1Y1;
+    }
+    
+    public void setP1Y1(JLabel P1Y1) {
+        this.P1Y1 = P1Y1;
+    }
+    
+    public JLabel getP1Y2() {
+        return P1Y2;
+    }
+    
+    public void setP1Y2(JLabel P1Y2) {
+        this.P1Y2 = P1Y2;
+    }
+    
+    public JLabel getP1Y3() {
+        return P1Y3;
+    }
+    
+    public void setP1Y3(JLabel P1Y3) {
+        this.P1Y3 = P1Y3;
+    }
+    
+    public JLabel getP2B1() {
+        return P2B1;
+    }
+    
+    public void setP2B1(JLabel P2B1) {
+        this.P2B1 = P2B1;
+    }
+    
+    public JLabel getP2B2() {
+        return P2B2;
+    }
+    
+    public void setP2B2(JLabel P2B2) {
+        this.P2B2 = P2B2;
+    }
+    
+    public JLabel getP2C1() {
+        return P2C1;
+    }
+    
+    public void setP2C1(JLabel P2C1) {
+        this.P2C1 = P2C1;
+    }
+    
+    public JLabel getP2C2() {
+        return P2C2;
+    }
+    
+    public void setP2C2(JLabel P2C2) {
+        this.P2C2 = P2C2;
+    }
+    
+    public JLabel getP2C3() {
+        return P2C3;
+    }
+    
+    public void setP2C3(JLabel P2C3) {
+        this.P2C3 = P2C3;
+    }
+    
+    public JLabel getP2G1() {
+        return P2G1;
+    }
+    
+    public void setP2G1(JLabel P2G1) {
+        this.P2G1 = P2G1;
+    }
+    
+    public JLabel getP2G2() {
+        return P2G2;
+    }
+    
+    public void setP2G2(JLabel P2G2) {
+        this.P2G2 = P2G2;
+    }
+    
+    public JLabel getP2G3() {
+        return P2G3;
+    }
+    
+    public void setP2G3(JLabel P2G3) {
+        this.P2G3 = P2G3;
+    }
+    
+    public JLabel getP2M1() {
+        return P2M1;
+    }
+    
+    public void setP2M1(JLabel P2M1) {
+        this.P2M1 = P2M1;
+    }
+    
+    public JLabel getP2M2() {
+        return P2M2;
+    }
+    
+    public void setP2M2(JLabel P2M2) {
+        this.P2M2 = P2M2;
+    }
+    
+    public JLabel getP2O1() {
+        return P2O1;
+    }
+    
+    public void setP2O1(JLabel P2O1) {
+        this.P2O1 = P2O1;
+    }
+    
+    public JLabel getP2O2() {
+        return P2O2;
+    }
+    
+    public void setP2O2(JLabel P2O2) {
+        this.P2O2 = P2O2;
+    }
+    
+    public JLabel getP2O3() {
+        return P2O3;
+    }
+    
+    public void setP2O3(JLabel P2O3) {
+        this.P2O3 = P2O3;
+    }
+    
+    public JLabel getP2P1() {
+        return P2P1;
+    }
+    
+    public void setP2P1(JLabel P2P1) {
+        this.P2P1 = P2P1;
+    }
+    
+    public JLabel getP2P2() {
+        return P2P2;
+    }
+    
+    public void setP2P2(JLabel P2P2) {
+        this.P2P2 = P2P2;
+    }
+    
+    public JLabel getP2P3() {
+        return P2P3;
+    }
+    
+    public void setP2P3(JLabel P2P3) {
+        this.P2P3 = P2P3;
+    }
+    
+    public JLabel getP2R1() {
+        return P2R1;
+    }
+    
+    public void setP2R1(JLabel P2R1) {
+        this.P2R1 = P2R1;
+    }
+    
+    public JLabel getP2R2() {
+        return P2R2;
+    }
+    
+    public void setP2R2(JLabel P2R2) {
+        this.P2R2 = P2R2;
+    }
+    
+    public JLabel getP2R3() {
+        return P2R3;
+    }
+    
+    public void setP2R3(JLabel P2R3) {
+        this.P2R3 = P2R3;
+    }
+    
+    public JLabel getP2RA1() {
+        return P2RA1;
+    }
+    
+    public void setP2RA1(JLabel P2RA1) {
+        this.P2RA1 = P2RA1;
+    }
+    
+    public JLabel getP2RA2() {
+        return P2RA2;
+    }
+    
+    public void setP2RA2(JLabel P2RA2) {
+        this.P2RA2 = P2RA2;
+    }
+    
+    public JLabel getP2RA3() {
+        return P2RA3;
+    }
+    
+    public void setP2RA3(JLabel P2RA3) {
+        this.P2RA3 = P2RA3;
+    }
+    
+    public JLabel getP2RA4() {
+        return P2RA4;
+    }
+    
+    public void setP2RA4(JLabel P2RA4) {
+        this.P2RA4 = P2RA4;
+    }
+    
+    public JLabel getP2U1() {
+        return P2U1;
+    }
+    
+    public void setP2U1(JLabel P2U1) {
+        this.P2U1 = P2U1;
+    }
+    
+    public JLabel getP2U2() {
+        return P2U2;
+    }
+    
+    public void setP2U2(JLabel P2U2) {
+        this.P2U2 = P2U2;
+    }
+    
+    public JLabel getP2Y1() {
+        return P2Y1;
+    }
+    
+    public void setP2Y1(JLabel P2Y1) {
+        this.P2Y1 = P2Y1;
+    }
+    
+    public JLabel getP2Y2() {
+        return P2Y2;
+    }
+    
+    public void setP2Y2(JLabel P2Y2) {
+        this.P2Y2 = P2Y2;
+    }
+    
+    public JLabel getP2Y3() {
+        return P2Y3;
+    }
+    
+    public void setP2Y3(JLabel P2Y3) {
+        this.P2Y3 = P2Y3;
+    }
+    
+    public JLabel getP3B1() {
+        return P3B1;
+    }
+    
+    public void setP3B1(JLabel P3B1) {
+        this.P3B1 = P3B1;
+    }
+    
+    public JLabel getP3B2() {
+        return P3B2;
+    }
+    
+    public void setP3B2(JLabel P3B2) {
+        this.P3B2 = P3B2;
+    }
+    
+    public JLabel getP3C1() {
+        return P3C1;
+    }
+    
+    public void setP3C1(JLabel P3C1) {
+        this.P3C1 = P3C1;
+    }
+    
+    public JLabel getP3C2() {
+        return P3C2;
+    }
+    
+    public void setP3C2(JLabel P3C2) {
+        this.P3C2 = P3C2;
+    }
+    
+    public JLabel getP3C3() {
+        return P3C3;
+    }
+    
+    public void setP3C3(JLabel P3C3) {
+        this.P3C3 = P3C3;
+    }
+    
+    public JLabel getP3G1() {
+        return P3G1;
+    }
+    
+    public void setP3G1(JLabel P3G1) {
+        this.P3G1 = P3G1;
+    }
+    
+    public JLabel getP3G2() {
+        return P3G2;
+    }
+    
+    public void setP3G2(JLabel P3G2) {
+        this.P3G2 = P3G2;
+    }
+    
+    public JLabel getP3G3() {
+        return P3G3;
+    }
+    
+    public void setP3G3(JLabel P3G3) {
+        this.P3G3 = P3G3;
+    }
+    
+    public JLabel getP3M1() {
+        return P3M1;
+    }
+    
+    public void setP3M1(JLabel P3M1) {
+        this.P3M1 = P3M1;
+    }
+    
+    public JLabel getP3M2() {
+        return P3M2;
+    }
+    
+    public void setP3M2(JLabel P3M2) {
+        this.P3M2 = P3M2;
+    }
+    
+    public JLabel getP3O1() {
+        return P3O1;
+    }
+    
+    public void setP3O1(JLabel P3O1) {
+        this.P3O1 = P3O1;
+    }
+    
+    public JLabel getP3O2() {
+        return P3O2;
+    }
+    
+    public void setP3O2(JLabel P3O2) {
+        this.P3O2 = P3O2;
+    }
+    
+    public JLabel getP3O3() {
+        return P3O3;
+    }
+    
+    public void setP3O3(JLabel P3O3) {
+        this.P3O3 = P3O3;
+    }
+    
+    public JLabel getP3P1() {
+        return P3P1;
+    }
+    
+    public void setP3P1(JLabel P3P1) {
+        this.P3P1 = P3P1;
+    }
+    
+    public JLabel getP3P2() {
+        return P3P2;
+    }
+    
+    public void setP3P2(JLabel P3P2) {
+        this.P3P2 = P3P2;
+    }
+    
+    public JLabel getP3P3() {
+        return P3P3;
+    }
+    
+    public void setP3P3(JLabel P3P3) {
+        this.P3P3 = P3P3;
+    }
+    
+    public JLabel getP3R1() {
+        return P3R1;
+    }
+    
+    public void setP3R1(JLabel P3R1) {
+        this.P3R1 = P3R1;
+    }
+    
+    public JLabel getP3R2() {
+        return P3R2;
+    }
+    
+    public void setP3R2(JLabel P3R2) {
+        this.P3R2 = P3R2;
+    }
+    
+    public JLabel getP3R3() {
+        return P3R3;
+    }
+    
+    public void setP3R3(JLabel P3R3) {
+        this.P3R3 = P3R3;
+    }
+    
+    public JLabel getP3RA1() {
+        return P3RA1;
+    }
+    
+    public void setP3RA1(JLabel P3RA1) {
+        this.P3RA1 = P3RA1;
+    }
+    
+    public JLabel getP3RA2() {
+        return P3RA2;
+    }
+    
+    public void setP3RA2(JLabel P3RA2) {
+        this.P3RA2 = P3RA2;
+    }
+    
+    public JLabel getP3RA3() {
+        return P3RA3;
+    }
+    
+    public void setP3RA3(JLabel P3RA3) {
+        this.P3RA3 = P3RA3;
+    }
+    
+    public JLabel getP3RA4() {
+        return P3RA4;
+    }
+    
+    public void setP3RA4(JLabel P3RA4) {
+        this.P3RA4 = P3RA4;
+    }
+    
+    public JLabel getP3U1() {
+        return P3U1;
+    }
+    
+    public void setP3U1(JLabel P3U1) {
+        this.P3U1 = P3U1;
+    }
+    
+    public JLabel getP3U2() {
+        return P3U2;
+    }
+    
+    public void setP3U2(JLabel P3U2) {
+        this.P3U2 = P3U2;
+    }
+    
+    public JLabel getP3Y1() {
+        return P3Y1;
+    }
+    
+    public void setP3Y1(JLabel P3Y1) {
+        this.P3Y1 = P3Y1;
+    }
+    
+    public JLabel getP3Y2() {
+        return P3Y2;
+    }
+    
+    public void setP3Y2(JLabel P3Y2) {
+        this.P3Y2 = P3Y2;
+    }
+    
+    public JLabel getP3Y3() {
+        return P3Y3;
+    }
+    
+    public void setP3Y3(JLabel P3Y3) {
+        this.P3Y3 = P3Y3;
+    }
+    
+    public JLabel getP4B1() {
+        return P4B1;
+    }
+    
+    public void setP4B1(JLabel P4B1) {
+        this.P4B1 = P4B1;
+    }
+    
+    public JLabel getP4B2() {
+        return P4B2;
+    }
+    
+    public void setP4B2(JLabel P4B2) {
+        this.P4B2 = P4B2;
+    }
+    
+    public JLabel getP4C1() {
+        return P4C1;
+    }
+    
+    public void setP4C1(JLabel P4C1) {
+        this.P4C1 = P4C1;
+    }
+    
+    public JLabel getP4C2() {
+        return P4C2;
+    }
+    
+    public void setP4C2(JLabel P4C2) {
+        this.P4C2 = P4C2;
+    }
+    
+    public JLabel getP4C3() {
+        return P4C3;
+    }
+    
+    public void setP4C3(JLabel P4C3) {
+        this.P4C3 = P4C3;
+    }
+    
+    public JLabel getP4G1() {
+        return P4G1;
+    }
+    
+    public void setP4G1(JLabel P4G1) {
+        this.P4G1 = P4G1;
+    }
+    
+    public JLabel getP4G2() {
+        return P4G2;
+    }
+    
+    public void setP4G2(JLabel P4G2) {
+        this.P4G2 = P4G2;
+    }
+    
+    public JLabel getP4G3() {
+        return P4G3;
+    }
+    
+    public void setP4G3(JLabel P4G3) {
+        this.P4G3 = P4G3;
+    }
+    
+    public JLabel getP4M1() {
+        return P4M1;
+    }
+    
+    public void setP4M1(JLabel P4M1) {
+        this.P4M1 = P4M1;
+    }
+    
+    public JLabel getP4M2() {
+        return P4M2;
+    }
+    
+    public void setP4M2(JLabel P4M2) {
+        this.P4M2 = P4M2;
+    }
+    
+    public JLabel getP4O1() {
+        return P4O1;
+    }
+    
+    public void setP4O1(JLabel P4O1) {
+        this.P4O1 = P4O1;
+    }
+    
+    public JLabel getP4O2() {
+        return P4O2;
+    }
+    
+    public void setP4O2(JLabel P4O2) {
+        this.P4O2 = P4O2;
+    }
+    
+    public JLabel getP4O3() {
+        return P4O3;
+    }
+    
+    public void setP4O3(JLabel P4O3) {
+        this.P4O3 = P4O3;
+    }
+    
+    public JLabel getP4P1() {
+        return P4P1;
+    }
+    
+    public void setP4P1(JLabel P4P1) {
+        this.P4P1 = P4P1;
+    }
+    
+    public JLabel getP4P2() {
+        return P4P2;
+    }
+    
+    public void setP4P2(JLabel P4P2) {
+        this.P4P2 = P4P2;
+    }
+    
+    public JLabel getP4P3() {
+        return P4P3;
+    }
+    
+    public void setP4P3(JLabel P4P3) {
+        this.P4P3 = P4P3;
+    }
+    
+    public JLabel getP4R1() {
+        return P4R1;
+    }
+    
+    public void setP4R1(JLabel P4R1) {
+        this.P4R1 = P4R1;
+    }
+    
+    public JLabel getP4R2() {
+        return P4R2;
+    }
+    
+    public void setP4R2(JLabel P4R2) {
+        this.P4R2 = P4R2;
+    }
+    
+    public JLabel getP4R3() {
+        return P4R3;
+    }
+    
+    public void setP4R3(JLabel P4R3) {
+        this.P4R3 = P4R3;
+    }
+    
+    public JLabel getP4RA1() {
+        return P4RA1;
+    }
+    
+    public void setP4RA1(JLabel P4RA1) {
+        this.P4RA1 = P4RA1;
+    }
+    
+    public JLabel getP4RA2() {
+        return P4RA2;
+    }
+    
+    public void setP4RA2(JLabel P4RA2) {
+        this.P4RA2 = P4RA2;
+    }
+    
+    public JLabel getP4RA3() {
+        return P4RA3;
+    }
+    
+    public void setP4RA3(JLabel P4RA3) {
+        this.P4RA3 = P4RA3;
+    }
+    
+    public JLabel getP4RA4() {
+        return P4RA4;
+    }
+    
+    public void setP4RA4(JLabel P4RA4) {
+        this.P4RA4 = P4RA4;
+    }
+    
+    public JLabel getP4U1() {
+        return P4U1;
+    }
+    
+    public void setP4U1(JLabel P4U1) {
+        this.P4U1 = P4U1;
+    }
+    
+    public JLabel getP4U2() {
+        return P4U2;
+    }
+    
+    public void setP4U2(JLabel P4U2) {
+        this.P4U2 = P4U2;
+    }
+    
+    public JLabel getP4Y1() {
+        return P4Y1;
+    }
+    
+    public void setP4Y1(JLabel P4Y1) {
+        this.P4Y1 = P4Y1;
+    }
+    
+    public JLabel getP4Y2() {
+        return P4Y2;
+    }
+    
+    public void setP4Y2(JLabel P4Y2) {
+        this.P4Y2 = P4Y2;
+    }
+    
+    public JLabel getP4Y3() {
+        return P4Y3;
+    }
+    
+    public void setP4Y3(JLabel P4Y3) {
+        this.P4Y3 = P4Y3;
+    }
+    
+    public JLabel getP5B1() {
+        return P5B1;
+    }
+    
+    public void setP5B1(JLabel P5B1) {
+        this.P5B1 = P5B1;
+    }
+    
+    public JLabel getP5B2() {
+        return P5B2;
+    }
+    
+    public void setP5B2(JLabel P5B2) {
+        this.P5B2 = P5B2;
+    }
+    
+    public JLabel getP5C1() {
+        return P5C1;
+    }
+    
+    public void setP5C1(JLabel P5C1) {
+        this.P5C1 = P5C1;
+    }
+    
+    public JLabel getP5C2() {
+        return P5C2;
+    }
+    
+    public void setP5C2(JLabel P5C2) {
+        this.P5C2 = P5C2;
+    }
+    
+    public JLabel getP5C3() {
+        return P5C3;
+    }
+    
+    public void setP5C3(JLabel P5C3) {
+        this.P5C3 = P5C3;
+    }
+    
+    public JLabel getP5G1() {
+        return P5G1;
+    }
+    
+    public void setP5G1(JLabel P5G1) {
+        this.P5G1 = P5G1;
+    }
+    
+    public JLabel getP5G2() {
+        return P5G2;
+    }
+    
+    public void setP5G2(JLabel P5G2) {
+        this.P5G2 = P5G2;
+    }
+    
+    public JLabel getP5G3() {
+        return P5G3;
+    }
+    
+    public void setP5G3(JLabel P5G3) {
+        this.P5G3 = P5G3;
+    }
+    
+    public JLabel getP5M1() {
+        return P5M1;
+    }
+    
+    public void setP5M1(JLabel P5M1) {
+        this.P5M1 = P5M1;
+    }
+    
+    public JLabel getP5M2() {
+        return P5M2;
+    }
+    
+    public void setP5M2(JLabel P5M2) {
+        this.P5M2 = P5M2;
+    }
+    
+    public JLabel getP5O1() {
+        return P5O1;
+    }
+    
+    public void setP5O1(JLabel P5O1) {
+        this.P5O1 = P5O1;
+    }
+    
+    public JLabel getP5O2() {
+        return P5O2;
+    }
+    
+    public void setP5O2(JLabel P5O2) {
+        this.P5O2 = P5O2;
+    }
+    
+    public JLabel getP5O3() {
+        return P5O3;
+    }
+    
+    public void setP5O3(JLabel P5O3) {
+        this.P5O3 = P5O3;
+    }
+    
+    public JLabel getP5P1() {
+        return P5P1;
+    }
+    
+    public void setP5P1(JLabel P5P1) {
+        this.P5P1 = P5P1;
+    }
+    
+    public JLabel getP5P2() {
+        return P5P2;
+    }
+    
+    public void setP5P2(JLabel P5P2) {
+        this.P5P2 = P5P2;
+    }
+    
+    public JLabel getP5P3() {
+        return P5P3;
+    }
+    
+    public void setP5P3(JLabel P5P3) {
+        this.P5P3 = P5P3;
+    }
+    
+    public JLabel getP5R1() {
+        return P5R1;
+    }
+    
+    public void setP5R1(JLabel P5R1) {
+        this.P5R1 = P5R1;
+    }
+    
+    public JLabel getP5R2() {
+        return P5R2;
+    }
+    
+    public void setP5R2(JLabel P5R2) {
+        this.P5R2 = P5R2;
+    }
+    
+    public JLabel getP5R3() {
+        return P5R3;
+    }
+    
+    public void setP5R3(JLabel P5R3) {
+        this.P5R3 = P5R3;
+    }
+    
+    public JLabel getP5RA1() {
+        return P5RA1;
+    }
+    
+    public void setP5RA1(JLabel P5RA1) {
+        this.P5RA1 = P5RA1;
+    }
+    
+    public JLabel getP5RA2() {
+        return P5RA2;
+    }
+    
+    public void setP5RA2(JLabel P5RA2) {
+        this.P5RA2 = P5RA2;
+    }
+    
+    public JLabel getP5RA3() {
+        return P5RA3;
+    }
+    
+    public void setP5RA3(JLabel P5RA3) {
+        this.P5RA3 = P5RA3;
+    }
+    
+    public JLabel getP5RA4() {
+        return P5RA4;
+    }
+    
+    public void setP5RA4(JLabel P5RA4) {
+        this.P5RA4 = P5RA4;
+    }
+    
+    public JLabel getP5U1() {
+        return P5U1;
+    }
+    
+    public void setP5U1(JLabel P5U1) {
+        this.P5U1 = P5U1;
+    }
+    
+    public JLabel getP5U2() {
+        return P5U2;
+    }
+    
+    public void setP5U2(JLabel P5U2) {
+        this.P5U2 = P5U2;
+    }
+    
+    public JLabel getP5Y1() {
+        return P5Y1;
+    }
+    
+    public void setP5Y1(JLabel P5Y1) {
+        this.P5Y1 = P5Y1;
+    }
+    
+    public JLabel getP5Y2() {
+        return P5Y2;
+    }
+    
+    public void setP5Y2(JLabel P5Y2) {
+        this.P5Y2 = P5Y2;
+    }
+    
+    public JLabel getP5Y3() {
+        return P5Y3;
+    }
+    
+    public void setP5Y3(JLabel P5Y3) {
+        this.P5Y3 = P5Y3;
+    }
+    
+    public JLabel getP6B1() {
+        return P6B1;
+    }
+    
+    public void setP6B1(JLabel P6B1) {
+        this.P6B1 = P6B1;
+    }
+    
+    public JLabel getP6B2() {
+        return P6B2;
+    }
+    
+    public void setP6B2(JLabel P6B2) {
+        this.P6B2 = P6B2;
+    }
+    
+    public JLabel getP6C1() {
+        return P6C1;
+    }
+    
+    public void setP6C1(JLabel P6C1) {
+        this.P6C1 = P6C1;
+    }
+    
+    public JLabel getP6C2() {
+        return P6C2;
+    }
+    
+    public void setP6C2(JLabel P6C2) {
+        this.P6C2 = P6C2;
+    }
+    
+    public JLabel getP6C3() {
+        return P6C3;
+    }
+    
+    public void setP6C3(JLabel P6C3) {
+        this.P6C3 = P6C3;
+    }
+    
+    public JLabel getP6G1() {
+        return P6G1;
+    }
+    
+    public void setP6G1(JLabel P6G1) {
+        this.P6G1 = P6G1;
+    }
+    
+    public JLabel getP6G2() {
+        return P6G2;
+    }
+    
+    public void setP6G2(JLabel P6G2) {
+        this.P6G2 = P6G2;
+    }
+    
+    public JLabel getP6G3() {
+        return P6G3;
+    }
+    
+    public void setP6G3(JLabel P6G3) {
+        this.P6G3 = P6G3;
+    }
+    
+    public JLabel getP6M1() {
+        return P6M1;
+    }
+    
+    public void setP6M1(JLabel P6M1) {
+        this.P6M1 = P6M1;
+    }
+    
+    public JLabel getP6M2() {
+        return P6M2;
+    }
+    
+    public void setP6M2(JLabel P6M2) {
+        this.P6M2 = P6M2;
+    }
+    
+    public JLabel getP6O1() {
+        return P6O1;
+    }
+    
+    public void setP6O1(JLabel P6O1) {
+        this.P6O1 = P6O1;
+    }
+    
+    public JLabel getP6O2() {
+        return P6O2;
+    }
+    
+    public void setP6O2(JLabel P6O2) {
+        this.P6O2 = P6O2;
+    }
+    
+    public JLabel getP6O3() {
+        return P6O3;
+    }
+    
+    public void setP6O3(JLabel P6O3) {
+        this.P6O3 = P6O3;
+    }
+    
+    public JLabel getP6P1() {
+        return P6P1;
+    }
+    
+    public void setP6P1(JLabel P6P1) {
+        this.P6P1 = P6P1;
+    }
+    
+    public JLabel getP6P2() {
+        return P6P2;
+    }
+    
+    public void setP6P2(JLabel P6P2) {
+        this.P6P2 = P6P2;
+    }
+    
+    public JLabel getP6P3() {
+        return P6P3;
+    }
+    
+    public void setP6P3(JLabel P6P3) {
+        this.P6P3 = P6P3;
+    }
+    
+    public JLabel getP6R1() {
+        return P6R1;
+    }
+    
+    public void setP6R1(JLabel P6R1) {
+        this.P6R1 = P6R1;
+    }
+    
+    public JLabel getP6R2() {
+        return P6R2;
+    }
+    
+    public void setP6R2(JLabel P6R2) {
+        this.P6R2 = P6R2;
+    }
+    
+    public JLabel getP6R3() {
+        return P6R3;
+    }
+    
+    public void setP6R3(JLabel P6R3) {
+        this.P6R3 = P6R3;
+    }
+    
+    public JLabel getP6RA1() {
+        return P6RA1;
+    }
+    
+    public void setP6RA1(JLabel P6RA1) {
+        this.P6RA1 = P6RA1;
+    }
+    
+    public JLabel getP6RA2() {
+        return P6RA2;
+    }
+    
+    public void setP6RA2(JLabel P6RA2) {
+        this.P6RA2 = P6RA2;
+    }
+    
+    public JLabel getP6RA3() {
+        return P6RA3;
+    }
+    
+    public void setP6RA3(JLabel P6RA3) {
+        this.P6RA3 = P6RA3;
+    }
+    
+    public JLabel getP6RA4() {
+        return P6RA4;
+    }
+    
+    public void setP6RA4(JLabel P6RA4) {
+        this.P6RA4 = P6RA4;
+    }
+    
+    public JLabel getP6U1() {
+        return P6U1;
+    }
+    
+    public void setP6U1(JLabel P6U1) {
+        this.P6U1 = P6U1;
+    }
+    
+    public JLabel getP6U2() {
+        return P6U2;
+    }
+    
+    public void setP6U2(JLabel P6U2) {
+        this.P6U2 = P6U2;
+    }
+    
+    public JLabel getP6Y1() {
+        return P6Y1;
+    }
+    
+    public void setP6Y1(JLabel P6Y1) {
+        this.P6Y1 = P6Y1;
+    }
+    
+    public JLabel getP6Y2() {
+        return P6Y2;
+    }
+    
+    public void setP6Y2(JLabel P6Y2) {
+        this.P6Y2 = P6Y2;
+    }
+    
+    public JLabel getP6Y3() {
+        return P6Y3;
+    }
+    
+    public void setP6Y3(JLabel P6Y3) {
+        this.P6Y3 = P6Y3;
+    }
+    
+    public JLabel getP7B1() {
+        return P7B1;
+    }
+    
+    public void setP7B1(JLabel P7B1) {
+        this.P7B1 = P7B1;
+    }
+    
+    public JLabel getP7B2() {
+        return P7B2;
+    }
+    
+    public void setP7B2(JLabel P7B2) {
+        this.P7B2 = P7B2;
+    }
+    
+    public JLabel getP7C1() {
+        return P7C1;
+    }
+    
+    public void setP7C1(JLabel P7C1) {
+        this.P7C1 = P7C1;
+    }
+    
+    public JLabel getP7C2() {
+        return P7C2;
+    }
+    
+    public void setP7C2(JLabel P7C2) {
+        this.P7C2 = P7C2;
+    }
+    
+    public JLabel getP7C3() {
+        return P7C3;
+    }
+    
+    public void setP7C3(JLabel P7C3) {
+        this.P7C3 = P7C3;
+    }
+    
+    public JLabel getP7G1() {
+        return P7G1;
+    }
+    
+    public void setP7G1(JLabel P7G1) {
+        this.P7G1 = P7G1;
+    }
+    
+    public JLabel getP7G2() {
+        return P7G2;
+    }
+    
+    public void setP7G2(JLabel P7G2) {
+        this.P7G2 = P7G2;
+    }
+    
+    public JLabel getP7G3() {
+        return P7G3;
+    }
+    
+    public void setP7G3(JLabel P7G3) {
+        this.P7G3 = P7G3;
+    }
+    
+    public JLabel getP7M1() {
+        return P7M1;
+    }
+    
+    public void setP7M1(JLabel P7M1) {
+        this.P7M1 = P7M1;
+    }
+    
+    public JLabel getP7M2() {
+        return P7M2;
+    }
+    
+    public void setP7M2(JLabel P7M2) {
+        this.P7M2 = P7M2;
+    }
+    
+    public JLabel getP7O1() {
+        return P7O1;
+    }
+    
+    public void setP7O1(JLabel P7O1) {
+        this.P7O1 = P7O1;
+    }
+    
+    public JLabel getP7O2() {
+        return P7O2;
+    }
+    
+    public void setP7O2(JLabel P7O2) {
+        this.P7O2 = P7O2;
+    }
+    
+    public JLabel getP7O3() {
+        return P7O3;
+    }
+    
+    public void setP7O3(JLabel P7O3) {
+        this.P7O3 = P7O3;
+    }
+    
+    public JLabel getP7P1() {
+        return P7P1;
+    }
+    
+    public void setP7P1(JLabel P7P1) {
+        this.P7P1 = P7P1;
+    }
+    
+    public JLabel getP7P2() {
+        return P7P2;
+    }
+    
+    public void setP7P2(JLabel P7P2) {
+        this.P7P2 = P7P2;
+    }
+    
+    public JLabel getP7P3() {
+        return P7P3;
+    }
+    
+    public void setP7P3(JLabel P7P3) {
+        this.P7P3 = P7P3;
+    }
+    
+    public JLabel getP7R1() {
+        return P7R1;
+    }
+    
+    public void setP7R1(JLabel P7R1) {
+        this.P7R1 = P7R1;
+    }
+    
+    public JLabel getP7R2() {
+        return P7R2;
+    }
+    
+    public void setP7R2(JLabel P7R2) {
+        this.P7R2 = P7R2;
+    }
+    
+    public JLabel getP7R3() {
+        return P7R3;
+    }
+    
+    public void setP7R3(JLabel P7R3) {
+        this.P7R3 = P7R3;
+    }
+    
+    public JLabel getP7RA1() {
+        return P7RA1;
+    }
+    
+    public void setP7RA1(JLabel P7RA1) {
+        this.P7RA1 = P7RA1;
+    }
+    
+    public JLabel getP7RA2() {
+        return P7RA2;
+    }
+    
+    public void setP7RA2(JLabel P7RA2) {
+        this.P7RA2 = P7RA2;
+    }
+    
+    public JLabel getP7RA3() {
+        return P7RA3;
+    }
+    
+    public void setP7RA3(JLabel P7RA3) {
+        this.P7RA3 = P7RA3;
+    }
+    
+    public JLabel getP7RA4() {
+        return P7RA4;
+    }
+    
+    public void setP7RA4(JLabel P7RA4) {
+        this.P7RA4 = P7RA4;
+    }
+    
+    public JLabel getP7U1() {
+        return P7U1;
+    }
+    
+    public void setP7U1(JLabel P7U1) {
+        this.P7U1 = P7U1;
+    }
+    
+    public JLabel getP7U2() {
+        return P7U2;
+    }
+    
+    public void setP7U2(JLabel P7U2) {
+        this.P7U2 = P7U2;
+    }
+    
+    public JLabel getP7Y1() {
+        return P7Y1;
+    }
+    
+    public void setP7Y1(JLabel P7Y1) {
+        this.P7Y1 = P7Y1;
+    }
+    
+    public JLabel getP7Y2() {
+        return P7Y2;
+    }
+    
+    public void setP7Y2(JLabel P7Y2) {
+        this.P7Y2 = P7Y2;
+    }
+    
+    public JLabel getP7Y3() {
+        return P7Y3;
+    }
+    
+    public void setP7Y3(JLabel P7Y3) {
+        this.P7Y3 = P7Y3;
+    }
+    
+    public JLabel getP8B1() {
+        return P8B1;
+    }
+    
+    public void setP8B1(JLabel P8B1) {
+        this.P8B1 = P8B1;
+    }
+    
+    public JLabel getP8B2() {
+        return P8B2;
+    }
+    
+    public void setP8B2(JLabel P8B2) {
+        this.P8B2 = P8B2;
+    }
+    
+    public JLabel getP8C1() {
+        return P8C1;
+    }
+    
+    public void setP8C1(JLabel P8C1) {
+        this.P8C1 = P8C1;
+    }
+    
+    public JLabel getP8C2() {
+        return P8C2;
+    }
+    
+    public void setP8C2(JLabel P8C2) {
+        this.P8C2 = P8C2;
+    }
+    
+    public JLabel getP8C3() {
+        return P8C3;
+    }
+    
+    public void setP8C3(JLabel P8C3) {
+        this.P8C3 = P8C3;
+    }
+    
+    public JLabel getP8G1() {
+        return P8G1;
+    }
+    
+    public void setP8G1(JLabel P8G1) {
+        this.P8G1 = P8G1;
+    }
+    
+    public JLabel getP8G2() {
+        return P8G2;
+    }
+    
+    public void setP8G2(JLabel P8G2) {
+        this.P8G2 = P8G2;
+    }
+    
+    public JLabel getP8G3() {
+        return P8G3;
+    }
+    
+    public void setP8G3(JLabel P8G3) {
+        this.P8G3 = P8G3;
+    }
+    
+    public JLabel getP8M1() {
+        return P8M1;
+    }
+    
+    public void setP8M1(JLabel P8M1) {
+        this.P8M1 = P8M1;
+    }
+    
+    public JLabel getP8M2() {
+        return P8M2;
+    }
+    
+    public void setP8M2(JLabel P8M2) {
+        this.P8M2 = P8M2;
+    }
+    
+    public JLabel getP8O1() {
+        return P8O1;
+    }
+    
+    public void setP8O1(JLabel P8O1) {
+        this.P8O1 = P8O1;
+    }
+    
+    public JLabel getP8O2() {
+        return P8O2;
+    }
+    
+    public void setP8O2(JLabel P8O2) {
+        this.P8O2 = P8O2;
+    }
+    
+    public JLabel getP8O3() {
+        return P8O3;
+    }
+    
+    public void setP8O3(JLabel P8O3) {
+        this.P8O3 = P8O3;
+    }
+    
+    public JLabel getP8P1() {
+        return P8P1;
+    }
+    
+    public void setP8P1(JLabel P8P1) {
+        this.P8P1 = P8P1;
+    }
+    
+    public JLabel getP8P2() {
+        return P8P2;
+    }
+    
+    public void setP8P2(JLabel P8P2) {
+        this.P8P2 = P8P2;
+    }
+    
+    public JLabel getP8P3() {
+        return P8P3;
+    }
+    
+    public void setP8P3(JLabel P8P3) {
+        this.P8P3 = P8P3;
+    }
+    
+    public JLabel getP8R1() {
+        return P8R1;
+    }
+    
+    public void setP8R1(JLabel P8R1) {
+        this.P8R1 = P8R1;
+    }
+    
+    public JLabel getP8R2() {
+        return P8R2;
+    }
+    
+    public void setP8R2(JLabel P8R2) {
+        this.P8R2 = P8R2;
+    }
+    
+    public JLabel getP8R3() {
+        return P8R3;
+    }
+    
+    public void setP8R3(JLabel P8R3) {
+        this.P8R3 = P8R3;
+    }
+    
+    public JLabel getP8RA1() {
+        return P8RA1;
+    }
+    
+    public void setP8RA1(JLabel P8RA1) {
+        this.P8RA1 = P8RA1;
+    }
+    
+    public JLabel getP8RA2() {
+        return P8RA2;
+    }
+    
+    public void setP8RA2(JLabel P8RA2) {
+        this.P8RA2 = P8RA2;
+    }
+    
+    public JLabel getP8RA3() {
+        return P8RA3;
+    }
+    
+    public void setP8RA3(JLabel P8RA3) {
+        this.P8RA3 = P8RA3;
+    }
+    
+    public JLabel getP8RA4() {
+        return P8RA4;
+    }
+    
+    public void setP8RA4(JLabel P8RA4) {
+        this.P8RA4 = P8RA4;
+    }
+    
+    public JLabel getP8U1() {
+        return P8U1;
+    }
+    
+    public void setP8U1(JLabel P8U1) {
+        this.P8U1 = P8U1;
+    }
+    
+    public JLabel getP8U2() {
+        return P8U2;
+    }
+    
+    public void setP8U2(JLabel P8U2) {
+        this.P8U2 = P8U2;
+    }
+    
+    public JLabel getP8Y1() {
+        return P8Y1;
+    }
+    
+    public void setP8Y1(JLabel P8Y1) {
+        this.P8Y1 = P8Y1;
+    }
+    
+    public JLabel getP8Y2() {
+        return P8Y2;
+    }
+    
+    public void setP8Y2(JLabel P8Y2) {
+        this.P8Y2 = P8Y2;
+    }
+    
+    public JLabel getP8Y3() {
+        return P8Y3;
+    }
+    
+    public void setP8Y3(JLabel P8Y3) {
+        this.P8Y3 = P8Y3;
+    }
+    
+    public JPopupMenu getPopupProperties() {
+        return PopupProperties;
+    }
+    
+    public void setPopupProperties(JPopupMenu PopupProperties) {
+        this.PopupProperties = PopupProperties;
+    }
+    
+    public JButton getbAuctionProperty() {
+        return bAuctionProperty;
+    }
+    
+    public void setbAuctionProperty(JButton bAuctionProperty) {
+        this.bAuctionProperty = bAuctionProperty;
+    }
+    
+    public JButton getbBankrupt() {
+        return bBankrupt;
+    }
+    
+    public void setbBankrupt(JButton bBankrupt) {
+        this.bBankrupt = bBankrupt;
+    }
+    
+    public JButton getbBuyProperty() {
+        return bBuyProperty;
+    }
+    
+    public void setbBuyProperty(JButton bBuyProperty) {
+        this.bBuyProperty = bBuyProperty;
+    }
+    
+    public JButton getbDice() {
+        return bDice;
+    }
+    
+    public void setbDice(JButton bDice) {
+        this.bDice = bDice;
+    }
+    
+    public JButton getbNextTurn() {
+        return bNextTurn;
+    }
+    
+    public void setbNextTurn(JButton bNextTurn) {
+        this.bNextTurn = bNextTurn;
+    }
+    
+    public JButton getbPayRent() {
+        return bPayRent;
+    }
+    
+    public void setbPayRent(JButton bPayRent) {
+        this.bPayRent = bPayRent;
+    }
+    
+    public JButton getbPropertyHandle() {
+        return bPropertyHandle;
+    }
+    
+    public void setbPropertyHandle(JButton bPropertyHandle) {
+        this.bPropertyHandle = bPropertyHandle;
+    }
+    
+    public Canvas getCanvas() {
+        return canvas;
+    }
+    
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+    
+    public JPanel getDicePane() {
+        return dicePane;
+    }
+    
+    public void setDicePane(JPanel dicePane) {
+        this.dicePane = dicePane;
+    }
+    
+    public JButton getjButton1() {
+        return jButton1;
+    }
+    
+    public void setjButton1(JButton jButton1) {
+        this.jButton1 = jButton1;
+    }
+    
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+    
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+    
+    public JLabel getjLabel11() {
+        return jLabel11;
+    }
+    
+    public void setjLabel11(JLabel jLabel11) {
+        this.jLabel11 = jLabel11;
+    }
+    
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+    
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+    
+    public JLabel getjLabel3() {
+        return jLabel3;
+    }
+    
+    public void setjLabel3(JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
+    }
+    
+    public JLabel getjLabel4() {
+        return jLabel4;
+    }
+    
+    public void setjLabel4(JLabel jLabel4) {
+        this.jLabel4 = jLabel4;
+    }
+    
+    public JLabel getjLabel5() {
+        return jLabel5;
+    }
+    
+    public void setjLabel5(JLabel jLabel5) {
+        this.jLabel5 = jLabel5;
+    }
+    
+    public JLabel getjLabel6() {
+        return jLabel6;
+    }
+    
+    public void setjLabel6(JLabel jLabel6) {
+        this.jLabel6 = jLabel6;
+    }
+    
+    public JLabel getjLabel7() {
+        return jLabel7;
+    }
+    
+    public void setjLabel7(JLabel jLabel7) {
+        this.jLabel7 = jLabel7;
+    }
+    
+    public JLabel getjLabel8() {
+        return jLabel8;
+    }
+    
+    public void setjLabel8(JLabel jLabel8) {
+        this.jLabel8 = jLabel8;
+    }
+    
+    public JLabel getlCell() {
+        return lCell;
+    }
+    
+    public void setlCell(JLabel lCell) {
+        this.lCell = lCell;
+    }
+    
+    public JLabel getlDice1() {
+        return lDice1;
+    }
+    
+    public void setlDice1(JLabel lDice1) {
+        this.lDice1 = lDice1;
+    }
+    
+    public JLabel getlDice2() {
+        return lDice2;
+    }
+    
+    public void setlDice2(JLabel lDice2) {
+        this.lDice2 = lDice2;
+    }
+    
+    public JLabel getlHotelPrice() {
+        return lHotelPrice;
+    }
+    
+    public void setlHotelPrice(JLabel lHotelPrice) {
+        this.lHotelPrice = lHotelPrice;
+    }
+    
+    public JLabel getlHousePrice() {
+        return lHousePrice;
+    }
+    
+    public void setlHousePrice(JLabel lHousePrice) {
+        this.lHousePrice = lHousePrice;
+    }
+    
+    public JLabel getlMoney() {
+        return lMoney;
+    }
+    
+    public void setlMoney(JLabel lMoney) {
+        this.lMoney = lMoney;
+    }
+    
+    public JLabel getlPlayer1() {
+        return lPlayer1;
+    }
+    
+    public void setlPlayer1(JLabel lPlayer1) {
+        this.lPlayer1 = lPlayer1;
+    }
+    
+    public JLabel getlPlayer2() {
+        return lPlayer2;
+    }
+    
+    public void setlPlayer2(JLabel lPlayer2) {
+        this.lPlayer2 = lPlayer2;
+    }
+    
+    public JLabel getlPlayer3() {
+        return lPlayer3;
+    }
+    
+    public void setlPlayer3(JLabel lPlayer3) {
+        this.lPlayer3 = lPlayer3;
+    }
+    
+    public JLabel getlPlayer4() {
+        return lPlayer4;
+    }
+    
+    public void setlPlayer4(JLabel lPlayer4) {
+        this.lPlayer4 = lPlayer4;
+    }
+    
+    public JLabel getlPlayer5() {
+        return lPlayer5;
+    }
+    
+    public void setlPlayer5(JLabel lPlayer5) {
+        this.lPlayer5 = lPlayer5;
+    }
+    
+    public JLabel getlPlayer6() {
+        return lPlayer6;
+    }
+    
+    public void setlPlayer6(JLabel lPlayer6) {
+        this.lPlayer6 = lPlayer6;
+    }
+    
+    public JLabel getlPlayer7() {
+        return lPlayer7;
+    }
+    
+    public void setlPlayer7(JLabel lPlayer7) {
+        this.lPlayer7 = lPlayer7;
+    }
+    
+    public JLabel getlPlayer8() {
+        return lPlayer8;
+    }
+    
+    public void setlPlayer8(JLabel lPlayer8) {
+        this.lPlayer8 = lPlayer8;
+    }
+    
+    public JLabel getlPlayerOnTurn() {
+        return lPlayerOnTurn;
+    }
+    
+    public void setlPlayerOnTurn(JLabel lPlayerOnTurn) {
+        this.lPlayerOnTurn = lPlayerOnTurn;
+    }
+    
+    public JLabel getlPlayers() {
+        return lPlayers;
+    }
+    
+    public void setlPlayers(JLabel lPlayers) {
+        this.lPlayers = lPlayers;
+    }
+    
+    public JLabel getlProperties() {
+        return lProperties;
+    }
+    
+    public void setlProperties(JLabel lProperties) {
+        this.lProperties = lProperties;
+    }
+    
+    public JLabel getlRentToPay() {
+        return lRentToPay;
+    }
+    
+    public void setlRentToPay(JLabel lRentToPay) {
+        this.lRentToPay = lRentToPay;
+    }
+    
+    public JLabel getlTotalDice() {
+        return lTotalDice;
+    }
+    
+    public void setlTotalDice(JLabel lTotalDice) {
+        this.lTotalDice = lTotalDice;
+    }
+    
+    public JPanel getPlayerPane() {
+        return playerPane;
+    }
+    
+    public void setPlayerPane(JPanel playerPane) {
+        this.playerPane = playerPane;
+    }
+    
+    
+//</editor-fold>
+    //GEETER SETTER
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenuItemHotels;
     private javax.swing.JMenuItem MenuItemHouses;

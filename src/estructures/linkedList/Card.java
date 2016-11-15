@@ -6,6 +6,7 @@
 package estructures.linkedList;
 
 import estructures.Nodo;
+import javax.swing.JOptionPane;
 import managers.Master;
 
 /**
@@ -23,30 +24,62 @@ public class Card extends Nodo{
     private String text;
     private Master m;
     private int value;
+    private int actionType;
 
-    public Card(int cardNumber, String type, String title, String Clausule, String text, Master m) {
-        this.cardNumber = cardNumber;
+    public Card(int cardNumber, String type, String title, String Clausule, String text, int actionType, int value,Master m) {
+        super(cardNumber);
         this.type = type;
         this.title = title;
         this.Clausule = Clausule;
         this.text = text;
         this.m = m;
-        accion();
+        this.actionType = actionType;
+        this.value = value;
     }
     
+    public void showMessageToPlayer(){
+        JOptionPane.showMessageDialog(null, "Card Info: \n" + title + "\n" + Clausule + "\n" + actionType + " " + value);
+    }
     
     public void accion(){
-        if(tipo == 1){
-            m.getPlayerOnTurn().setMoney(m.getPlayerOnTurn().getMoney() + value);
+        if(actionType == 1){
+            //Give or take player x amount of money
+            System.out.println("Entro a 1");
+            if(value > 0 ) m.g.getPlayerOnTurn().setMoney(m.g.getPlayerOnTurn().getMoney() + value);
+            else {m.g.getlRentToPay().setText(String.valueOf(-1 * value) + " M"); m.g.setOnAcquirable(true);}
+            if(m.g.getlRentToPay().getText().equals("0 M")) m.g.setOnAcquirable(false);
+            m.g.getlMoney().setText((String.valueOf(m.g.getPlayerOnTurn().getMoney()) + " M"));
         }
-        if(tipo == 2){
-            m.getPlayerOnTurn().setMoney((m.getPlayerOnTurn().getHouses() * value) + m.getPlayerOnTurn().getMoney() + (value * m.getPlayerOnTurn().getHotels()));
+        if(actionType == 2){
+            //Give or take player x amount of money per houses and hotels
+            System.out.println("Entro a 2");
+            if(value > 0 ) m.g.getPlayerOnTurn().setMoney(m.g.getPlayerOnTurn().getMoney() + (m.g.getPlayerOnTurn().getHouses() * value) + (value * m.g.getPlayerOnTurn().getHotels()));
+            else {m.g.getlRentToPay().setText(String.valueOf(-1 * ((m.g.getPlayerOnTurn().getHouses() * value) + (value * m.g.getPlayerOnTurn().getHotels()))) + " M"); m.g.setOnAcquirable(true);}
+            if(m.g.getlRentToPay().getText().equals("0 M")) m.g.setOnAcquirable(false);
+            m.g.getlMoney().setText((String.valueOf(m.g.getPlayerOnTurn().getMoney()) + " M"));
         }
-        if(tipo == 3){
-            m.getPlayerOnTurn().setMoney(m.getPlayerOnTurn().getMoney() + value * m.getPlayers().length());
+        if(actionType == 3){
+            //Give or take money per player in game
+            System.out.println("Entro a 3");
+            if(value > 0 ) m.g.getPlayerOnTurn().setMoney(m.g.getPlayerOnTurn().getMoney() + value * m.getPlayers().length());
+            else {m.g.getlRentToPay().setText(String.valueOf(-1 * value * m.getPlayers().length()) + " M"); m.g.setOnAcquirable(true);}
+            if(m.g.getlRentToPay().getText().equals("0 M")) m.g.setOnAcquirable(false);
+            m.g.getlMoney().setText((String.valueOf(m.g.getPlayerOnTurn().getMoney()) + " M"));
         }
-        if(tipo == 4){
-            m.getPlayerOnTurn().setCourrentCell(value);
+        if(actionType == 4){
+            //Move player to any cell 
+            System.out.println("Entro a 4");
+            if(m.g.getPlayerOnTurn().getCourrentCell() > value){
+                m.g.getPlayerOnTurn().setMoney(m.g.getPlayerOnTurn().getMoney() + 200);
+                m.g.getlMoney().setText((String.valueOf(m.g.getPlayerOnTurn().getMoney()) + " M"));
+            }
+            if(value == 11){
+                m.g.getPlayerOnTurn().setInJail(true);
+            }
+            if(value == 1){
+                m.g.getPlayerOnTurn().setMoney(m.g.getPlayerOnTurn().getMoney() + 200);
+            }
+            m.g.getPlayerOnTurn().setCourrentCell(value);
         }
     }
     
