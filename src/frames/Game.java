@@ -314,6 +314,10 @@ public class Game extends javax.swing.JFrame {
         lMoney.setText(money);
 
         loadCell(playerOnTurn.getCourrentCell());
+        
+        if(playerOnTurn.isInJail()){
+            lRentToPay.setText("50 M");
+        }
 
     }
 
@@ -1167,6 +1171,7 @@ public class Game extends javax.swing.JFrame {
         lRentToPay = new javax.swing.JLabel();
         bPayRent = new javax.swing.JButton();
         bNextTurn = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         MenuItemSell.setText("Vender");
         MenuItemSell.addActionListener(new java.awt.event.ActionListener() {
@@ -2875,6 +2880,13 @@ public class Game extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jButton2.setText("Pa la carcel Papi");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -2884,7 +2896,9 @@ public class Game extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dicePane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(playerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(playerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 8, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2899,7 +2913,9 @@ public class Game extends javax.swing.JFrame {
                         .addComponent(playerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(dicePane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(188, 188, 188))
+                        .addGap(69, 69, 69)
+                        .addComponent(jButton2)
+                        .addGap(96, 96, 96))
                     .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
@@ -2915,6 +2931,18 @@ public class Game extends javax.swing.JFrame {
             lTotalDice.setText(Integer.toString(totalDice));
             lDice1.setText(Integer.toString(m.getDice1()));
             lDice2.setText(Integer.toString(m.getDice2()));
+            if(playerOnTurn.isInJail()){
+                
+                if(m.getDice1() != m.getDice2()){
+                    playerOnTurn.setTurnsInJail(playerOnTurn.getTurnsInJail() + 1);
+                    if(playerOnTurn.getTurnsInJail() >= 5){
+                        JOptionPane.showMessageDialog(null, "Tienes que salir de la carcel ya han pasado 4 turnos, paga la fianza de 50 M y vuelve a lanzar los dados");
+                        onAcquirable = true;
+                    }
+                    return;
+                }
+                playerOnTurn.setInJail(false);
+            }
             int toCell = playerOnTurn.getCourrentCell() + totalDice;
             if (toCell > 40) {
                 toCell = toCell % 40;
@@ -2939,6 +2967,10 @@ public class Game extends javax.swing.JFrame {
                 System.out.println("ID " + courrentCell.getId());
                 System.out.println("Nombre " + courrentCell.getName());
                 playerOnTurn.setCourrentCell(courrentCell.getId());
+                if(courrentCell.getId() == 11 || courrentCell.getId() == 31){
+                    playerOnTurn.setCourrentCell(11);
+                    playerOnTurn.setInJail(true);
+                }
             } else if (cellInTurn.getNombre().equals("Railroad")) {
                 onAcquirable = true;
                 Railroad courrentCell = (Railroad) cellInTurn;
@@ -3040,7 +3072,7 @@ public class Game extends javax.swing.JFrame {
     }//GEN-LAST:event_bAuctionPropertyActionPerformed
 
     private void bPayRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPayRentActionPerformed
-        if (onAcquirable) {
+        if (onAcquirable || playerOnTurn.isInJail()) {
             String rentToPay = lRentToPay.getText();
             if (!rentToPay.equals("0 M")) {
                 int value = Integer.valueOf(rentToPay.substring(0, rentToPay.length() - 2));
@@ -3050,6 +3082,10 @@ public class Game extends javax.swing.JFrame {
                     lRentToPay.setText("0 M");
                     setPlayerOnTurn();
                     onAcquirable = false;
+                    if(playerOnTurn.isInJail()){
+                        playerOnTurn.setInJail(false);
+                        lTotalDice.setText("0");
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No hay renta que pagar.");
@@ -3317,6 +3353,11 @@ public class Game extends javax.swing.JFrame {
         // PAPI HACE FALTA TRADEO
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        playerOnTurn.courrentCell = 11;
+        playerOnTurn.setInJail(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenuItemHotels;
     private javax.swing.JMenuItem MenuItemHouses;
@@ -3558,6 +3599,7 @@ public class Game extends javax.swing.JFrame {
     private java.awt.Canvas canvas;
     private javax.swing.JPanel dicePane;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
