@@ -32,8 +32,6 @@ public class Master {
     private Lista CommunityChestCard;
     private Lista ChanceCard;
 
-    private Player playerOnTurn;
-
     private int dice1, dice2;
     
     public Game g;
@@ -372,14 +370,6 @@ public class Master {
     //GETTERS SETTERS
     public Lista getPlayers() {
         return players;
-    }
-
-    public Player getPlayerOnTurn() {
-        return playerOnTurn;
-    }
-
-    public void setPlayerOnTurn(Player playerOnTurn) {
-        this.playerOnTurn = playerOnTurn;
     }
 
     public Lista getTable() {

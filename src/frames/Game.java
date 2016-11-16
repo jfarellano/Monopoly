@@ -3139,6 +3139,7 @@ public class Game extends javax.swing.JFrame {
 
             lHousePrice.setText("0 M");
             lHotelPrice.setText("0 M");
+            lRentToPay.setText("0 M");
 
             Player p;
             do {
