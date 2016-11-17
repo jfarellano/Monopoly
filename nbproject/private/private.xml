@@ -5,27 +5,19 @@
             <url>src/frames/Game.java</url>
             <bookmark id="1">
                 <name/>
-                <line>3334</line>
+                <line>3871</line>
                 <key/>
             </bookmark>
             <bookmark id="2">
                 <name/>
-                <line>3334</line>
+                <line>3871</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/resources/txts/CommunityChestCards.txt</file>
-            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/estructures/linkedList/Player.java</file>
-            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/managers/Master.java</file>
-            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/estructures/linkedList/Card.java</file>
-            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/frames/PlayerSetUp.java</file>
-            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/resources/txts/Table.txt</file>
-            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/resources/txts/ChanceCards.txt</file>
-            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/frames/Game.java</file>
-            <file>file:/D:/Documents/U/Semestre3/Datos/Monopoly/src/frames/Start.java</file>
+            <file>file:/C:/Users/Administrador/Desktop/Monopoly-master%202/src/frames/Game.java</file>
         </group>
     </open-files>
 </project-private>

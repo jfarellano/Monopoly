@@ -16,8 +16,10 @@ import estructures.linkedList.Utility;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -34,6 +36,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 import machines.Avenue;
 import machines.Corner;
 import managers.Master;
@@ -56,7 +59,15 @@ public class Game extends javax.swing.JFrame {
     Nodo cellInTurn;
     boolean onAcquirable;
 
+    Player playerOnAuction;
+    boolean onAuction;
+
+    Player playerToTrade; //New stuff...
+    boolean onTrade;
+
     Component propertySelected;
+
+    private boolean keySleep;
 
     /**
      * Creates new form Game
@@ -65,6 +76,7 @@ public class Game extends javax.swing.JFrame {
         this.m = m;
         stop = false;
         onAcquirable = false;
+        onAuction = false;
 
         initComponents();
         this.setLocationRelativeTo(null);
@@ -78,8 +90,11 @@ public class Game extends javax.swing.JFrame {
             }
         });
 
+        enableComponents(AuctionPane, false);
+        enableComponents(tradePane, false);
         setUp();
         createComponentMap();
+        setUpAuctionAndTrade();
         //justProving();
 
         setPlayerOnTurn();
@@ -112,6 +127,52 @@ public class Game extends javax.swing.JFrame {
             System.out.println("Nombre del jugador: " + p.getPlayerName());
             m.getPlayers().next();
         }
+    }
+
+    private void setUpAuctionAndTrade() {
+        simpleSetUp(1, Color.BLUE);
+        simpleSetUp(2, Color.YELLOW);
+        simpleSetUp(3, Color.GRAY);
+        simpleSetUp(4, Color.PINK);
+        simpleSetUp(5, Color.WHITE);
+        simpleSetUp(6, Color.MAGENTA);
+        simpleSetUp(7, Color.ORANGE);
+        simpleSetUp(8, Color.CYAN);
+    }
+
+    private void simpleSetUp(int id, Color color) {
+        String ID = Integer.toString(id);
+        Player p = (Player) m.getPlayers().BuscarConId(id);
+
+        JLabel P = (JLabel) getComponentByName("P" + ID);
+        JLabel P1 = (JLabel) getComponentByName("1P" + ID);
+        if (p == null) {
+            P.setText("0");
+            P1.setText("0");
+        } else if (!p.isBankruptcy()) {
+            P.setText(ID);
+            P1.setText(ID);
+        } else {
+            P.setText("0");
+            P1.setText("0");
+        }
+        P.setBackground(color);
+        P.setOpaque(true);
+        P1.setBackground(color);
+        P1.setOpaque(true);
+    }
+
+    private void setPlayerOnAuction() {
+        int playerNumber = playerOnAuction.getId();
+
+        String componentName = "P" + Integer.toString(playerNumber);
+        JLabel a = (JLabel) getComponentByName(componentName);
+        lPlayerOnAuction.setText(Integer.toString(playerNumber));
+        lPlayerOnAuction.setBackground(a.getBackground());
+        lPlayerOnAuction.setOpaque(true);
+
+        String money = Integer.toString(playerOnAuction.getMoney()) + " M";
+        lMoneyAuction.setText(money);
     }
 
     private Nodo getCellByComponent(Component component) {
@@ -276,11 +337,58 @@ public class Game extends javax.swing.JFrame {
             component.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if (!PopupProperties.isPopupTrigger(e)) {
-                        Color color = e.getComponent().getBackground();
-                        if (color != UIManager.getColor("Panel.background") && playerOnTurn.getId() == Integer.valueOf(e.getComponent().getName().substring(1, 2))) {
-                            PopupProperties.show(e.getComponent(), e.getX(), e.getY());
-                            propertySelected = e.getComponent();
+                    if (!onTrade) {
+                        if (!PopupProperties.isPopupTrigger(e)) {
+                            Color color = e.getComponent().getBackground();
+                            if (color != UIManager.getColor("Panel.background") && playerOnTurn.getId() == Integer.valueOf(e.getComponent().getName().substring(1, 2)) && !onAuction) {
+                                PopupProperties.show(e.getComponent(), e.getX(), e.getY());
+                                propertySelected = e.getComponent();
+                            }
+                        }
+                    } else {
+                        JLabel component = (JLabel) e.getComponent();
+                        String componentName = component.getName();
+
+                        component.setBackground(UIManager.getColor("Panel.background"));
+                        component.setForeground(Color.BLACK);
+                        component.setOpaque(true);
+
+                        String tradeComponentName;
+                        JLabel tradeComponent;
+
+                        Player playerReceiver;
+                        int idPlayer = Integer.valueOf(componentName.substring(1, 2));
+                        if (idPlayer == playerOnTurn.getId()) {
+                            playerReceiver = playerToTrade;
+                            tradeComponentName = "P" + playerToTrade.getId() + componentName.substring(2);
+                        } else {
+                            playerReceiver = playerOnTurn;
+                            tradeComponentName = "P" + playerOnTurn.getId() + componentName.substring(2);
+                        }
+
+                        tradeComponent = (JLabel) getComponentByName(tradeComponentName);
+                        Nodo tradeCell = getCellByComponent(componentName);
+
+                        String name = tradeCell.getNombre();
+                        if (name.equals("Avenue")) {
+                            Avenue courrentCell = (Avenue) tradeCell;
+                            courrentCell.setOwner(playerReceiver);
+                            showAvenues(playerReceiver.getId(), courrentCell.getAvenueColor(), m.getAvenueNumber(tradeCell));
+                        } else if (name.equals("Railroad")) {
+                            Railroad courrentCell = (Railroad) tradeCell;
+                            courrentCell.setOwner(playerReceiver);
+                            Railroad rCopy = (Railroad) m.getRail().BuscarConId(tradeCell.getId());
+                            rCopy.setOwner(playerReceiver);
+                            showUtilityOrRailroad(false, playerReceiver.getId(), m.getRailNumber(tradeCell));
+                        } else if (name.equals("Utility")) {
+                            Utility courrentCell = (Utility) tradeCell;
+                            courrentCell.setOwner(playerReceiver);
+                            Utility uCopy = (Utility) m.getUtility().BuscarConId(tradeCell.getId());
+                            uCopy.setOwner(playerReceiver);
+                            m.enableUtilityRentPrice(playerReceiver);
+                            showUtilityOrRailroad(true, playerOnTurn.getId(), m.getUtilityNumber(cellInTurn));
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No puedes comprar esto.");
                         }
                     }
                 }
@@ -288,22 +396,38 @@ public class Game extends javax.swing.JFrame {
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     Color color = e.getComponent().getBackground();
-                    if (color != UIManager.getColor("Panel.background") && playerOnTurn.getId() == Integer.valueOf(e.getComponent().getName().substring(1, 2))) {
-                        Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-                        setCursor(cursor);
+                    if (color != UIManager.getColor("Panel.background")) {
+                        int id = Integer.valueOf(e.getComponent().getName().substring(1, 2));
+                        if ((playerOnTurn.getId() == id)) {
+                            Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+                            setCursor(cursor);
+                        } else if (playerToTrade != null) {
+                            if ((playerToTrade.getId() == id)) {
+                                Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+                                setCursor(cursor);
+                            }
+                        }
                     }
                 }
 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     Color color = e.getComponent().getBackground();
-                    if (color != UIManager.getColor("Panel.background") && playerOnTurn.getId() == Integer.valueOf(e.getComponent().getName().substring(1, 2))) {
-                        Cursor cursor = Cursor.getDefaultCursor();
-                        setCursor(cursor);
+                    if (color != UIManager.getColor("Panel.background")) {
+                        int id = Integer.valueOf(e.getComponent().getName().substring(1, 2));
+                        if ((playerOnTurn.getId() == id)) {
+                            Cursor cursor = Cursor.getDefaultCursor();
+                            setCursor(cursor);
+                        } else if (playerToTrade != null) {
+                            if ((playerToTrade.getId() == id)) {
+                                Cursor cursor = Cursor.getDefaultCursor();
+                                setCursor(cursor);
+                            }
+                        }
                     }
                 }
             });
         }
-
     }
 
     private void setPlayerOnTurn() {
@@ -320,8 +444,8 @@ public class Game extends javax.swing.JFrame {
         lMoney.setText(money);
 
         loadCell(playerOnTurn.getCourrentCell());
-        
-        if(playerOnTurn.isInJail()){
+
+        if (playerOnTurn.isInJail()) {
             lRentToPay.setText("50 M");
         }
 
@@ -388,6 +512,16 @@ public class Game extends javax.swing.JFrame {
         Component[] components = playerPane.getComponents();
         for (int i = 0; i < components.length; i++) {
             componentMap.put(components[i].getName(), components[i]);
+        }
+
+        Component[] auctionComponents = AuctionPane.getComponents();
+        for (int i = 0; i < auctionComponents.length; i++) {
+            componentMap.put(auctionComponents[i].getName(), auctionComponents[i]);
+        }
+
+        Component[] tradeComponents = tradePane.getComponents();
+        for (int i = 0; i < tradeComponents.length; i++) {
+            componentMap.put(tradeComponents[i].getName(), tradeComponents[i]);
         }
     }
 
@@ -899,6 +1033,83 @@ public class Game extends javax.swing.JFrame {
         return cont;
     }
 
+    private void enableComponents(Container container, boolean enable) {
+        Component[] components = container.getComponents();
+        for (Component component : components) {
+            component.setEnabled(enable);
+            if (component instanceof Container) {
+                enableComponents((Container) component, enable);
+            }
+        }
+    }
+
+    private void validatePlayersOnAuction() {
+        int cont = 0;
+        for (int i = 1; i < 9; i++) {
+            String componentName = "P" + i;
+            JLabel jl = (JLabel) getComponentByName(componentName);
+            if (!jl.getText().equals("0")) {
+                cont++;
+            }
+        }
+
+        nextPlayerOnAuction();
+        if (cont == 1) {
+            String bestOffer = lBestOffer.getText();
+            int finalMoney = playerOnAuction.getMoney() - Integer.valueOf(bestOffer.substring(0, bestOffer.length() - 2));
+            if (finalMoney < 0) {
+                finalMoney = 0;
+            }
+            playerOnAuction.setMoney(finalMoney);
+            String name = cellInTurn.getNombre();
+            if (name.equals("Avenue")) {
+                Avenue courrentCell = (Avenue) cellInTurn;
+                courrentCell.setOwner(playerOnAuction);
+                showAvenues(playerOnAuction.getId(), courrentCell.getAvenueColor(), m.getAvenueNumber(cellInTurn));
+            } else if (name.equals("Railroad")) {
+                Railroad courrentCell = (Railroad) cellInTurn;
+                courrentCell.setOwner(playerOnAuction);
+                Railroad rCopy = (Railroad) m.getRail().BuscarConId(courrentCell.getId());
+                rCopy.setOwner(playerOnAuction);
+                showUtilityOrRailroad(false, playerOnAuction.getId(), m.getRailNumber(cellInTurn));
+            } else if (name.equals("Utility")) {
+                Utility courrentCell = (Utility) cellInTurn;
+                courrentCell.setOwner(playerOnAuction);
+                Utility uCopy = (Utility) m.getUtility().BuscarConId(courrentCell.getId());
+                uCopy.setOwner(playerOnAuction);
+                m.enableUtilityRentPrice(playerOnAuction);
+                showUtilityOrRailroad(true, playerOnAuction.getId(), m.getUtilityNumber(cellInTurn));
+            }
+            onAcquirable = false;
+            m.getPlayers().BuscarConId(playerOnTurn.getId());
+            setPlayerOnTurn();
+            enableComponents(AuctionPane, false);
+            onAuction = false;
+            enableComponents(dicePane, true);
+            lBestOffer.setText("0 M");
+            tOffer.setText("0");
+            lMoneyAuction.setText("0 M");
+            lPlayerOnAuction.setText("0");
+            lPlayerOnAuction.setBackground(UIManager.getColor("Panel.background"));
+        } else {
+            setPlayerOnAuction();
+        }
+    }
+
+    private void nextPlayerOnAuction() {
+        int number = playerOnAuction.getId();
+        JLabel jl;
+        do {
+            number = number + 1;
+            if (number > 8) {
+                number = number % 8;
+            }
+            String componentName = "P" + number;
+            jl = (JLabel) getComponentByName(componentName);
+        } while (jl.getText().equals("0"));
+        playerOnAuction = (Player) m.getPlayers().BuscarConId(number);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1163,7 +1374,7 @@ public class Game extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         lPlayerOnTurn = new javax.swing.JLabel();
         bBankrupt = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        bTrade = new javax.swing.JButton();
         bBuyProperty = new javax.swing.JButton();
         bAuctionProperty = new javax.swing.JButton();
         bPropertyHandle = new javax.swing.JButton();
@@ -1177,7 +1388,43 @@ public class Game extends javax.swing.JFrame {
         lRentToPay = new javax.swing.JLabel();
         bPayRent = new javax.swing.JButton();
         bNextTurn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        AuctionPane = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        lP1 = new javax.swing.JLabel();
+        lP2 = new javax.swing.JLabel();
+        lP3 = new javax.swing.JLabel();
+        lP4 = new javax.swing.JLabel();
+        lP5 = new javax.swing.JLabel();
+        lP6 = new javax.swing.JLabel();
+        lP7 = new javax.swing.JLabel();
+        lP8 = new javax.swing.JLabel();
+        tOffer = new javax.swing.JTextField();
+        bOffer = new javax.swing.JButton();
+        jLabel20 = new javax.swing.JLabel();
+        lBestOffer = new javax.swing.JLabel();
+        bImOutOfAuction = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        lPlayerOnAuction = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        lMoneyAuction = new javax.swing.JLabel();
+        tradePane = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        l1P3 = new javax.swing.JLabel();
+        l1P4 = new javax.swing.JLabel();
+        l1P5 = new javax.swing.JLabel();
+        l1P6 = new javax.swing.JLabel();
+        l1P7 = new javax.swing.JLabel();
+        l1P8 = new javax.swing.JLabel();
+        l1P1 = new javax.swing.JLabel();
+        l1P2 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        bAcept = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        tPlayerToTrade = new javax.swing.JTextField();
+        tMoneyToGive = new javax.swing.JTextField();
+        bFinalize = new javax.swing.JButton();
 
         MenuItemSell.setText("Vender");
         MenuItemSell.addActionListener(new java.awt.event.ActionListener() {
@@ -2703,10 +2950,10 @@ public class Game extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Tradear");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bTrade.setText("Tradear");
+        bTrade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bTradeActionPerformed(evt);
             }
         });
 
@@ -2824,7 +3071,7 @@ public class Game extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(bPropertyHandle)
-                            .addComponent(jButton1))
+                            .addComponent(bTrade))
                         .addGap(81, 81, 81))))
         );
         dicePaneLayout.setVerticalGroup(
@@ -2876,8 +3123,8 @@ public class Game extends javax.swing.JFrame {
                                 .addComponent(bPayRent))
                             .addGroup(dicePaneLayout.createSequentialGroup()
                                 .addComponent(bPropertyHandle)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bTrade))))
                     .addComponent(lCell, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(dicePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -2886,12 +3133,292 @@ public class Game extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton2.setText("Pa la carcel Papi");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        jLabel9.setText("SUBASTA");
+
+        jLabel10.setText("Jugadores:");
+
+        lP1.setText("1");
+        lP1.setName("P1"); // NOI18N
+
+        lP2.setText("2");
+        lP2.setName("P2"); // NOI18N
+
+        lP3.setText("3");
+        lP3.setName("P3"); // NOI18N
+
+        lP4.setText("4");
+        lP4.setName("P4"); // NOI18N
+
+        lP5.setText("5");
+        lP5.setName("P5"); // NOI18N
+
+        lP6.setText("6");
+        lP6.setName("P6"); // NOI18N
+
+        lP7.setText("7");
+        lP7.setName("P7"); // NOI18N
+
+        lP8.setText("8");
+        lP8.setName("P8"); // NOI18N
+
+        tOffer.setText("0");
+        tOffer.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tOfferKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tOfferKeyPressed(evt);
             }
         });
+
+        bOffer.setText("Ofertar");
+        bOffer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bOfferActionPerformed(evt);
+            }
+        });
+
+        jLabel20.setText("Mayor oferta:");
+
+        lBestOffer.setText("0 M");
+
+        bImOutOfAuction.setText("Retirarme");
+        bImOutOfAuction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bImOutOfAuctionActionPerformed(evt);
+            }
+        });
+
+        jLabel21.setText("Turno:");
+
+        lPlayerOnAuction.setText("0");
+        lPlayerOnAuction.setName("PT"); // NOI18N
+
+        jLabel12.setText("Dinero:");
+
+        lMoneyAuction.setText("0 M");
+
+        javax.swing.GroupLayout AuctionPaneLayout = new javax.swing.GroupLayout(AuctionPane);
+        AuctionPane.setLayout(AuctionPaneLayout);
+        AuctionPaneLayout.setHorizontalGroup(
+            AuctionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AuctionPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AuctionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AuctionPaneLayout.createSequentialGroup()
+                        .addComponent(bOffer)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bImOutOfAuction))
+                    .addGroup(AuctionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(tOffer, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(AuctionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AuctionPaneLayout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10))
+                            .addGroup(AuctionPaneLayout.createSequentialGroup()
+                                .addComponent(lP1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lP2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lP3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lP4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lP5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lP6, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lP7, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lP8, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(AuctionPaneLayout.createSequentialGroup()
+                                .addComponent(jLabel20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lBestOffer, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(AuctionPaneLayout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lPlayerOnAuction, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lMoneyAuction, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        AuctionPaneLayout.setVerticalGroup(
+            AuctionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AuctionPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AuctionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(AuctionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lP1)
+                    .addComponent(lP2)
+                    .addComponent(lP3)
+                    .addComponent(lP4)
+                    .addComponent(lP5)
+                    .addComponent(lP6)
+                    .addComponent(lP7)
+                    .addComponent(lP8))
+                .addGap(12, 12, 12)
+                .addGroup(AuctionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(lPlayerOnAuction)
+                    .addComponent(jLabel12)
+                    .addComponent(lMoneyAuction))
+                .addGap(18, 18, 18)
+                .addGroup(AuctionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(lBestOffer))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tOffer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AuctionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bImOutOfAuction)
+                    .addComponent(bOffer))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel13.setText("TRADEO");
+
+        jLabel14.setText("Jugadores:");
+
+        l1P3.setText("3");
+        l1P3.setName("1P3"); // NOI18N
+
+        l1P4.setText("4");
+        l1P4.setName("1P4"); // NOI18N
+
+        l1P5.setText("5");
+        l1P5.setName("1P5"); // NOI18N
+
+        l1P6.setText("6");
+        l1P6.setName("1P6"); // NOI18N
+
+        l1P7.setText("7");
+        l1P7.setName("1P7"); // NOI18N
+
+        l1P8.setText("8");
+        l1P8.setName("1P8"); // NOI18N
+
+        l1P1.setText("1");
+        l1P1.setName("1P1"); // NOI18N
+
+        l1P2.setText("2");
+        l1P2.setName("1P2"); // NOI18N
+
+        jLabel15.setText("Tradeare con:");
+
+        bAcept.setText("Aceptar");
+        bAcept.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAceptActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setText("Dinero que doy:");
+
+        tPlayerToTrade.setText("0");
+        tPlayerToTrade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tPlayerToTradeKeyTyped(evt);
+            }
+        });
+
+        tMoneyToGive.setText("0");
+        tMoneyToGive.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tMoneyToGiveKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tMoneyToGiveKeyPressed(evt);
+            }
+        });
+
+        bFinalize.setText("Finalizar");
+        bFinalize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bFinalizeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout tradePaneLayout = new javax.swing.GroupLayout(tradePane);
+        tradePane.setLayout(tradePaneLayout);
+        tradePaneLayout.setHorizontalGroup(
+            tradePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tradePaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tradePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tradePaneLayout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tMoneyToGive))
+                    .addGroup(tradePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(tradePaneLayout.createSequentialGroup()
+                            .addComponent(jLabel13)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel14))
+                        .addGroup(tradePaneLayout.createSequentialGroup()
+                            .addComponent(l1P1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(l1P2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(l1P3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(l1P4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(l1P5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(l1P6, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(l1P7, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(l1P8, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(tradePaneLayout.createSequentialGroup()
+                            .addComponent(jLabel15)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(tPlayerToTrade, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tradePaneLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(bAcept)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bFinalize))
+        );
+        tradePaneLayout.setVerticalGroup(
+            tradePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tradePaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tradePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(tradePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l1P1)
+                    .addComponent(l1P2)
+                    .addComponent(l1P3)
+                    .addComponent(l1P4)
+                    .addComponent(l1P5)
+                    .addComponent(l1P6)
+                    .addComponent(l1P7)
+                    .addComponent(l1P8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(tradePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(tPlayerToTrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(tradePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(tMoneyToGive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(tradePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bAcept)
+                    .addComponent(bFinalize))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -2902,10 +3429,13 @@ public class Game extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dicePane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(playerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 8, Short.MAX_VALUE)))
+                        .addComponent(playerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(AuctionPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tradePane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -2919,11 +3449,12 @@ public class Game extends javax.swing.JFrame {
                         .addComponent(playerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(dicePane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
-                        .addComponent(jButton2)
-                        .addGap(96, 96, 96))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(AuctionPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tradePane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -2937,11 +3468,11 @@ public class Game extends javax.swing.JFrame {
             lTotalDice.setText(Integer.toString(totalDice));
             lDice1.setText(Integer.toString(m.getDice1()));
             lDice2.setText(Integer.toString(m.getDice2()));
-            if(playerOnTurn.isInJail()){
-                
-                if(m.getDice1() != m.getDice2()){
+            if (playerOnTurn.isInJail()) {
+
+                if (m.getDice1() != m.getDice2()) {
                     playerOnTurn.setTurnsInJail(playerOnTurn.getTurnsInJail() + 1);
-                    if(playerOnTurn.getTurnsInJail() >= 5){
+                    if (playerOnTurn.getTurnsInJail() >= 5) {
                         JOptionPane.showMessageDialog(null, "Tienes que salir de la carcel ya han pasado 4 turnos, paga la fianza de 50 M y vuelve a lanzar los dados");
                         onAcquirable = true;
                     }
@@ -2973,7 +3504,7 @@ public class Game extends javax.swing.JFrame {
                 System.out.println("ID " + courrentCell.getId());
                 System.out.println("Nombre " + courrentCell.getName());
                 playerOnTurn.setCourrentCell(courrentCell.getId());
-                if(courrentCell.getId() == 11 || courrentCell.getId() == 31){
+                if (courrentCell.getId() == 11 || courrentCell.getId() == 31) {
                     playerOnTurn.setCourrentCell(11);
                     playerOnTurn.setInJail(true);
                 }
@@ -3074,12 +3605,43 @@ public class Game extends javax.swing.JFrame {
     }//GEN-LAST:event_bBuyPropertyActionPerformed
 
     private void bAuctionPropertyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAuctionPropertyActionPerformed
-        Avenue courrentCell = (Avenue) cellInTurn;
-        if (courrentCell.getOwner() == null) {
-            //to do...            
-            setPlayerOnTurn();
-        } else {
-            JOptionPane.showMessageDialog(null, "Ya tiene dueño.");
+        if (!playerOnTurn.isBankruptcy() && onAcquirable) {
+            if (cellInTurn.getNombre().equals("Avenue")) {
+                setUpAuctionAndTrade();
+                Avenue courrentCell = (Avenue) cellInTurn;
+                if (courrentCell.getOwner() == null) {
+                    enableComponents(dicePane, false);
+                    enableComponents(AuctionPane, true);
+                    playerOnAuction = playerOnTurn;
+                    setPlayerOnAuction();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ya tiene dueño.");
+                }
+            } else if (cellInTurn.getNombre().equals("Railroad")) {
+                setUpAuctionAndTrade();
+                Railroad courrentCell = (Railroad) cellInTurn;
+                if (courrentCell.getOwner() == null) {
+                    enableComponents(dicePane, false);
+                    enableComponents(AuctionPane, true);
+                    playerOnAuction = playerOnTurn;
+                    setPlayerOnAuction();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ya tiene dueño.");
+                }
+            } else if (cellInTurn.getNombre().equals("Utility")) {
+                setUpAuctionAndTrade();
+                Utility courrentCell = (Utility) cellInTurn;
+                if (courrentCell.getOwner() == null) {
+                    enableComponents(dicePane, false);
+                    enableComponents(AuctionPane, true);
+                    playerOnAuction = playerOnTurn;
+                    setPlayerOnAuction();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ya tiene dueño.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No puede subastar esto.");
+            }
         }
     }//GEN-LAST:event_bAuctionPropertyActionPerformed
 
@@ -3094,7 +3656,7 @@ public class Game extends javax.swing.JFrame {
                     lRentToPay.setText("0 M");
                     setPlayerOnTurn();
                     onAcquirable = false;
-                    if(playerOnTurn.isInJail()){
+                    if (playerOnTurn.isInJail()) {
                         playerOnTurn.setInJail(false);
                         lTotalDice.setText("0");
                     }
@@ -3363,2244 +3925,2372 @@ public class Game extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_MenuItemSellHotelsActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // PAPI HACE FALTA TRADEO
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void bTradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTradeActionPerformed
+        if (!playerOnTurn.isBankruptcy()) {
+            JOptionPane.showMessageDialog(null, "Explicacion:\nPara tradear debes escribir el numero que tenga el color del personaje con el que vas a tradear y hundir aceptar\napartir de aqui puedes empezar a clickear las propiedades tuyas que se le van a dar al otro jugador\no clickear las propiedades del otro jugador que vas a recibir\nsi hay dinero involucrado debes ponerlo y hundir finalizar, si recibes dinero lo debes poner negativo.");
+            setUpAuctionAndTrade();
+            enableComponents(dicePane, false);
+            enableComponents(tradePane, true);
+            keySleep = false;
+        }
+    }//GEN-LAST:event_bTradeActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        playerOnTurn.courrentCell = 11;
-        playerOnTurn.setInJail(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void tOfferKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tOfferKeyTyped
+        char enter = evt.getKeyChar();
+        evt.consume();
+        if (!keySleep) {
+            if (Character.isDigit(enter)) {
+                String number = tOffer.getText() + enter + "";
+                tOffer.setText(number);
+            }
+        } else {
+            keySleep = false;
+        }
+    }//GEN-LAST:event_tOfferKeyTyped
 
-    //GETTER SETTER
+    private void tOfferKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tOfferKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            keySleep = true;
+        }
+    }//GEN-LAST:event_tOfferKeyPressed
+
+    private void bOfferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOfferActionPerformed
+        int offer = Integer.valueOf(tOffer.getText());
+        String bestOffer = lBestOffer.getText();
+        bestOffer = bestOffer.substring(0, bestOffer.length() - 2);
+        if (offer > Integer.valueOf(bestOffer)) {
+            bestOffer = Integer.toString(offer) + " M";
+            lBestOffer.setText(bestOffer);
+            nextPlayerOnAuction();
+            setPlayerOnAuction();
+        } else {
+            JOptionPane.showMessageDialog(null, "Tiene que ofertar mas para seguir.");
+        }
+    }//GEN-LAST:event_bOfferActionPerformed
+
+    private void bImOutOfAuctionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bImOutOfAuctionActionPerformed
+        String componentName = "P" + playerOnAuction.getId();
+        JLabel jl = (JLabel) getComponentByName(componentName);
+        jl.setText("0");
+        validatePlayersOnAuction();
+    }//GEN-LAST:event_bImOutOfAuctionActionPerformed
+
+    private void tPlayerToTradeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tPlayerToTradeKeyTyped
+        char enter = evt.getKeyChar();
+        evt.consume();
+        if (Character.isDigit(enter)) {
+            String number = enter + "";
+            tPlayerToTrade.setText(number);
+        }
+    }//GEN-LAST:event_tPlayerToTradeKeyTyped
+
+    private void tMoneyToGiveKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tMoneyToGiveKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            keySleep = true;
+        }
+    }//GEN-LAST:event_tMoneyToGiveKeyPressed
+
+    private void tMoneyToGiveKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tMoneyToGiveKeyTyped
+        char enter = evt.getKeyChar();
+        evt.consume();
+        if (!keySleep) {
+            if (Character.isDigit(enter)) {
+                String number = tMoneyToGive.getText() + enter + "";
+                tMoneyToGive.setText(number);
+            }
+        } else {
+            keySleep = false;
+        }
+    }//GEN-LAST:event_tMoneyToGiveKeyTyped
+
+    private void bAceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptActionPerformed
+        if (!onTrade) {
+            playerToTrade = (Player) m.getPlayers().BuscarConId(Integer.valueOf(tPlayerToTrade.getText()));
+            if (playerToTrade != null) {
+                if (!playerToTrade.isBankruptcy() && playerToTrade != playerOnTurn) {
+                    onTrade = true;
+                    bAcept.setEnabled(false);
+                    tPlayerToTrade.setEnabled(false);
+
+                    if (!tMoneyToGive.getText().equals("0")) {
+                        int money = Integer.valueOf(tMoneyToGive.getText());
+                        int finalMoneyTurn = playerOnTurn.getMoney() - money;
+                        int finalMoneyTrade = playerToTrade.getMoney() + money;
+                        if (finalMoneyTurn >= 0 && finalMoneyTrade >= 0) {
+                            playerOnTurn.setMoney(finalMoneyTurn);
+                            playerToTrade.setMoney(finalMoneyTrade);
+
+                            tMoneyToGive.setEnabled(false);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No puede tradear con este jugador");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Escriba un jugador Existente");
+            }
+        }
+    }//GEN-LAST:event_bAceptActionPerformed
+
+    private void bFinalizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizeActionPerformed
+        if (!tMoneyToGive.getText().equals("0")) {
+            int money = Integer.valueOf(tMoneyToGive.getText());
+            int finalMoneyTurn = playerOnTurn.getMoney() - money;
+            int finalMoneyTrade = playerToTrade.getMoney() + money;
+            if (finalMoneyTurn >= 0 && finalMoneyTrade >= 0) {
+                playerOnTurn.setMoney(finalMoneyTurn);
+                playerToTrade.setMoney(finalMoneyTrade);
+
+                onTrade = false;
+
+                playerToTrade = null;
+
+                enableComponents(dicePane, true);
+                enableComponents(tradePane, false);
+
+                m.getPlayers().BuscarConId(playerOnTurn.getId());
+                setPlayerOnTurn();
+            }
+        } else {
+            onTrade = false;
+
+            playerToTrade = null;
+
+            enableComponents(dicePane, true);
+            enableComponents(tradePane, false);
+
+            m.getPlayers().BuscarConId(playerOnTurn.getId());
+            setPlayerOnTurn();
+        }
+    }//GEN-LAST:event_bFinalizeActionPerformed
+
+    //GETTER SETTER //Massive shit! ...
     //<editor-fold defaultstate="collapsed" desc="comment">
-    
     public Master getM() {
         return m;
     }
-    
+
     public void setM(Master m) {
         this.m = m;
     }
-    
+
     public Thread getT1() {
         return t1;
     }
-    
+
     public void setT1(Thread t1) {
         this.t1 = t1;
     }
-    
+
     public boolean isStop() {
         return stop;
     }
-    
+
     public void setStop(boolean stop) {
         this.stop = stop;
     }
-    
-    
+
     public void setBackground(BufferedImage background) {
         this.background = background;
     }
-    
+
     public HashMap getComponentMap() {
         return componentMap;
     }
-    
+
     public void setComponentMap(HashMap componentMap) {
         this.componentMap = componentMap;
     }
-    
+
     public Player getPlayerOnTurn() {
         return playerOnTurn;
     }
-    
+
     public void setPlayerOnTurn(Player playerOnTurn) {
         this.playerOnTurn = playerOnTurn;
     }
-    
+
     public Nodo getCellInTurn() {
         return cellInTurn;
     }
-    
+
     public void setCellInTurn(Nodo cellInTurn) {
         this.cellInTurn = cellInTurn;
     }
-    
+
     public boolean isOnAcquirable() {
         return onAcquirable;
     }
-    
+
     public void setOnAcquirable(boolean onAcquirable) {
         this.onAcquirable = onAcquirable;
     }
-    
+
     public Component getPropertySelected() {
         return propertySelected;
     }
-    
+
     public void setPropertySelected(Component propertySelected) {
         this.propertySelected = propertySelected;
     }
-    
+
     public JMenuItem getMenuItemHotels() {
         return MenuItemHotels;
     }
-    
+
     public void setMenuItemHotels(JMenuItem MenuItemHotels) {
         this.MenuItemHotels = MenuItemHotels;
     }
-    
+
     public JMenuItem getMenuItemHouses() {
         return MenuItemHouses;
     }
-    
+
     public void setMenuItemHouses(JMenuItem MenuItemHouses) {
         this.MenuItemHouses = MenuItemHouses;
     }
-    
+
     public JMenuItem getMenuItemSell() {
         return MenuItemSell;
     }
-    
+
     public void setMenuItemSell(JMenuItem MenuItemSell) {
         this.MenuItemSell = MenuItemSell;
     }
-    
+
     public JMenuItem getMenuItemSellHotels() {
         return MenuItemSellHotels;
     }
-    
+
     public void setMenuItemSellHotels(JMenuItem MenuItemSellHotels) {
         this.MenuItemSellHotels = MenuItemSellHotels;
     }
-    
+
     public JMenuItem getMenuItemSellHouses() {
         return MenuItemSellHouses;
     }
-    
+
     public void setMenuItemSellHouses(JMenuItem MenuItemSellHouses) {
         this.MenuItemSellHouses = MenuItemSellHouses;
     }
-    
+
     public JLabel getP1B1() {
         return P1B1;
     }
-    
+
     public void setP1B1(JLabel P1B1) {
         this.P1B1 = P1B1;
     }
-    
+
     public JLabel getP1B2() {
         return P1B2;
     }
-    
+
     public void setP1B2(JLabel P1B2) {
         this.P1B2 = P1B2;
     }
-    
+
     public JLabel getP1C1() {
         return P1C1;
     }
-    
+
     public void setP1C1(JLabel P1C1) {
         this.P1C1 = P1C1;
     }
-    
+
     public JLabel getP1C2() {
         return P1C2;
     }
-    
+
     public void setP1C2(JLabel P1C2) {
         this.P1C2 = P1C2;
     }
-    
+
     public JLabel getP1C3() {
         return P1C3;
     }
-    
+
     public void setP1C3(JLabel P1C3) {
         this.P1C3 = P1C3;
     }
-    
+
     public JLabel getP1G1() {
         return P1G1;
     }
-    
+
     public void setP1G1(JLabel P1G1) {
         this.P1G1 = P1G1;
     }
-    
+
     public JLabel getP1G2() {
         return P1G2;
     }
-    
+
     public void setP1G2(JLabel P1G2) {
         this.P1G2 = P1G2;
     }
-    
+
     public JLabel getP1G3() {
         return P1G3;
     }
-    
+
     public void setP1G3(JLabel P1G3) {
         this.P1G3 = P1G3;
     }
-    
+
     public JLabel getP1M1() {
         return P1M1;
     }
-    
+
     public void setP1M1(JLabel P1M1) {
         this.P1M1 = P1M1;
     }
-    
+
     public JLabel getP1M2() {
         return P1M2;
     }
-    
+
     public void setP1M2(JLabel P1M2) {
         this.P1M2 = P1M2;
     }
-    
+
     public JLabel getP1O1() {
         return P1O1;
     }
-    
+
     public void setP1O1(JLabel P1O1) {
         this.P1O1 = P1O1;
     }
-    
+
     public JLabel getP1O2() {
         return P1O2;
     }
-    
+
     public void setP1O2(JLabel P1O2) {
         this.P1O2 = P1O2;
     }
-    
+
     public JLabel getP1O3() {
         return P1O3;
     }
-    
+
     public void setP1O3(JLabel P1O3) {
         this.P1O3 = P1O3;
     }
-    
+
     public JLabel getP1P1() {
         return P1P1;
     }
-    
+
     public void setP1P1(JLabel P1P1) {
         this.P1P1 = P1P1;
     }
-    
+
     public JLabel getP1P2() {
         return P1P2;
     }
-    
+
     public void setP1P2(JLabel P1P2) {
         this.P1P2 = P1P2;
     }
-    
+
     public JLabel getP1P3() {
         return P1P3;
     }
-    
+
     public void setP1P3(JLabel P1P3) {
         this.P1P3 = P1P3;
     }
-    
+
     public JLabel getP1R1() {
         return P1R1;
     }
-    
+
     public void setP1R1(JLabel P1R1) {
         this.P1R1 = P1R1;
     }
-    
+
     public JLabel getP1R2() {
         return P1R2;
     }
-    
+
     public void setP1R2(JLabel P1R2) {
         this.P1R2 = P1R2;
     }
-    
+
     public JLabel getP1R3() {
         return P1R3;
     }
-    
+
     public void setP1R3(JLabel P1R3) {
         this.P1R3 = P1R3;
     }
-    
+
     public JLabel getP1RA1() {
         return P1RA1;
     }
-    
+
     public void setP1RA1(JLabel P1RA1) {
         this.P1RA1 = P1RA1;
     }
-    
+
     public JLabel getP1RA2() {
         return P1RA2;
     }
-    
+
     public void setP1RA2(JLabel P1RA2) {
         this.P1RA2 = P1RA2;
     }
-    
+
     public JLabel getP1RA3() {
         return P1RA3;
     }
-    
+
     public void setP1RA3(JLabel P1RA3) {
         this.P1RA3 = P1RA3;
     }
-    
+
     public JLabel getP1RA4() {
         return P1RA4;
     }
-    
+
     public void setP1RA4(JLabel P1RA4) {
         this.P1RA4 = P1RA4;
     }
-    
+
     public JLabel getP1U1() {
         return P1U1;
     }
-    
+
     public void setP1U1(JLabel P1U1) {
         this.P1U1 = P1U1;
     }
-    
+
     public JLabel getP1U2() {
         return P1U2;
     }
-    
+
     public void setP1U2(JLabel P1U2) {
         this.P1U2 = P1U2;
     }
-    
+
     public JLabel getP1Y1() {
         return P1Y1;
     }
-    
+
     public void setP1Y1(JLabel P1Y1) {
         this.P1Y1 = P1Y1;
     }
-    
+
     public JLabel getP1Y2() {
         return P1Y2;
     }
-    
+
     public void setP1Y2(JLabel P1Y2) {
         this.P1Y2 = P1Y2;
     }
-    
+
     public JLabel getP1Y3() {
         return P1Y3;
     }
-    
+
     public void setP1Y3(JLabel P1Y3) {
         this.P1Y3 = P1Y3;
     }
-    
+
     public JLabel getP2B1() {
         return P2B1;
     }
-    
+
     public void setP2B1(JLabel P2B1) {
         this.P2B1 = P2B1;
     }
-    
+
     public JLabel getP2B2() {
         return P2B2;
     }
-    
+
     public void setP2B2(JLabel P2B2) {
         this.P2B2 = P2B2;
     }
-    
+
     public JLabel getP2C1() {
         return P2C1;
     }
-    
+
     public void setP2C1(JLabel P2C1) {
         this.P2C1 = P2C1;
     }
-    
+
     public JLabel getP2C2() {
         return P2C2;
     }
-    
+
     public void setP2C2(JLabel P2C2) {
         this.P2C2 = P2C2;
     }
-    
+
     public JLabel getP2C3() {
         return P2C3;
     }
-    
+
     public void setP2C3(JLabel P2C3) {
         this.P2C3 = P2C3;
     }
-    
+
     public JLabel getP2G1() {
         return P2G1;
     }
-    
+
     public void setP2G1(JLabel P2G1) {
         this.P2G1 = P2G1;
     }
-    
+
     public JLabel getP2G2() {
         return P2G2;
     }
-    
+
     public void setP2G2(JLabel P2G2) {
         this.P2G2 = P2G2;
     }
-    
+
     public JLabel getP2G3() {
         return P2G3;
     }
-    
+
     public void setP2G3(JLabel P2G3) {
         this.P2G3 = P2G3;
     }
-    
+
     public JLabel getP2M1() {
         return P2M1;
     }
-    
+
     public void setP2M1(JLabel P2M1) {
         this.P2M1 = P2M1;
     }
-    
+
     public JLabel getP2M2() {
         return P2M2;
     }
-    
+
     public void setP2M2(JLabel P2M2) {
         this.P2M2 = P2M2;
     }
-    
+
     public JLabel getP2O1() {
         return P2O1;
     }
-    
+
     public void setP2O1(JLabel P2O1) {
         this.P2O1 = P2O1;
     }
-    
+
     public JLabel getP2O2() {
         return P2O2;
     }
-    
+
     public void setP2O2(JLabel P2O2) {
         this.P2O2 = P2O2;
     }
-    
+
     public JLabel getP2O3() {
         return P2O3;
     }
-    
+
     public void setP2O3(JLabel P2O3) {
         this.P2O3 = P2O3;
     }
-    
+
     public JLabel getP2P1() {
         return P2P1;
     }
-    
+
     public void setP2P1(JLabel P2P1) {
         this.P2P1 = P2P1;
     }
-    
+
     public JLabel getP2P2() {
         return P2P2;
     }
-    
+
     public void setP2P2(JLabel P2P2) {
         this.P2P2 = P2P2;
     }
-    
+
     public JLabel getP2P3() {
         return P2P3;
     }
-    
+
     public void setP2P3(JLabel P2P3) {
         this.P2P3 = P2P3;
     }
-    
+
     public JLabel getP2R1() {
         return P2R1;
     }
-    
+
     public void setP2R1(JLabel P2R1) {
         this.P2R1 = P2R1;
     }
-    
+
     public JLabel getP2R2() {
         return P2R2;
     }
-    
+
     public void setP2R2(JLabel P2R2) {
         this.P2R2 = P2R2;
     }
-    
+
     public JLabel getP2R3() {
         return P2R3;
     }
-    
+
     public void setP2R3(JLabel P2R3) {
         this.P2R3 = P2R3;
     }
-    
+
     public JLabel getP2RA1() {
         return P2RA1;
     }
-    
+
     public void setP2RA1(JLabel P2RA1) {
         this.P2RA1 = P2RA1;
     }
-    
+
     public JLabel getP2RA2() {
         return P2RA2;
     }
-    
+
     public void setP2RA2(JLabel P2RA2) {
         this.P2RA2 = P2RA2;
     }
-    
+
     public JLabel getP2RA3() {
         return P2RA3;
     }
-    
+
     public void setP2RA3(JLabel P2RA3) {
         this.P2RA3 = P2RA3;
     }
-    
+
     public JLabel getP2RA4() {
         return P2RA4;
     }
-    
+
     public void setP2RA4(JLabel P2RA4) {
         this.P2RA4 = P2RA4;
     }
-    
+
     public JLabel getP2U1() {
         return P2U1;
     }
-    
+
     public void setP2U1(JLabel P2U1) {
         this.P2U1 = P2U1;
     }
-    
+
     public JLabel getP2U2() {
         return P2U2;
     }
-    
+
     public void setP2U2(JLabel P2U2) {
         this.P2U2 = P2U2;
     }
-    
+
     public JLabel getP2Y1() {
         return P2Y1;
     }
-    
+
     public void setP2Y1(JLabel P2Y1) {
         this.P2Y1 = P2Y1;
     }
-    
+
     public JLabel getP2Y2() {
         return P2Y2;
     }
-    
+
     public void setP2Y2(JLabel P2Y2) {
         this.P2Y2 = P2Y2;
     }
-    
+
     public JLabel getP2Y3() {
         return P2Y3;
     }
-    
+
     public void setP2Y3(JLabel P2Y3) {
         this.P2Y3 = P2Y3;
     }
-    
+
     public JLabel getP3B1() {
         return P3B1;
     }
-    
+
     public void setP3B1(JLabel P3B1) {
         this.P3B1 = P3B1;
     }
-    
+
     public JLabel getP3B2() {
         return P3B2;
     }
-    
+
     public void setP3B2(JLabel P3B2) {
         this.P3B2 = P3B2;
     }
-    
+
     public JLabel getP3C1() {
         return P3C1;
     }
-    
+
     public void setP3C1(JLabel P3C1) {
         this.P3C1 = P3C1;
     }
-    
+
     public JLabel getP3C2() {
         return P3C2;
     }
-    
+
     public void setP3C2(JLabel P3C2) {
         this.P3C2 = P3C2;
     }
-    
+
     public JLabel getP3C3() {
         return P3C3;
     }
-    
+
     public void setP3C3(JLabel P3C3) {
         this.P3C3 = P3C3;
     }
-    
+
     public JLabel getP3G1() {
         return P3G1;
     }
-    
+
     public void setP3G1(JLabel P3G1) {
         this.P3G1 = P3G1;
     }
-    
+
     public JLabel getP3G2() {
         return P3G2;
     }
-    
+
     public void setP3G2(JLabel P3G2) {
         this.P3G2 = P3G2;
     }
-    
+
     public JLabel getP3G3() {
         return P3G3;
     }
-    
+
     public void setP3G3(JLabel P3G3) {
         this.P3G3 = P3G3;
     }
-    
+
     public JLabel getP3M1() {
         return P3M1;
     }
-    
+
     public void setP3M1(JLabel P3M1) {
         this.P3M1 = P3M1;
     }
-    
+
     public JLabel getP3M2() {
         return P3M2;
     }
-    
+
     public void setP3M2(JLabel P3M2) {
         this.P3M2 = P3M2;
     }
-    
+
     public JLabel getP3O1() {
         return P3O1;
     }
-    
+
     public void setP3O1(JLabel P3O1) {
         this.P3O1 = P3O1;
     }
-    
+
     public JLabel getP3O2() {
         return P3O2;
     }
-    
+
     public void setP3O2(JLabel P3O2) {
         this.P3O2 = P3O2;
     }
-    
+
     public JLabel getP3O3() {
         return P3O3;
     }
-    
+
     public void setP3O3(JLabel P3O3) {
         this.P3O3 = P3O3;
     }
-    
+
     public JLabel getP3P1() {
         return P3P1;
     }
-    
+
     public void setP3P1(JLabel P3P1) {
         this.P3P1 = P3P1;
     }
-    
+
     public JLabel getP3P2() {
         return P3P2;
     }
-    
+
     public void setP3P2(JLabel P3P2) {
         this.P3P2 = P3P2;
     }
-    
+
     public JLabel getP3P3() {
         return P3P3;
     }
-    
+
     public void setP3P3(JLabel P3P3) {
         this.P3P3 = P3P3;
     }
-    
+
     public JLabel getP3R1() {
         return P3R1;
     }
-    
+
     public void setP3R1(JLabel P3R1) {
         this.P3R1 = P3R1;
     }
-    
+
     public JLabel getP3R2() {
         return P3R2;
     }
-    
+
     public void setP3R2(JLabel P3R2) {
         this.P3R2 = P3R2;
     }
-    
+
     public JLabel getP3R3() {
         return P3R3;
     }
-    
+
     public void setP3R3(JLabel P3R3) {
         this.P3R3 = P3R3;
     }
-    
+
     public JLabel getP3RA1() {
         return P3RA1;
     }
-    
+
     public void setP3RA1(JLabel P3RA1) {
         this.P3RA1 = P3RA1;
     }
-    
+
     public JLabel getP3RA2() {
         return P3RA2;
     }
-    
+
     public void setP3RA2(JLabel P3RA2) {
         this.P3RA2 = P3RA2;
     }
-    
+
     public JLabel getP3RA3() {
         return P3RA3;
     }
-    
+
     public void setP3RA3(JLabel P3RA3) {
         this.P3RA3 = P3RA3;
     }
-    
+
     public JLabel getP3RA4() {
         return P3RA4;
     }
-    
+
     public void setP3RA4(JLabel P3RA4) {
         this.P3RA4 = P3RA4;
     }
-    
+
     public JLabel getP3U1() {
         return P3U1;
     }
-    
+
     public void setP3U1(JLabel P3U1) {
         this.P3U1 = P3U1;
     }
-    
+
     public JLabel getP3U2() {
         return P3U2;
     }
-    
+
     public void setP3U2(JLabel P3U2) {
         this.P3U2 = P3U2;
     }
-    
+
     public JLabel getP3Y1() {
         return P3Y1;
     }
-    
+
     public void setP3Y1(JLabel P3Y1) {
         this.P3Y1 = P3Y1;
     }
-    
+
     public JLabel getP3Y2() {
         return P3Y2;
     }
-    
+
     public void setP3Y2(JLabel P3Y2) {
         this.P3Y2 = P3Y2;
     }
-    
+
     public JLabel getP3Y3() {
         return P3Y3;
     }
-    
+
     public void setP3Y3(JLabel P3Y3) {
         this.P3Y3 = P3Y3;
     }
-    
+
     public JLabel getP4B1() {
         return P4B1;
     }
-    
+
     public void setP4B1(JLabel P4B1) {
         this.P4B1 = P4B1;
     }
-    
+
     public JLabel getP4B2() {
         return P4B2;
     }
-    
+
     public void setP4B2(JLabel P4B2) {
         this.P4B2 = P4B2;
     }
-    
+
     public JLabel getP4C1() {
         return P4C1;
     }
-    
+
     public void setP4C1(JLabel P4C1) {
         this.P4C1 = P4C1;
     }
-    
+
     public JLabel getP4C2() {
         return P4C2;
     }
-    
+
     public void setP4C2(JLabel P4C2) {
         this.P4C2 = P4C2;
     }
-    
+
     public JLabel getP4C3() {
         return P4C3;
     }
-    
+
     public void setP4C3(JLabel P4C3) {
         this.P4C3 = P4C3;
     }
-    
+
     public JLabel getP4G1() {
         return P4G1;
     }
-    
+
     public void setP4G1(JLabel P4G1) {
         this.P4G1 = P4G1;
     }
-    
+
     public JLabel getP4G2() {
         return P4G2;
     }
-    
+
     public void setP4G2(JLabel P4G2) {
         this.P4G2 = P4G2;
     }
-    
+
     public JLabel getP4G3() {
         return P4G3;
     }
-    
+
     public void setP4G3(JLabel P4G3) {
         this.P4G3 = P4G3;
     }
-    
+
     public JLabel getP4M1() {
         return P4M1;
     }
-    
+
     public void setP4M1(JLabel P4M1) {
         this.P4M1 = P4M1;
     }
-    
+
     public JLabel getP4M2() {
         return P4M2;
     }
-    
+
     public void setP4M2(JLabel P4M2) {
         this.P4M2 = P4M2;
     }
-    
+
     public JLabel getP4O1() {
         return P4O1;
     }
-    
+
     public void setP4O1(JLabel P4O1) {
         this.P4O1 = P4O1;
     }
-    
+
     public JLabel getP4O2() {
         return P4O2;
     }
-    
+
     public void setP4O2(JLabel P4O2) {
         this.P4O2 = P4O2;
     }
-    
+
     public JLabel getP4O3() {
         return P4O3;
     }
-    
+
     public void setP4O3(JLabel P4O3) {
         this.P4O3 = P4O3;
     }
-    
+
     public JLabel getP4P1() {
         return P4P1;
     }
-    
+
     public void setP4P1(JLabel P4P1) {
         this.P4P1 = P4P1;
     }
-    
+
     public JLabel getP4P2() {
         return P4P2;
     }
-    
+
     public void setP4P2(JLabel P4P2) {
         this.P4P2 = P4P2;
     }
-    
+
     public JLabel getP4P3() {
         return P4P3;
     }
-    
+
     public void setP4P3(JLabel P4P3) {
         this.P4P3 = P4P3;
     }
-    
+
     public JLabel getP4R1() {
         return P4R1;
     }
-    
+
     public void setP4R1(JLabel P4R1) {
         this.P4R1 = P4R1;
     }
-    
+
     public JLabel getP4R2() {
         return P4R2;
     }
-    
+
     public void setP4R2(JLabel P4R2) {
         this.P4R2 = P4R2;
     }
-    
+
     public JLabel getP4R3() {
         return P4R3;
     }
-    
+
     public void setP4R3(JLabel P4R3) {
         this.P4R3 = P4R3;
     }
-    
+
     public JLabel getP4RA1() {
         return P4RA1;
     }
-    
+
     public void setP4RA1(JLabel P4RA1) {
         this.P4RA1 = P4RA1;
     }
-    
+
     public JLabel getP4RA2() {
         return P4RA2;
     }
-    
+
     public void setP4RA2(JLabel P4RA2) {
         this.P4RA2 = P4RA2;
     }
-    
+
     public JLabel getP4RA3() {
         return P4RA3;
     }
-    
+
     public void setP4RA3(JLabel P4RA3) {
         this.P4RA3 = P4RA3;
     }
-    
+
     public JLabel getP4RA4() {
         return P4RA4;
     }
-    
+
     public void setP4RA4(JLabel P4RA4) {
         this.P4RA4 = P4RA4;
     }
-    
+
     public JLabel getP4U1() {
         return P4U1;
     }
-    
+
     public void setP4U1(JLabel P4U1) {
         this.P4U1 = P4U1;
     }
-    
+
     public JLabel getP4U2() {
         return P4U2;
     }
-    
+
     public void setP4U2(JLabel P4U2) {
         this.P4U2 = P4U2;
     }
-    
+
     public JLabel getP4Y1() {
         return P4Y1;
     }
-    
+
     public void setP4Y1(JLabel P4Y1) {
         this.P4Y1 = P4Y1;
     }
-    
+
     public JLabel getP4Y2() {
         return P4Y2;
     }
-    
+
     public void setP4Y2(JLabel P4Y2) {
         this.P4Y2 = P4Y2;
     }
-    
+
     public JLabel getP4Y3() {
         return P4Y3;
     }
-    
+
     public void setP4Y3(JLabel P4Y3) {
         this.P4Y3 = P4Y3;
     }
-    
+
     public JLabel getP5B1() {
         return P5B1;
     }
-    
+
     public void setP5B1(JLabel P5B1) {
         this.P5B1 = P5B1;
     }
-    
+
     public JLabel getP5B2() {
         return P5B2;
     }
-    
+
     public void setP5B2(JLabel P5B2) {
         this.P5B2 = P5B2;
     }
-    
+
     public JLabel getP5C1() {
         return P5C1;
     }
-    
+
     public void setP5C1(JLabel P5C1) {
         this.P5C1 = P5C1;
     }
-    
+
     public JLabel getP5C2() {
         return P5C2;
     }
-    
+
     public void setP5C2(JLabel P5C2) {
         this.P5C2 = P5C2;
     }
-    
+
     public JLabel getP5C3() {
         return P5C3;
     }
-    
+
     public void setP5C3(JLabel P5C3) {
         this.P5C3 = P5C3;
     }
-    
+
     public JLabel getP5G1() {
         return P5G1;
     }
-    
+
     public void setP5G1(JLabel P5G1) {
         this.P5G1 = P5G1;
     }
-    
+
     public JLabel getP5G2() {
         return P5G2;
     }
-    
+
     public void setP5G2(JLabel P5G2) {
         this.P5G2 = P5G2;
     }
-    
+
     public JLabel getP5G3() {
         return P5G3;
     }
-    
+
     public void setP5G3(JLabel P5G3) {
         this.P5G3 = P5G3;
     }
-    
+
     public JLabel getP5M1() {
         return P5M1;
     }
-    
+
     public void setP5M1(JLabel P5M1) {
         this.P5M1 = P5M1;
     }
-    
+
     public JLabel getP5M2() {
         return P5M2;
     }
-    
+
     public void setP5M2(JLabel P5M2) {
         this.P5M2 = P5M2;
     }
-    
+
     public JLabel getP5O1() {
         return P5O1;
     }
-    
+
     public void setP5O1(JLabel P5O1) {
         this.P5O1 = P5O1;
     }
-    
+
     public JLabel getP5O2() {
         return P5O2;
     }
-    
+
     public void setP5O2(JLabel P5O2) {
         this.P5O2 = P5O2;
     }
-    
+
     public JLabel getP5O3() {
         return P5O3;
     }
-    
+
     public void setP5O3(JLabel P5O3) {
         this.P5O3 = P5O3;
     }
-    
+
     public JLabel getP5P1() {
         return P5P1;
     }
-    
+
     public void setP5P1(JLabel P5P1) {
         this.P5P1 = P5P1;
     }
-    
+
     public JLabel getP5P2() {
         return P5P2;
     }
-    
+
     public void setP5P2(JLabel P5P2) {
         this.P5P2 = P5P2;
     }
-    
+
     public JLabel getP5P3() {
         return P5P3;
     }
-    
+
     public void setP5P3(JLabel P5P3) {
         this.P5P3 = P5P3;
     }
-    
+
     public JLabel getP5R1() {
         return P5R1;
     }
-    
+
     public void setP5R1(JLabel P5R1) {
         this.P5R1 = P5R1;
     }
-    
+
     public JLabel getP5R2() {
         return P5R2;
     }
-    
+
     public void setP5R2(JLabel P5R2) {
         this.P5R2 = P5R2;
     }
-    
+
     public JLabel getP5R3() {
         return P5R3;
     }
-    
+
     public void setP5R3(JLabel P5R3) {
         this.P5R3 = P5R3;
     }
-    
+
     public JLabel getP5RA1() {
         return P5RA1;
     }
-    
+
     public void setP5RA1(JLabel P5RA1) {
         this.P5RA1 = P5RA1;
     }
-    
+
     public JLabel getP5RA2() {
         return P5RA2;
     }
-    
+
     public void setP5RA2(JLabel P5RA2) {
         this.P5RA2 = P5RA2;
     }
-    
+
     public JLabel getP5RA3() {
         return P5RA3;
     }
-    
+
     public void setP5RA3(JLabel P5RA3) {
         this.P5RA3 = P5RA3;
     }
-    
+
     public JLabel getP5RA4() {
         return P5RA4;
     }
-    
+
     public void setP5RA4(JLabel P5RA4) {
         this.P5RA4 = P5RA4;
     }
-    
+
     public JLabel getP5U1() {
         return P5U1;
     }
-    
+
     public void setP5U1(JLabel P5U1) {
         this.P5U1 = P5U1;
     }
-    
+
     public JLabel getP5U2() {
         return P5U2;
     }
-    
+
     public void setP5U2(JLabel P5U2) {
         this.P5U2 = P5U2;
     }
-    
+
     public JLabel getP5Y1() {
         return P5Y1;
     }
-    
+
     public void setP5Y1(JLabel P5Y1) {
         this.P5Y1 = P5Y1;
     }
-    
+
     public JLabel getP5Y2() {
         return P5Y2;
     }
-    
+
     public void setP5Y2(JLabel P5Y2) {
         this.P5Y2 = P5Y2;
     }
-    
+
     public JLabel getP5Y3() {
         return P5Y3;
     }
-    
+
     public void setP5Y3(JLabel P5Y3) {
         this.P5Y3 = P5Y3;
     }
-    
+
     public JLabel getP6B1() {
         return P6B1;
     }
-    
+
     public void setP6B1(JLabel P6B1) {
         this.P6B1 = P6B1;
     }
-    
+
     public JLabel getP6B2() {
         return P6B2;
     }
-    
+
     public void setP6B2(JLabel P6B2) {
         this.P6B2 = P6B2;
     }
-    
+
     public JLabel getP6C1() {
         return P6C1;
     }
-    
+
     public void setP6C1(JLabel P6C1) {
         this.P6C1 = P6C1;
     }
-    
+
     public JLabel getP6C2() {
         return P6C2;
     }
-    
+
     public void setP6C2(JLabel P6C2) {
         this.P6C2 = P6C2;
     }
-    
+
     public JLabel getP6C3() {
         return P6C3;
     }
-    
+
     public void setP6C3(JLabel P6C3) {
         this.P6C3 = P6C3;
     }
-    
+
     public JLabel getP6G1() {
         return P6G1;
     }
-    
+
     public void setP6G1(JLabel P6G1) {
         this.P6G1 = P6G1;
     }
-    
+
     public JLabel getP6G2() {
         return P6G2;
     }
-    
+
     public void setP6G2(JLabel P6G2) {
         this.P6G2 = P6G2;
     }
-    
+
     public JLabel getP6G3() {
         return P6G3;
     }
-    
+
     public void setP6G3(JLabel P6G3) {
         this.P6G3 = P6G3;
     }
-    
+
     public JLabel getP6M1() {
         return P6M1;
     }
-    
+
     public void setP6M1(JLabel P6M1) {
         this.P6M1 = P6M1;
     }
-    
+
     public JLabel getP6M2() {
         return P6M2;
     }
-    
+
     public void setP6M2(JLabel P6M2) {
         this.P6M2 = P6M2;
     }
-    
+
     public JLabel getP6O1() {
         return P6O1;
     }
-    
+
     public void setP6O1(JLabel P6O1) {
         this.P6O1 = P6O1;
     }
-    
+
     public JLabel getP6O2() {
         return P6O2;
     }
-    
+
     public void setP6O2(JLabel P6O2) {
         this.P6O2 = P6O2;
     }
-    
+
     public JLabel getP6O3() {
         return P6O3;
     }
-    
+
     public void setP6O3(JLabel P6O3) {
         this.P6O3 = P6O3;
     }
-    
+
     public JLabel getP6P1() {
         return P6P1;
     }
-    
+
     public void setP6P1(JLabel P6P1) {
         this.P6P1 = P6P1;
     }
-    
+
     public JLabel getP6P2() {
         return P6P2;
     }
-    
+
     public void setP6P2(JLabel P6P2) {
         this.P6P2 = P6P2;
     }
-    
+
     public JLabel getP6P3() {
         return P6P3;
     }
-    
+
     public void setP6P3(JLabel P6P3) {
         this.P6P3 = P6P3;
     }
-    
+
     public JLabel getP6R1() {
         return P6R1;
     }
-    
+
     public void setP6R1(JLabel P6R1) {
         this.P6R1 = P6R1;
     }
-    
+
     public JLabel getP6R2() {
         return P6R2;
     }
-    
+
     public void setP6R2(JLabel P6R2) {
         this.P6R2 = P6R2;
     }
-    
+
     public JLabel getP6R3() {
         return P6R3;
     }
-    
+
     public void setP6R3(JLabel P6R3) {
         this.P6R3 = P6R3;
     }
-    
+
     public JLabel getP6RA1() {
         return P6RA1;
     }
-    
+
     public void setP6RA1(JLabel P6RA1) {
         this.P6RA1 = P6RA1;
     }
-    
+
     public JLabel getP6RA2() {
         return P6RA2;
     }
-    
+
     public void setP6RA2(JLabel P6RA2) {
         this.P6RA2 = P6RA2;
     }
-    
+
     public JLabel getP6RA3() {
         return P6RA3;
     }
-    
+
     public void setP6RA3(JLabel P6RA3) {
         this.P6RA3 = P6RA3;
     }
-    
+
     public JLabel getP6RA4() {
         return P6RA4;
     }
-    
+
     public void setP6RA4(JLabel P6RA4) {
         this.P6RA4 = P6RA4;
     }
-    
+
     public JLabel getP6U1() {
         return P6U1;
     }
-    
+
     public void setP6U1(JLabel P6U1) {
         this.P6U1 = P6U1;
     }
-    
+
     public JLabel getP6U2() {
         return P6U2;
     }
-    
+
     public void setP6U2(JLabel P6U2) {
         this.P6U2 = P6U2;
     }
-    
+
     public JLabel getP6Y1() {
         return P6Y1;
     }
-    
+
     public void setP6Y1(JLabel P6Y1) {
         this.P6Y1 = P6Y1;
     }
-    
+
     public JLabel getP6Y2() {
         return P6Y2;
     }
-    
+
     public void setP6Y2(JLabel P6Y2) {
         this.P6Y2 = P6Y2;
     }
-    
+
     public JLabel getP6Y3() {
         return P6Y3;
     }
-    
+
     public void setP6Y3(JLabel P6Y3) {
         this.P6Y3 = P6Y3;
     }
-    
+
     public JLabel getP7B1() {
         return P7B1;
     }
-    
+
     public void setP7B1(JLabel P7B1) {
         this.P7B1 = P7B1;
     }
-    
+
     public JLabel getP7B2() {
         return P7B2;
     }
-    
+
     public void setP7B2(JLabel P7B2) {
         this.P7B2 = P7B2;
     }
-    
+
     public JLabel getP7C1() {
         return P7C1;
     }
-    
+
     public void setP7C1(JLabel P7C1) {
         this.P7C1 = P7C1;
     }
-    
+
     public JLabel getP7C2() {
         return P7C2;
     }
-    
+
     public void setP7C2(JLabel P7C2) {
         this.P7C2 = P7C2;
     }
-    
+
     public JLabel getP7C3() {
         return P7C3;
     }
-    
+
     public void setP7C3(JLabel P7C3) {
         this.P7C3 = P7C3;
     }
-    
+
     public JLabel getP7G1() {
         return P7G1;
     }
-    
+
     public void setP7G1(JLabel P7G1) {
         this.P7G1 = P7G1;
     }
-    
+
     public JLabel getP7G2() {
         return P7G2;
     }
-    
+
     public void setP7G2(JLabel P7G2) {
         this.P7G2 = P7G2;
     }
-    
+
     public JLabel getP7G3() {
         return P7G3;
     }
-    
+
     public void setP7G3(JLabel P7G3) {
         this.P7G3 = P7G3;
     }
-    
+
     public JLabel getP7M1() {
         return P7M1;
     }
-    
+
     public void setP7M1(JLabel P7M1) {
         this.P7M1 = P7M1;
     }
-    
+
     public JLabel getP7M2() {
         return P7M2;
     }
-    
+
     public void setP7M2(JLabel P7M2) {
         this.P7M2 = P7M2;
     }
-    
+
     public JLabel getP7O1() {
         return P7O1;
     }
-    
+
     public void setP7O1(JLabel P7O1) {
         this.P7O1 = P7O1;
     }
-    
+
     public JLabel getP7O2() {
         return P7O2;
     }
-    
+
     public void setP7O2(JLabel P7O2) {
         this.P7O2 = P7O2;
     }
-    
+
     public JLabel getP7O3() {
         return P7O3;
     }
-    
+
     public void setP7O3(JLabel P7O3) {
         this.P7O3 = P7O3;
     }
-    
+
     public JLabel getP7P1() {
         return P7P1;
     }
-    
+
     public void setP7P1(JLabel P7P1) {
         this.P7P1 = P7P1;
     }
-    
+
     public JLabel getP7P2() {
         return P7P2;
     }
-    
+
     public void setP7P2(JLabel P7P2) {
         this.P7P2 = P7P2;
     }
-    
+
     public JLabel getP7P3() {
         return P7P3;
     }
-    
+
     public void setP7P3(JLabel P7P3) {
         this.P7P3 = P7P3;
     }
-    
+
     public JLabel getP7R1() {
         return P7R1;
     }
-    
+
     public void setP7R1(JLabel P7R1) {
         this.P7R1 = P7R1;
     }
-    
+
     public JLabel getP7R2() {
         return P7R2;
     }
-    
+
     public void setP7R2(JLabel P7R2) {
         this.P7R2 = P7R2;
     }
-    
+
     public JLabel getP7R3() {
         return P7R3;
     }
-    
+
     public void setP7R3(JLabel P7R3) {
         this.P7R3 = P7R3;
     }
-    
+
     public JLabel getP7RA1() {
         return P7RA1;
     }
-    
+
     public void setP7RA1(JLabel P7RA1) {
         this.P7RA1 = P7RA1;
     }
-    
+
     public JLabel getP7RA2() {
         return P7RA2;
     }
-    
+
     public void setP7RA2(JLabel P7RA2) {
         this.P7RA2 = P7RA2;
     }
-    
+
     public JLabel getP7RA3() {
         return P7RA3;
     }
-    
+
     public void setP7RA3(JLabel P7RA3) {
         this.P7RA3 = P7RA3;
     }
-    
+
     public JLabel getP7RA4() {
         return P7RA4;
     }
-    
+
     public void setP7RA4(JLabel P7RA4) {
         this.P7RA4 = P7RA4;
     }
-    
+
     public JLabel getP7U1() {
         return P7U1;
     }
-    
+
     public void setP7U1(JLabel P7U1) {
         this.P7U1 = P7U1;
     }
-    
+
     public JLabel getP7U2() {
         return P7U2;
     }
-    
+
     public void setP7U2(JLabel P7U2) {
         this.P7U2 = P7U2;
     }
-    
+
     public JLabel getP7Y1() {
         return P7Y1;
     }
-    
+
     public void setP7Y1(JLabel P7Y1) {
         this.P7Y1 = P7Y1;
     }
-    
+
     public JLabel getP7Y2() {
         return P7Y2;
     }
-    
+
     public void setP7Y2(JLabel P7Y2) {
         this.P7Y2 = P7Y2;
     }
-    
+
     public JLabel getP7Y3() {
         return P7Y3;
     }
-    
+
     public void setP7Y3(JLabel P7Y3) {
         this.P7Y3 = P7Y3;
     }
-    
+
     public JLabel getP8B1() {
         return P8B1;
     }
-    
+
     public void setP8B1(JLabel P8B1) {
         this.P8B1 = P8B1;
     }
-    
+
     public JLabel getP8B2() {
         return P8B2;
     }
-    
+
     public void setP8B2(JLabel P8B2) {
         this.P8B2 = P8B2;
     }
-    
+
     public JLabel getP8C1() {
         return P8C1;
     }
-    
+
     public void setP8C1(JLabel P8C1) {
         this.P8C1 = P8C1;
     }
-    
+
     public JLabel getP8C2() {
         return P8C2;
     }
-    
+
     public void setP8C2(JLabel P8C2) {
         this.P8C2 = P8C2;
     }
-    
+
     public JLabel getP8C3() {
         return P8C3;
     }
-    
+
     public void setP8C3(JLabel P8C3) {
         this.P8C3 = P8C3;
     }
-    
+
     public JLabel getP8G1() {
         return P8G1;
     }
-    
+
     public void setP8G1(JLabel P8G1) {
         this.P8G1 = P8G1;
     }
-    
+
     public JLabel getP8G2() {
         return P8G2;
     }
-    
+
     public void setP8G2(JLabel P8G2) {
         this.P8G2 = P8G2;
     }
-    
+
     public JLabel getP8G3() {
         return P8G3;
     }
-    
+
     public void setP8G3(JLabel P8G3) {
         this.P8G3 = P8G3;
     }
-    
+
     public JLabel getP8M1() {
         return P8M1;
     }
-    
+
     public void setP8M1(JLabel P8M1) {
         this.P8M1 = P8M1;
     }
-    
+
     public JLabel getP8M2() {
         return P8M2;
     }
-    
+
     public void setP8M2(JLabel P8M2) {
         this.P8M2 = P8M2;
     }
-    
+
     public JLabel getP8O1() {
         return P8O1;
     }
-    
+
     public void setP8O1(JLabel P8O1) {
         this.P8O1 = P8O1;
     }
-    
+
     public JLabel getP8O2() {
         return P8O2;
     }
-    
+
     public void setP8O2(JLabel P8O2) {
         this.P8O2 = P8O2;
     }
-    
+
     public JLabel getP8O3() {
         return P8O3;
     }
-    
+
     public void setP8O3(JLabel P8O3) {
         this.P8O3 = P8O3;
     }
-    
+
     public JLabel getP8P1() {
         return P8P1;
     }
-    
+
     public void setP8P1(JLabel P8P1) {
         this.P8P1 = P8P1;
     }
-    
+
     public JLabel getP8P2() {
         return P8P2;
     }
-    
+
     public void setP8P2(JLabel P8P2) {
         this.P8P2 = P8P2;
     }
-    
+
     public JLabel getP8P3() {
         return P8P3;
     }
-    
+
     public void setP8P3(JLabel P8P3) {
         this.P8P3 = P8P3;
     }
-    
+
     public JLabel getP8R1() {
         return P8R1;
     }
-    
+
     public void setP8R1(JLabel P8R1) {
         this.P8R1 = P8R1;
     }
-    
+
     public JLabel getP8R2() {
         return P8R2;
     }
-    
+
     public void setP8R2(JLabel P8R2) {
         this.P8R2 = P8R2;
     }
-    
+
     public JLabel getP8R3() {
         return P8R3;
     }
-    
+
     public void setP8R3(JLabel P8R3) {
         this.P8R3 = P8R3;
     }
-    
+
     public JLabel getP8RA1() {
         return P8RA1;
     }
-    
+
     public void setP8RA1(JLabel P8RA1) {
         this.P8RA1 = P8RA1;
     }
-    
+
     public JLabel getP8RA2() {
         return P8RA2;
     }
-    
+
     public void setP8RA2(JLabel P8RA2) {
         this.P8RA2 = P8RA2;
     }
-    
+
     public JLabel getP8RA3() {
         return P8RA3;
     }
-    
+
     public void setP8RA3(JLabel P8RA3) {
         this.P8RA3 = P8RA3;
     }
-    
+
     public JLabel getP8RA4() {
         return P8RA4;
     }
-    
+
     public void setP8RA4(JLabel P8RA4) {
         this.P8RA4 = P8RA4;
     }
-    
+
     public JLabel getP8U1() {
         return P8U1;
     }
-    
+
     public void setP8U1(JLabel P8U1) {
         this.P8U1 = P8U1;
     }
-    
+
     public JLabel getP8U2() {
         return P8U2;
     }
-    
+
     public void setP8U2(JLabel P8U2) {
         this.P8U2 = P8U2;
     }
-    
+
     public JLabel getP8Y1() {
         return P8Y1;
     }
-    
+
     public void setP8Y1(JLabel P8Y1) {
         this.P8Y1 = P8Y1;
     }
-    
+
     public JLabel getP8Y2() {
         return P8Y2;
     }
-    
+
     public void setP8Y2(JLabel P8Y2) {
         this.P8Y2 = P8Y2;
     }
-    
+
     public JLabel getP8Y3() {
         return P8Y3;
     }
-    
+
     public void setP8Y3(JLabel P8Y3) {
         this.P8Y3 = P8Y3;
     }
-    
+
     public JPopupMenu getPopupProperties() {
         return PopupProperties;
     }
-    
+
     public void setPopupProperties(JPopupMenu PopupProperties) {
         this.PopupProperties = PopupProperties;
     }
-    
+
     public JButton getbAuctionProperty() {
         return bAuctionProperty;
     }
-    
+
     public void setbAuctionProperty(JButton bAuctionProperty) {
         this.bAuctionProperty = bAuctionProperty;
     }
-    
+
     public JButton getbBankrupt() {
         return bBankrupt;
     }
-    
+
     public void setbBankrupt(JButton bBankrupt) {
         this.bBankrupt = bBankrupt;
     }
-    
+
     public JButton getbBuyProperty() {
         return bBuyProperty;
     }
-    
+
     public void setbBuyProperty(JButton bBuyProperty) {
         this.bBuyProperty = bBuyProperty;
     }
-    
+
     public JButton getbDice() {
         return bDice;
     }
-    
+
     public void setbDice(JButton bDice) {
         this.bDice = bDice;
     }
-    
+
     public JButton getbNextTurn() {
         return bNextTurn;
     }
-    
+
     public void setbNextTurn(JButton bNextTurn) {
         this.bNextTurn = bNextTurn;
     }
-    
+
     public JButton getbPayRent() {
         return bPayRent;
     }
-    
+
     public void setbPayRent(JButton bPayRent) {
         this.bPayRent = bPayRent;
     }
-    
+
     public JButton getbPropertyHandle() {
         return bPropertyHandle;
     }
-    
+
     public void setbPropertyHandle(JButton bPropertyHandle) {
         this.bPropertyHandle = bPropertyHandle;
     }
-    
+
     public Canvas getCanvas() {
         return canvas;
     }
-    
+
     public void setCanvas(Canvas canvas) {
         this.canvas = canvas;
     }
-    
+
     public JPanel getDicePane() {
         return dicePane;
     }
-    
+
     public void setDicePane(JPanel dicePane) {
         this.dicePane = dicePane;
     }
-    
+
     public JButton getjButton1() {
-        return jButton1;
+        return bTrade;
     }
-    
+
     public void setjButton1(JButton jButton1) {
-        this.jButton1 = jButton1;
+        this.bTrade = jButton1;
     }
-    
+
     public JLabel getjLabel1() {
         return jLabel1;
     }
-    
+
     public void setjLabel1(JLabel jLabel1) {
         this.jLabel1 = jLabel1;
     }
-    
+
     public JLabel getjLabel11() {
         return jLabel11;
     }
-    
+
     public void setjLabel11(JLabel jLabel11) {
         this.jLabel11 = jLabel11;
     }
-    
+
     public JLabel getjLabel2() {
         return jLabel2;
     }
-    
+
     public void setjLabel2(JLabel jLabel2) {
         this.jLabel2 = jLabel2;
     }
-    
+
     public JLabel getjLabel3() {
         return jLabel3;
     }
-    
+
     public void setjLabel3(JLabel jLabel3) {
         this.jLabel3 = jLabel3;
     }
-    
+
     public JLabel getjLabel4() {
         return jLabel4;
     }
-    
+
     public void setjLabel4(JLabel jLabel4) {
         this.jLabel4 = jLabel4;
     }
-    
+
     public JLabel getjLabel5() {
         return jLabel5;
     }
-    
+
     public void setjLabel5(JLabel jLabel5) {
         this.jLabel5 = jLabel5;
     }
-    
+
     public JLabel getjLabel6() {
         return jLabel6;
     }
-    
+
     public void setjLabel6(JLabel jLabel6) {
         this.jLabel6 = jLabel6;
     }
-    
+
     public JLabel getjLabel7() {
         return jLabel7;
     }
-    
+
     public void setjLabel7(JLabel jLabel7) {
         this.jLabel7 = jLabel7;
     }
-    
+
     public JLabel getjLabel8() {
         return jLabel8;
     }
-    
+
     public void setjLabel8(JLabel jLabel8) {
         this.jLabel8 = jLabel8;
     }
-    
+
     public JLabel getlCell() {
         return lCell;
     }
-    
+
     public void setlCell(JLabel lCell) {
         this.lCell = lCell;
     }
-    
+
     public JLabel getlDice1() {
         return lDice1;
     }
-    
+
     public void setlDice1(JLabel lDice1) {
         this.lDice1 = lDice1;
     }
-    
+
     public JLabel getlDice2() {
         return lDice2;
     }
-    
+
     public void setlDice2(JLabel lDice2) {
         this.lDice2 = lDice2;
     }
-    
+
     public JLabel getlHotelPrice() {
         return lHotelPrice;
     }
-    
+
     public void setlHotelPrice(JLabel lHotelPrice) {
         this.lHotelPrice = lHotelPrice;
     }
-    
+
     public JLabel getlHousePrice() {
         return lHousePrice;
     }
-    
+
     public void setlHousePrice(JLabel lHousePrice) {
         this.lHousePrice = lHousePrice;
     }
-    
+
     public JLabel getlMoney() {
         return lMoney;
     }
-    
+
     public void setlMoney(JLabel lMoney) {
         this.lMoney = lMoney;
     }
-    
+
     public JLabel getlPlayer1() {
         return lPlayer1;
     }
-    
+
     public void setlPlayer1(JLabel lPlayer1) {
         this.lPlayer1 = lPlayer1;
     }
-    
+
     public JLabel getlPlayer2() {
         return lPlayer2;
     }
-    
+
     public void setlPlayer2(JLabel lPlayer2) {
         this.lPlayer2 = lPlayer2;
     }
-    
+
     public JLabel getlPlayer3() {
         return lPlayer3;
     }
-    
+
     public void setlPlayer3(JLabel lPlayer3) {
         this.lPlayer3 = lPlayer3;
     }
-    
+
     public JLabel getlPlayer4() {
         return lPlayer4;
     }
-    
+
     public void setlPlayer4(JLabel lPlayer4) {
         this.lPlayer4 = lPlayer4;
     }
-    
+
     public JLabel getlPlayer5() {
         return lPlayer5;
     }
-    
+
     public void setlPlayer5(JLabel lPlayer5) {
         this.lPlayer5 = lPlayer5;
     }
-    
+
     public JLabel getlPlayer6() {
         return lPlayer6;
     }
-    
+
     public void setlPlayer6(JLabel lPlayer6) {
         this.lPlayer6 = lPlayer6;
     }
-    
+
     public JLabel getlPlayer7() {
         return lPlayer7;
     }
-    
+
     public void setlPlayer7(JLabel lPlayer7) {
         this.lPlayer7 = lPlayer7;
     }
-    
+
     public JLabel getlPlayer8() {
         return lPlayer8;
     }
-    
+
     public void setlPlayer8(JLabel lPlayer8) {
         this.lPlayer8 = lPlayer8;
     }
-    
+
     public JLabel getlPlayerOnTurn() {
         return lPlayerOnTurn;
     }
-    
+
     public void setlPlayerOnTurn(JLabel lPlayerOnTurn) {
         this.lPlayerOnTurn = lPlayerOnTurn;
     }
-    
+
     public JLabel getlPlayers() {
         return lPlayers;
     }
-    
+
     public void setlPlayers(JLabel lPlayers) {
         this.lPlayers = lPlayers;
     }
-    
+
     public JLabel getlProperties() {
         return lProperties;
     }
-    
+
     public void setlProperties(JLabel lProperties) {
         this.lProperties = lProperties;
     }
-    
+
     public JLabel getlRentToPay() {
         return lRentToPay;
     }
-    
+
     public void setlRentToPay(JLabel lRentToPay) {
         this.lRentToPay = lRentToPay;
     }
-    
+
     public JLabel getlTotalDice() {
         return lTotalDice;
     }
-    
+
     public void setlTotalDice(JLabel lTotalDice) {
         this.lTotalDice = lTotalDice;
     }
-    
+
     public JPanel getPlayerPane() {
         return playerPane;
     }
-    
+
     public void setPlayerPane(JPanel playerPane) {
         this.playerPane = playerPane;
     }
-    
-    
+
 //</editor-fold>
     //GEETER SETTER
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AuctionPane;
     private javax.swing.JMenuItem MenuItemHotels;
     private javax.swing.JMenuItem MenuItemHouses;
     private javax.swing.JMenuItem MenuItemSell;
@@ -5831,32 +6521,62 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JLabel P8Y2;
     private javax.swing.JLabel P8Y3;
     private javax.swing.JPopupMenu PopupProperties;
+    private javax.swing.JButton bAcept;
     private javax.swing.JButton bAuctionProperty;
     private javax.swing.JButton bBankrupt;
     private javax.swing.JButton bBuyProperty;
     private javax.swing.JButton bDice;
+    private javax.swing.JButton bFinalize;
+    private javax.swing.JButton bImOutOfAuction;
     private javax.swing.JButton bNextTurn;
+    private javax.swing.JButton bOffer;
     private javax.swing.JButton bPayRent;
     private javax.swing.JButton bPropertyHandle;
+    private javax.swing.JButton bTrade;
     private java.awt.Canvas canvas;
     private javax.swing.JPanel dicePane;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel l1P1;
+    private javax.swing.JLabel l1P2;
+    private javax.swing.JLabel l1P3;
+    private javax.swing.JLabel l1P4;
+    private javax.swing.JLabel l1P5;
+    private javax.swing.JLabel l1P6;
+    private javax.swing.JLabel l1P7;
+    private javax.swing.JLabel l1P8;
+    private javax.swing.JLabel lBestOffer;
     private javax.swing.JLabel lCell;
     private javax.swing.JLabel lDice1;
     private javax.swing.JLabel lDice2;
     private javax.swing.JLabel lHotelPrice;
     private javax.swing.JLabel lHousePrice;
     private javax.swing.JLabel lMoney;
+    private javax.swing.JLabel lMoneyAuction;
+    private javax.swing.JLabel lP1;
+    private javax.swing.JLabel lP2;
+    private javax.swing.JLabel lP3;
+    private javax.swing.JLabel lP4;
+    private javax.swing.JLabel lP5;
+    private javax.swing.JLabel lP6;
+    private javax.swing.JLabel lP7;
+    private javax.swing.JLabel lP8;
     private javax.swing.JLabel lPlayer1;
     private javax.swing.JLabel lPlayer2;
     private javax.swing.JLabel lPlayer3;
@@ -5865,11 +6585,16 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JLabel lPlayer6;
     private javax.swing.JLabel lPlayer7;
     private javax.swing.JLabel lPlayer8;
+    private javax.swing.JLabel lPlayerOnAuction;
     private javax.swing.JLabel lPlayerOnTurn;
     private javax.swing.JLabel lPlayers;
     private javax.swing.JLabel lProperties;
     private javax.swing.JLabel lRentToPay;
     private javax.swing.JLabel lTotalDice;
     private javax.swing.JPanel playerPane;
+    private javax.swing.JTextField tMoneyToGive;
+    private javax.swing.JTextField tOffer;
+    private javax.swing.JTextField tPlayerToTrade;
+    private javax.swing.JPanel tradePane;
     // End of variables declaration//GEN-END:variables
 }

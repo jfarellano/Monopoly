@@ -258,10 +258,10 @@ public class Master {
     public Card drawRandomCard(int Chance1Chest2) {
         Random r = new Random();
         if (Chance1Chest2 == 1) {
-            int x = r.nextInt(ChanceCard.length()) + 1;
+            int x = r.nextInt(ChanceCard.length()) ;//+ 1;
             return (Card) ChanceCard.BuscarConId(x);
         } else {
-            int x = r.nextInt(CommunityChestCard.length()) + 1;
+            int x = r.nextInt(CommunityChestCard.length()) ;//+ 1;
             return (Card) CommunityChestCard.BuscarConId(x);
         }
     }
